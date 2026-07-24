@@ -1,0 +1,3463 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>重庆+巫山 · 2026-08-01 行程书（视觉初稿）</title>
+<meta name="description" content="重庆主城与巫山小三峡四日行程书视觉优化初稿">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+
+:root {
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.45, 0, 0.55, 1);
+  --hover-ms: 200ms;
+  --enter-ms: 560ms;
+  --press-ms: 100ms;
+  --stagger-ms: 60ms;
+  --hover-y: -3px;
+  --hover-scale: 1.01;
+  --enter-y: 20px;
+  --bg: #fff8f1;
+  --bg-2: #eef9ff;
+  --surface: #ffffff;
+  --surface-2: #fff4ea;
+  --surface-sky: #eef8ff;
+  --ink: #1c2430;
+  --ink-soft: #5b6675;
+  --ink-faint: #8b95a3;
+  --line: #f0ddd0;
+  --line-sky: #d5eaf8;
+  --accent: #ff6a3d;
+  --accent-2: #e85a30;
+  --accent-soft: #ffe3d7;
+  --accent-ink: #7a2410;
+  --sky: #2aa8e0;
+  --sky-2: #148fc7;
+  --sky-soft: #d9f1ff;
+  --mint: #14b8a6;
+  --mint-soft: #d8f7f2;
+  --sun: #f5b301;
+  --sun-soft: #fff3c4;
+  --ok: #0f9f6e;
+  --ok-soft: #d8f8ea;
+  --warn: #d97706;
+  --warn-soft: #ffedd5;
+  --danger: #e11d48;
+  --danger-soft: #ffe4e6;
+  --shadow: 0 14px 40px rgba(255, 106, 61, 0.10), 0 8px 24px rgba(42, 168, 224, 0.08);
+  --shadow-sm: 0 4px 14px rgba(28, 36, 48, 0.06);
+  --radius: 20px;
+  --radius-sm: 14px;
+  --nav-h: 64px;
+  --font: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --max: 1120px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121820;
+    --bg-2: #0f1720;
+    --surface: #1a2330;
+    --surface-2: #243041;
+    --surface-sky: #173043;
+    --ink: #f3f7fb;
+    --ink-soft: #b3c0cf;
+    --ink-faint: #8493a5;
+    --line: #334155;
+    --line-sky: #2a4b63;
+    --accent: #ff8b63;
+    --accent-2: #ffb089;
+    --accent-soft: #4a261b;
+    --accent-ink: #ffe7dc;
+    --sky: #5cc8f5;
+    --sky-2: #7dd3fc;
+    --sky-soft: #163246;
+    --mint: #2dd4bf;
+    --mint-soft: #134e4a;
+    --sun: #fbbf24;
+    --sun-soft: #422006;
+    --ok: #34d399;
+    --ok-soft: #064e3b;
+    --warn: #fbbf24;
+    --warn-soft: #451a03;
+    --danger: #fb7185;
+    --danger-soft: #4c0519;
+    --shadow: 0 18px 48px rgba(0,0,0,.4);
+    --shadow-sm: 0 4px 16px rgba(0,0,0,.28);
+  }
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background:
+    radial-gradient(900px 420px at 8% -8%, color-mix(in srgb, var(--sun) 28%, transparent), transparent 60%),
+    radial-gradient(800px 380px at 92% 0%, color-mix(in srgb, var(--sky) 24%, transparent), transparent 58%),
+    radial-gradient(700px 360px at 50% 18%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 55%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 48%, var(--bg) 100%);
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.35;
+  background-image:
+    radial-gradient(circle at 12% 22%, color-mix(in srgb, var(--sun) 18%, transparent) 0 2px, transparent 3px),
+    radial-gradient(circle at 78% 18%, color-mix(in srgb, var(--sky) 20%, transparent) 0 2px, transparent 3px),
+    radial-gradient(circle at 40% 70%, color-mix(in srgb, var(--accent) 16%, transparent) 0 1.5px, transparent 2.5px);
+  background-size: 180px 180px, 220px 220px, 160px 160px;
+}
+
+a { color: var(--sky-2); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { color: var(--accent-2); }
+img, svg { display: block; max-width: 100%; }
+
+.site-nav,
+.hero,
+section,
+footer { position: relative; z-index: 1; }
+
+/* ===== Nav ===== */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 0 18px;
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+}
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 30% 30%, #fff7c2 0 28%, transparent 30%),
+    linear-gradient(145deg, var(--accent), var(--sky));
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 28%, transparent);
+  flex: 0 0 auto;
+  position: relative;
+}
+.nav-mark::after {
+  content: "";
+  position: absolute;
+  right: 5px;
+  bottom: 6px;
+  width: 10px;
+  height: 6px;
+  border-radius: 999px 999px 2px 2px;
+  background: #fff;
+  opacity: 0.9;
+}
+.nav-brand span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  max-width: min(740px, 72vw);
+}
+.nav-links::-webkit-scrollbar { display: none; }
+.nav-links a {
+  flex: 0 0 auto;
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 999px;
+  transition: background .2s ease, color .2s ease, transform .15s ease;
+}
+.nav-links a:hover {
+  background: linear-gradient(90deg, var(--accent-soft), var(--sky-soft));
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .site-nav { background: var(--surface); backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+
+/* ===== Hero ===== */
+.hero {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 24px 24px 6px;
+  display: grid;
+  grid-template-columns: 1.25fr 0.95fr;
+  gap: 22px;
+  align-items: stretch;
+}
+.hero-copy {
+  padding: 16px 4px 8px;
+  position: relative;
+}
+.hero-copy::before {
+  content: "GO";
+  position: absolute;
+  right: 4%;
+  top: -6px;
+  font-size: clamp(4rem, 10vw, 7rem);
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  color: color-mix(in srgb, var(--sky) 10%, transparent);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+.hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  background: linear-gradient(90deg, var(--accent-soft), var(--sun-soft));
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  padding: 7px 12px;
+  border-radius: 999px;
+  margin-bottom: 14px;
+}
+.hero-kicker i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.hero h1 {
+  margin: 0 0 12px;
+  font-size: clamp(2.05rem, 4.4vw, 3.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  font-weight: 860;
+  max-width: 12ch;
+  background: linear-gradient(120deg, var(--ink) 20%, color-mix(in srgb, var(--accent-2) 70%, var(--ink)) 55%, var(--sky-2) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .hero h1 { color: var(--ink); background: none; }
+}
+.hero-sub {
+  margin: 0 0 16px;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  max-width: 38ch;
+}
+.hero-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  font-weight: 700;
+  box-shadow: var(--shadow-sm);
+}
+.chip:nth-child(1) { border-color: color-mix(in srgb, var(--sky) 28%, var(--line)); background: var(--sky-soft); }
+.chip:nth-child(2) { border-color: color-mix(in srgb, var(--mint) 28%, var(--line)); background: var(--mint-soft); }
+.chip:nth-child(3) { border-color: color-mix(in srgb, var(--accent) 28%, var(--line)); background: var(--accent-soft); }
+.chip strong { color: var(--ink); font-weight: 800; }
+.hero-stamp { color: var(--ink-faint); font-size: 12px; margin-top: 6px; }
+
+.hero-panel {
+  background:
+    linear-gradient(165deg, color-mix(in srgb, var(--surface) 88%, #fff) 0%, var(--surface) 40%),
+    var(--surface);
+  border: 1px solid color-mix(in srgb, var(--sky) 22%, var(--line));
+  border-radius: calc(var(--radius) + 6px);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  position: relative;
+  overflow: hidden;
+}
+.hero-panel::before {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  right: -40px;
+  top: -50px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--sun) 40%, transparent), transparent 70%);
+}
+.hero-panel::after {
+  content: "";
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  left: -30px;
+  bottom: -40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--sky) 35%, transparent), transparent 70%);
+}
+.hero-panel > * { position: relative; z-index: 1; }
+.hero-panel h2 {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  border: 0;
+  padding: 0;
+}
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.stat {
+  background: color-mix(in srgb, var(--surface) 70%, var(--sky-soft));
+  border: 1px solid color-mix(in srgb, var(--sky) 18%, var(--line));
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  transition: transform .18s ease;
+}
+.stat:nth-child(2),
+.stat:nth-child(3) {
+  background: color-mix(in srgb, var(--surface) 70%, var(--accent-soft));
+  border-color: color-mix(in srgb, var(--accent) 18%, var(--line));
+}
+.stat:hover { transform: translateY(var(--hover-y)) scale(var(--hover-scale)); }
+.stat .label { display: block; font-size: 12px; color: var(--ink-faint); margin-bottom: 4px; font-weight: 700; }
+.stat .value { display: block; font-size: 1.05rem; font-weight: 820; letter-spacing: -0.02em; color: var(--ink); }
+.confidence-summary {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  padding-top: 6px;
+  border-top: 1px dashed var(--line);
+}
+.confidence-summary .dot {
+  display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+  margin: 0 4px 0 10px; vertical-align: middle;
+}
+.dot-green  { background: var(--ok); }
+.dot-yellow { background: var(--sun); }
+.dot-gray   { background: var(--ink-faint); }
+
+/* Keyword strip under hero: user-driven horizontal scroll */
+.trip-vibes {
+  max-width: var(--max);
+  margin: 8px auto 0;
+  padding: 0 24px;
+}
+.vibe-track {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 4px;
+  padding: 4px 2px 10px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+.vibe-track::-webkit-scrollbar { height: 6px; }
+.vibe-track::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--accent) 35%, var(--line));
+  border-radius: 999px;
+}
+.vibe-pill {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
+  transition: transform var(--hover-ms) var(--ease-out), box-shadow var(--hover-ms) var(--ease-out);
+}
+.vibe-pill:nth-child(3n+1) { background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 25%, var(--line)); }
+.vibe-pill:nth-child(3n+2) { background: var(--sky-soft); border-color: color-mix(in srgb, var(--sky) 25%, var(--line)); }
+.vibe-pill:nth-child(3n) { background: var(--sun-soft); border-color: color-mix(in srgb, var(--sun) 30%, var(--line)); }
+.vibe-pill:hover { transform: translateY(var(--hover-y)); }
+.vibe-pill:active { transform: scale(0.98); }
+
+/* ===== Sections ===== */
+section {
+  max-width: var(--max);
+  margin: 28px auto;
+  padding: 0 24px 8px;
+}
+section > h2 {
+  margin: 8px 0 16px;
+  padding: 0;
+  border: 0;
+  font-size: clamp(1.4rem, 2.3vw, 1.8rem);
+  letter-spacing: -0.03em;
+  font-weight: 840;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+section > h2::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, var(--accent), var(--sun));
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 14%, transparent);
+  flex: 0 0 auto;
+}
+section > h2::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--sky) 45%, transparent), transparent);
+}
+
+#overview-map > h2::before { background: linear-gradient(135deg, var(--sky), var(--mint)); }
+#transport > h2::before { background: linear-gradient(135deg, var(--sky), var(--accent)); }
+#hotel > h2::before { background: linear-gradient(135deg, var(--sun), var(--accent)); }
+#days > h2::before { background: linear-gradient(135deg, var(--accent), #ff8fb3); }
+#budget > h2::before { background: linear-gradient(135deg, var(--mint), var(--sky)); }
+#risk > h2::before { background: linear-gradient(135deg, var(--warn), var(--accent)); }
+#xhs-notes > h2::before { background: linear-gradient(135deg, #ff6b9d, var(--accent)); }
+#checklist > h2::before { background: linear-gradient(135deg, var(--mint), var(--sun)); }
+
+#map {
+  width: 100%;
+  height: min(52vh, 520px);
+  min-height: 360px;
+  border-radius: var(--radius);
+  border: 2px solid color-mix(in srgb, var(--sky) 28%, var(--line));
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.transport-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.dir-block h4 {
+  margin: 0 0 12px;
+  font-size: 12.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-weight: 800;
+}
+.trans-card,
+.hotel-card,
+.day-card,
+.risk-block,
+.xhs-section,
+.completeness-panel,
+.check-group {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.trans-card {
+  padding: 16px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--hover-ms) var(--ease-out), box-shadow var(--hover-ms) var(--ease-out), border-color var(--hover-ms) var(--ease-out);
+}
+.trans-card::after {
+  content: "";
+  position: absolute;
+  right: -18px;
+  top: -18px;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--sky) 28%, transparent), transparent 70%);
+}
+.trans-card:hover {
+  transform: translateY(var(--hover-y)) scale(var(--hover-scale));
+  box-shadow: var(--shadow);
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+}
+.trans-mode {
+  font-weight: 840;
+  font-size: 1.08rem;
+  color: var(--sky-2);
+  letter-spacing: -0.02em;
+}
+.trans-route { font-size: 15px; margin: 6px 0 2px; font-weight: 720; }
+.trans-time { color: var(--ink-soft); font-size: 13.5px; }
+.trans-price {
+  margin-top: 8px;
+  font-weight: 820;
+  color: var(--accent-ink);
+  background: linear-gradient(90deg, var(--accent-soft), var(--sun-soft));
+  display: inline-flex;
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+.transport-section .intra-tip {
+  grid-column: 1 / -1;
+  background: linear-gradient(90deg, var(--sky-soft), var(--mint-soft));
+  border: 1px dashed color-mix(in srgb, var(--sky) 35%, var(--line));
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  color: var(--ink-soft);
+  font-size: 14px;
+  font-weight: 600;
+}
+.book-links {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+  font-size: 13px;
+  color: var(--ink-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  align-items: center;
+}
+.book-links .book-label { color: var(--ink-faint); margin-right: 2px; font-weight: 700; }
+.book-links a {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  color: var(--accent-2);
+  text-decoration: none;
+  font-weight: 760;
+  transition: background .15s ease, border-color .15s ease, transform .15s ease;
+}
+.book-links a:hover {
+  background: linear-gradient(90deg, var(--accent-soft), var(--sky-soft));
+  border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+  transform: translateY(-1px);
+}
+.book-links a:active { transform: scale(0.98); }
+
+/* Hotels */
+.hotel-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.hotel-card {
+  padding: 16px;
+  display: grid;
+  gap: 8px;
+  transition: transform var(--hover-ms) var(--ease-out), box-shadow var(--hover-ms) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+.hotel-card:hover { transform: translateY(var(--hover-y)) scale(var(--hover-scale)); box-shadow: var(--shadow); }
+.hotel-card:nth-child(-n+2) {
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--accent-soft) 70%, var(--surface)), var(--surface) 55%);
+  border-color: color-mix(in srgb, var(--accent) 22%, var(--line));
+}
+.hotel-card:nth-child(n+3) {
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--sky-soft) 65%, var(--surface)), var(--surface) 55%);
+}
+.h-rank {
+  font-size: 12px;
+  font-weight: 860;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+}
+.h-price {
+  font-size: 1.4rem;
+  font-weight: 880;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.h-rating { color: var(--ink-soft); font-size: 13px; font-weight: 650; }
+.h-loc { color: var(--ink-soft); font-size: 13.5px; }
+.h-reason {
+  color: var(--ink-soft);
+  font-size: 13.5px;
+  line-height: 1.55;
+  padding: 10px 12px;
+  background: color-mix(in srgb, var(--surface) 70%, var(--sun-soft));
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--sun) 20%, var(--line));
+}
+.h-amenities { display: flex; flex-wrap: wrap; gap: 6px; }
+.h-amenities .tag,
+.tag {
+  display: inline-flex;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--sky-soft);
+  border: 1px solid color-mix(in srgb, var(--sky) 20%, var(--line));
+  color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 720;
+}
+.warning {
+  color: var(--warn);
+  background: var(--warn-soft);
+  border: 1px solid color-mix(in srgb, var(--warn) 25%, transparent);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  font-size: 12.5px;
+  font-weight: 650;
+}
+
+/* Days */
+.day-card {
+  padding: 0;
+  margin-bottom: 18px;
+  overflow: hidden;
+  border-width: 1px;
+}
+.day-card[data-day="1"] { border-color: color-mix(in srgb, var(--accent) 28%, var(--line)); }
+.day-card[data-day="2"] { border-color: color-mix(in srgb, var(--sky) 30%, var(--line)); }
+.day-card[data-day="3"] { border-color: color-mix(in srgb, var(--mint) 30%, var(--line)); }
+.day-card[data-day="4"] { border-color: color-mix(in srgb, var(--sun) 35%, var(--line)); }
+
+.day-header {
+  padding: 18px 18px 12px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+.day-card[data-day="1"] .day-header {
+  background: linear-gradient(120deg, color-mix(in srgb, var(--accent-soft) 85%, transparent), transparent 72%);
+}
+.day-card[data-day="2"] .day-header {
+  background: linear-gradient(120deg, color-mix(in srgb, var(--sky-soft) 90%, transparent), transparent 72%);
+}
+.day-card[data-day="3"] .day-header {
+  background: linear-gradient(120deg, color-mix(in srgb, var(--mint-soft) 90%, transparent), transparent 72%);
+}
+.day-card[data-day="4"] .day-header {
+  background: linear-gradient(120deg, color-mix(in srgb, var(--sun-soft) 90%, transparent), transparent 72%);
+}
+.day-header h3 {
+  margin: 0 0 10px;
+  font-size: 1.14rem;
+  letter-spacing: -0.02em;
+  font-weight: 840;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.day-header h3::before {
+  content: attr(data-badge);
+}
+.day-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.day-meta > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 11px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  font-weight: 720;
+  box-shadow: var(--shadow-sm);
+}
+.day-routes {
+  margin: 14px 18px 0;
+  background: linear-gradient(180deg, var(--surface-sky), var(--surface));
+  border: 1px solid color-mix(in srgb, var(--sky) 20%, var(--line));
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+.day-routes h4 {
+  margin: 0 0 8px;
+  font-size: 12.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-weight: 800;
+}
+.route-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+.route-steps li {
+  padding: 6px 0 6px 14px;
+  border-left: 3px solid color-mix(in srgb, var(--accent) 40%, var(--sky));
+  margin-left: 4px;
+}
+.route-source-text { color: var(--ink-faint); font-weight: 720; }
+.route-source-real { color: var(--ok); font-weight: 800; font-size: 12px; }
+.route-source-fallback { color: var(--danger); font-size: 12px; }
+
+.timeline {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 8px 18px 8px;
+}
+.stop {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px dashed color-mix(in srgb, var(--line) 90%, transparent);
+  position: relative;
+}
+.stop:last-child { border-bottom: 0; }
+.t-time {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--accent-2);
+  padding-top: 3px;
+  letter-spacing: -0.02em;
+}
+.stop-transport .t-time { color: var(--sky-2); }
+.stop-attraction .t-time { color: var(--accent-2); }
+.stop-dinner .t-time,
+.stop-lunch .t-time,
+.stop-breakfast .t-time { color: #d97706; }
+.stop-evening .t-time { color: #db2777; }
+.t-body { min-width: 0; }
+.t-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.t-title strong {
+  font-size: 15.5px;
+  letter-spacing: -0.01em;
+  font-weight: 800;
+}
+.t-emoji {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  font-size: 14px;
+}
+.stop-transport .t-emoji { background: var(--sky-soft); }
+.stop-evening .t-emoji { background: #fce7f3; }
+.stop-dinner .t-emoji,
+.stop-lunch .t-emoji,
+.stop-breakfast .t-emoji { background: var(--sun-soft); }
+.rating {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--ink-soft);
+  background: var(--sun-soft);
+  border: 1px solid color-mix(in srgb, var(--sun) 30%, var(--line));
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+.t-reason {
+  color: var(--ink-soft);
+  font-size: 13.5px;
+  margin: 4px 0 8px;
+  line-height: 1.55;
+}
+.t-detail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  color: var(--ink-faint);
+  font-size: 12.5px;
+}
+.t-detail span {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 9px;
+  font-weight: 650;
+}
+.day-budget {
+  margin: 0;
+  padding: 12px 18px 16px;
+  text-align: right;
+  color: var(--accent-ink);
+  background: linear-gradient(90deg, transparent, var(--accent-soft));
+  font-weight: 840;
+  border-top: 1px solid var(--line);
+}
+.warn-badge {
+  display: inline-block;
+  background: var(--warn-soft);
+  color: var(--warn);
+  border: 1px solid color-mix(in srgb, var(--warn) 22%, transparent);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+/* Budget */
+.budget-section {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 18px;
+  align-items: start;
+}
+.budget-pie-wrap {
+  background: linear-gradient(180deg, var(--surface-sky), var(--surface));
+  border: 1px solid color-mix(in srgb, var(--sky) 22%, var(--line));
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 16px;
+}
+.budget-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.budget-table th,
+.budget-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  font-size: 14px;
+}
+.budget-table th {
+  background: linear-gradient(90deg, var(--accent-soft), var(--sky-soft));
+  color: var(--ink-soft);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+.budget-table tr:last-child td { border-bottom: 0; }
+.budget-table .grand td {
+  font-weight: 880;
+  background: linear-gradient(90deg, var(--sun-soft), var(--accent-soft));
+}
+
+/* Risk */
+.risk-panel { display: grid; gap: 12px; }
+.risk-block {
+  padding: 16px;
+  border-left: 5px solid var(--line-strong, var(--line));
+  background: linear-gradient(90deg, color-mix(in srgb, var(--surface-2) 80%, transparent), var(--surface));
+}
+.risk-block.confidence-green { border-left-color: var(--ok); }
+.risk-block.confidence-yellow { border-left-color: var(--sun); }
+.risk-block.confidence-gray { border-left-color: var(--ink-faint); }
+.risk-block h3, .risk-block h4 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  font-weight: 820;
+}
+.risk-block ul { margin: 0; padding-left: 18px; color: var(--ink-soft); }
+.risk-block li { margin: 4px 0; }
+.scam-group { margin-bottom: 12px; }
+.scam-group h4 {
+  margin: 0 0 6px;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+.emergency {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+.emergency div,
+.emergency p,
+.emergency li {
+  background: var(--danger-soft);
+  border: 1px solid color-mix(in srgb, var(--danger) 18%, var(--line));
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  margin: 0;
+  font-weight: 760;
+  font-size: 13.5px;
+  color: var(--ink);
+  list-style: none;
+}
+
+/* Xiaohongshu */
+.xhs-section { padding: 20px; background: linear-gradient(180deg, #fff7fb, var(--surface)); }
+.xhs-intro { color: var(--ink-soft); font-size: 14px; margin: 0 0 18px; max-width: 65ch; font-weight: 600; }
+.xhs-group { margin-bottom: 20px; }
+.xhs-group h4 { margin: 0 0 12px; font-size: 1rem; font-weight: 820; }
+.xhs-count { color: var(--ink-faint); font-size: 13px; font-weight: 600; margin-left: 6px; }
+.xhs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.xhs-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  transition: transform var(--hover-ms) var(--ease-out), box-shadow var(--hover-ms) var(--ease-out), border-color var(--hover-ms) var(--ease-out);
+}
+.xhs-card:hover {
+  transform: translateY(var(--hover-y)) scale(var(--hover-scale));
+  box-shadow: var(--shadow);
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--line));
+}
+.xhs-cover {
+  width: 100%;
+  padding-top: 68%;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--accent-soft);
+}
+.xhs-body { padding: 12px; }
+.xhs-title { font-size: 14px; font-weight: 800; margin-bottom: 6px; line-height: 1.4; }
+.xhs-meta { font-size: 12px; color: var(--ink-faint); margin-bottom: 6px; font-weight: 650; }
+.xhs-meta span { margin-right: 10px; }
+.xhs-snippet { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 8px; }
+.xhs-sentiment {
+  display: inline-flex;
+  font-size: 11.5px;
+  font-weight: 820;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+.xhs-sentiment-positive { background: var(--ok-soft); color: var(--ok); }
+.xhs-sentiment-neutral { background: var(--surface-2); color: var(--ink-soft); border: 1px solid var(--line); }
+.xhs-sentiment-negative { background: var(--danger-soft); color: var(--danger); }
+.xhs-disclaimer { margin-top: 12px; color: var(--ink-faint); font-size: 12.5px; }
+.xhs-empty-card {
+  background: var(--surface-2);
+  border: 1px dashed var(--line);
+  padding: 24px;
+  border-radius: var(--radius);
+  text-align: center;
+}
+.manual-search { list-style: none; padding: 0; margin-top: 14px; }
+.manual-search li { display: inline-block; margin: 4px 6px; }
+.manual-search a {
+  display: inline-block;
+  padding: 6px 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--accent-2);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 760;
+}
+
+/* Completeness + checklist */
+.completeness-panel { padding: 18px; font-size: 14px; }
+.comp-row { margin-bottom: 14px; }
+.comp-row strong { display: block; margin-bottom: 6px; }
+.comp-row ul { margin: 0; padding-left: 18px; color: var(--ink-soft); line-height: 1.75; }
+.comp-warn ul { color: var(--warn); }
+.comp-tip {
+  border-top: 1px dashed var(--line);
+  padding-top: 12px;
+  margin-top: 12px;
+  color: var(--ink-faint);
+  font-size: 13px;
+}
+.checklist {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.check-group { padding: 16px; background: linear-gradient(180deg, var(--mint-soft), var(--surface)); }
+.check-group:nth-child(2n) { background: linear-gradient(180deg, var(--sky-soft), var(--surface)); }
+.check-group:nth-child(3n) { background: linear-gradient(180deg, var(--sun-soft), var(--surface)); }
+.check-group:nth-child(4n) { background: linear-gradient(180deg, var(--accent-soft), var(--surface)); }
+.check-group h3, .check-group h4 {
+  margin: 0 0 10px;
+  font-size: 0.98rem;
+  font-weight: 820;
+}
+.check-group ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--ink-soft);
+  line-height: 1.75;
+  font-weight: 600;
+}
+
+.confidence-badge {
+  display: inline-block;
+  width: 8px; height: 8px; border-radius: 50%;
+}
+.confidence-green  { background: var(--ok); }
+.confidence-yellow { background: var(--sun); }
+.confidence-gray   { background: var(--ink-faint); }
+
+footer {
+  max-width: var(--max);
+  margin: 12px auto 0;
+  padding: 28px 24px 48px;
+  color: var(--ink-faint);
+  font-size: 12.5px;
+  text-align: left;
+  border-top: 1px solid var(--line);
+}
+
+/* Motion system: Apple-like restraint */
+.site-nav,
+.book-links a,
+.nav-links a,
+.trans-card,
+.hotel-card,
+.xhs-card,
+.day-card,
+.stat,
+.back-to-top,
+.day-rail a {
+  transition:
+    transform var(--hover-ms) var(--ease-out),
+    box-shadow var(--hover-ms) var(--ease-out),
+    background var(--hover-ms) var(--ease-out),
+    border-color var(--hover-ms) var(--ease-out),
+    color var(--hover-ms) var(--ease-out),
+    opacity var(--hover-ms) var(--ease-out);
+}
+
+a:focus-visible,
+.book-links a:focus-visible,
+.nav-links a:focus-visible,
+.day-rail a:focus-visible,
+.back-to-top:focus-visible,
+.xhs-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.book-links a:active,
+.nav-links a:active,
+.day-rail a:active,
+.back-to-top:active,
+.xhs-card:active,
+.hotel-card:active,
+.trans-card:active {
+  transform: scale(0.98);
+}
+
+/* Hero one-shot staged entrance */
+.motion-ready .hero:not(.is-ready) .hero-copy > *,
+.motion-ready .hero:not(.is-ready) .hero-panel {
+  opacity: 0;
+  transform: translateY(var(--enter-y));
+}
+.motion-ready .hero.is-ready .hero-copy > *,
+.motion-ready .hero.is-ready .hero-panel {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--enter-ms) var(--ease-out), transform var(--enter-ms) var(--ease-out);
+}
+.motion-ready .hero.is-ready .hero-copy > *:nth-child(1) { transition-delay: calc(var(--stagger-ms) * 0); }
+.motion-ready .hero.is-ready .hero-copy > *:nth-child(2) { transition-delay: calc(var(--stagger-ms) * 1); }
+.motion-ready .hero.is-ready .hero-copy > *:nth-child(3) { transition-delay: calc(var(--stagger-ms) * 2); }
+.motion-ready .hero.is-ready .hero-copy > *:nth-child(4) { transition-delay: calc(var(--stagger-ms) * 3); }
+.motion-ready .hero.is-ready .hero-copy > *:nth-child(5) { transition-delay: calc(var(--stagger-ms) * 4); }
+.motion-ready .hero.is-ready .hero-panel { transition-delay: calc(var(--stagger-ms) * 2); }
+
+/* Section / card reveal once */
+.motion-ready .reveal-target {
+  opacity: 0;
+  transform: translateY(var(--enter-y));
+  transition: opacity var(--enter-ms) var(--ease-out), transform var(--enter-ms) var(--ease-out);
+}
+.motion-ready .reveal-target.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Day rail progress */
+.day-rail-wrap {
+  position: sticky;
+  top: calc(var(--nav-h) + 8px);
+  z-index: 30;
+  margin: 0 0 14px;
+}
+.day-rail {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 8px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  box-shadow: var(--shadow-sm);
+  scrollbar-width: none;
+}
+.day-rail::-webkit-scrollbar { display: none; }
+.day-rail a {
+  flex: 0 0 auto;
+  text-decoration: none;
+  color: var(--ink-soft);
+  font-weight: 800;
+  font-size: 13px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+.day-rail a:hover {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+.day-rail a.is-active {
+  background: linear-gradient(90deg, var(--accent-soft), var(--sky-soft));
+  border-color: color-mix(in srgb, var(--accent) 28%, var(--line));
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Timeline reading focus */
+.timeline .stop {
+  opacity: 0.72;
+  transition: opacity var(--hover-ms) var(--ease-out), transform var(--hover-ms) var(--ease-out);
+}
+.timeline .stop.is-active {
+  opacity: 1;
+  transform: translateX(2px);
+}
+.timeline .stop.is-active .t-title strong {
+  color: var(--accent-ink);
+}
+
+/* Sticky day header (desktop light stack) */
+@media (min-width: 861px) {
+  .day-card .day-header {
+    position: sticky;
+    top: calc(var(--nav-h) + 58px);
+    z-index: 12;
+    backdrop-filter: blur(10px) saturate(140%);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+  }
+}
+
+/* Nav scrolled material */
+.site-nav.is-scrolled {
+  border-bottom-color: color-mix(in srgb, var(--accent) 18%, var(--line));
+  box-shadow: 0 10px 28px rgba(28, 36, 48, 0.08);
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+}
+@media (prefers-reduced-transparency: reduce) {
+  .site-nav,
+  .site-nav.is-scrolled,
+  .day-rail,
+  .day-card .day-header {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--surface);
+  }
+}
+
+/* Hero panel material polish */
+.hero-panel {
+  border: 1px solid color-mix(in srgb, var(--sky) 28%, var(--line));
+  background:
+    linear-gradient(165deg, color-mix(in srgb, #fff 55%, transparent), color-mix(in srgb, var(--surface) 88%, transparent)),
+    var(--surface);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.55),
+    var(--shadow);
+}
+
+/* XHS horizontal snap list */
+.xhs-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 280px);
+  gap: 12px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+}
+.xhs-grid .xhs-card {
+  scroll-snap-align: start;
+}
+
+/* Back to top */
+.back-to-top {
+  position: fixed;
+  right: 18px;
+  bottom: 22px;
+  z-index: 50;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--line));
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(12px) saturate(150%);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  color: var(--accent-2);
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 1;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+}
+.back-to-top.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+.back-to-top:hover {
+  transform: translateY(var(--hover-y));
+  background: linear-gradient(90deg, var(--accent-soft), var(--sky-soft));
+}
+
+/* Count-up number */
+.budget-count {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-copy > *,
+  .hero-panel,
+  .reveal-target,
+  .timeline .stop,
+  .back-to-top {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .motion-ready .hero.is-ready .hero-copy > *,
+  .motion-ready .hero.is-ready .hero-panel {
+    transition: none !important;
+  }
+  .day-card .day-header {
+    position: static;
+    backdrop-filter: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .day-rail-wrap { top: 64px; }
+  .day-card .day-header { position: static; backdrop-filter: none; }
+  .back-to-top { right: 14px; bottom: 16px; }
+}
+
+/* Mobile */
+@media (max-width: 860px) {
+  .hero,
+  .transport-section,
+  .budget-section,
+  .hotel-grid,
+  .checklist {
+    grid-template-columns: 1fr;
+  }
+  .hero h1 { max-width: none; font-size: 2.05rem; }
+  .site-nav { height: auto; min-height: 56px; flex-wrap: wrap; padding: 10px 14px; }
+  .nav-links { max-width: 100%; width: 100%; }
+  section, .trip-vibes { padding-left: 16px; padding-right: 16px; }
+  .stop { grid-template-columns: 58px minmax(0, 1fr); }
+  #map { min-height: 300px; height: 42vh; }
+}
+
+@media print {
+  .site-nav, .trip-vibes { display: none; }
+  body { background: #fff; color: #111; }
+  body::before { display: none; }
+  .trans-card, .hotel-card, .day-card, .risk-block, .xhs-section { break-inside: avoid; box-shadow: none; }
+  .book-links a { border: 0; padding: 0; background: none; }
+  .hero h1 { color: #111; background: none; -webkit-text-fill-color: initial; }
+}
+
+
+/* ===== Media: photos + bilibili ===== */
+.day-cover {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 16 / 7;
+  overflow: hidden;
+  background: var(--bg-deep, #e8eef2);
+}
+.day-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.02);
+  transition: transform 0.6s var(--ease-out, cubic-bezier(0.22,1,0.36,1));
+}
+.day-card:hover .day-cover img { transform: scale(1.05); }
+.day-cover figcaption {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 28px 16px 12px;
+  background: linear-gradient(180deg, transparent, rgba(20,24,32,.72));
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.media-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding: 14px 18px 4px;
+}
+.media-card {
+  margin: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+.media-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+.media-card figcaption {
+  padding: 8px 10px 10px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink-soft);
+  line-height: 1.35;
+}
+
+.video-section {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--sky-soft) 55%, var(--surface)), var(--surface));
+  border: 1px solid color-mix(in srgb, var(--sky) 22%, var(--line));
+  border-radius: var(--radius);
+  padding: 18px;
+  box-shadow: var(--shadow-sm);
+}
+.video-intro {
+  margin: 0 0 14px;
+  color: var(--ink-soft);
+  font-size: 14px;
+  max-width: 65ch;
+  font-weight: 600;
+}
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.video-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.video-card header {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: baseline;
+  padding: 12px 14px 8px;
+}
+.video-card h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 820;
+}
+.video-card .video-link {
+  flex: 0 0 auto;
+  font-size: 12.5px;
+  font-weight: 800;
+  text-decoration: none;
+  color: var(--accent-2);
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--line));
+  border-radius: 999px;
+  padding: 5px 10px;
+}
+.video-card .video-link:hover {
+  background: linear-gradient(90deg, var(--accent-soft), var(--sky-soft));
+}
+.video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #0f1419;
+}
+.video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.video-fallback {
+  padding: 12px 14px 14px;
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+.video-fallback img {
+  width: 120px;
+  height: 76px;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+.video-fallback p {
+  margin: 0 0 8px;
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.video-fallback a {
+  display: inline-flex;
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--accent-2);
+  text-decoration: none;
+}
+.media-note {
+  margin: 12px 0 0;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 860px) {
+  .media-strip { grid-template-columns: 1fr; }
+  .video-grid { grid-template-columns: 1fr; }
+  .day-cover { aspect-ratio: 16 / 10; }
+}
+
+</style>
+</head>
+<body>
+
+<div id="nav-sentinel" aria-hidden="true" style="position:absolute;top:0;left:0;width:1px;height:1px;"></div>
+<nav class="site-nav" aria-label="本页导航">
+  <a class="nav-brand" href="#top">
+    <span class="nav-mark" aria-hidden="true"></span>
+    <span>重庆巫山行程书</span>
+  </a>
+  <div class="nav-links">
+    <a href="#overview-map">地图</a>
+    <a href="#transport">交通</a>
+    <a href="#hotel">住宿</a>
+    <a href="#days">日程</a>
+    <a href="#budget">预算</a>
+    <a href="#risk">风险</a>
+    <a href="#media-videos">影像</a>
+    <a href="#xhs-notes">笔记</a>
+    <a href="#checklist">清单</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="hero-copy">
+    <div class="hero-kicker"><i aria-hidden="true"></i>Chongqing getaway · 出发啦</div>
+    <h1>重庆+巫山 · 4日行程</h1>
+    <p class="hero-sub">跟着晚风去洪崖洞，再坐船钻进小三峡。四天刚好够浪一圈：吃火锅、拍夜景、赶头班船，把假期过成开心的样子。</p>
+    <div class="hero-meta-row">
+      <span class="chip"><span>日期</span><strong>2026-08-01 ~ 2026-08-04</strong></span>
+<span class="chip"><span>人数</span><strong>2人</strong></span>
+<span class="chip"><span>预算</span><strong>¥2970 / 2人</strong></span>
+    </div>
+    <div class="hero-stamp">数据生成时间 2026-07-24T14:43:23+08:00</div>
+  </div>
+  <aside class="hero-panel" aria-label="行程快照">
+    <h2>Trip snapshot</h2>
+    <div class="stat-grid">
+      <div class="stat"><span class="label">行程跨度</span><span class="value">4 天 3 晚</span></div>
+      <div class="stat"><span class="label">主线目的地</span><span class="value">重庆 · 巫山</span></div>
+      <div class="stat"><span class="label">核心体验</span><span class="value">夜景 + 小三峡</span></div>
+      <div class="stat"><span class="label">参考总预算</span><span class="value">¥2970 / 2人</span></div>
+    </div>
+    <div class="confidence-summary"><span class="dot dot-green"></span> 一手数据 83%
+      <span class="dot dot-yellow"></span> 抓取 17%
+      <span class="dot dot-gray"></span> 静态参考 0%</div>
+  </aside>
+</header>
+
+<!--
+═══════════════════════════════════════════════════════════════════════════════
+                         AGENT INSTRUCTIONS · 必读
+═══════════════════════════════════════════════════════════════════════════════
+本 HTML 共 8 个骨架 section，**全部必出**（无论数据完整度）。每个 section 下
+有具体「必须做到 X」的指令，agent 在生成 trip 数据时务必按指令准备字段；
+缺数据时自己想办法补（调工具 / WebSearch / 静态兜底），绝不允许空白渲染。
+缺失任何一项都视为本次任务未完成。
+═══════════════════════════════════════════════════════════════════════════════
+-->
+
+<!--
+  📍 总览地图 · AGENT MUST-DO:
+  ① POI 必须有坐标。拿不到真坐标时，用城市中心点 + POI 名 marker 兜底，
+     并在 poi.coord_status 写 "unverified"，模板会标"坐标待校验"
+  ② **路线必须是实际道路路线，不是两点之间的直线**。三种合法形式（任选）：
+     a) day.routes[].geometry = [[lng,lat],...] 真实 polyline 坐标数组（最佳）
+     b) day.routes[].description = "沿建国路向东 → 转入人民南路 → 春熙路"
+        路径文字版（OSRM/高德拿不到时用 WebSearch / 自己推理写出）
+     c) 完全无能为力时 day.routes[].source = "straight_line_unavailable"
+        模板会画虚线 + 红字"⚠️ 实际路线未获取"，但**不允许直接用直线还假装是真实路线**
+  ③ 同一天 POI 用同色 marker，不同天换色；起终点要有方向感
+-->
+<section id="overview-map">
+  <h2>总览地图</h2>
+  <div id="map" style="height: 480px; border-radius: 12px;"></div>
+</section>
+
+<!--
+  🚄 大交通 · AGENT MUST-DO:
+  ① 至少给出 1 条去程 + 1 条回程（具体车次/航班号 + 时刻 + 参考价 + 查询时间）
+  ② 每条方案至少 3 个不同平台的可点订票链接（12306/携程/去哪儿/飞猪）
+  ③ 价格旁必须标"参考价 + 查询时刻"，不允许写绝对价
+  数据来源优先级：美团火车票 > 12306 > WebSearch（携程/去哪儿）
+-->
+<section id="transport">
+  <h2>大交通</h2>
+  <div class="transport-section">
+  <div class="dir-block">
+    <h4>去程</h4>
+    
+      <div class="trans-card">
+        <div class="trans-mode">flight</div>
+        <div class="trans-route">广州白云 → 重庆江北</div>
+        <div class="trans-time">
+          约13:00 - 约15:00
+          (120分钟)
+        </div>
+        <div class="trans-price">
+          参考价 ¥400
+          <small>经济舱含税</small>
+        </div>
+        <div class="book-links">
+          <span class="book-label">去订票：</span>
+          
+            <a href="https://flights.ctrip.com/" target="_blank" rel="noopener">携程机票</a>
+            <a href="https://flight.qunar.com/" target="_blank" rel="noopener">去哪儿</a>
+            <a href="https://www.fliggy.com/" target="_blank" rel="noopener">飞猪</a>
+          
+        </div>
+        <span class="confidence-badge confidence-yellow"></span>
+      </div>
+    
+  </div>
+  <div class="dir-block">
+    <h4>回程</h4>
+    
+      <div class="trans-card">
+        <div class="trans-mode">CA4341</div>
+        <div class="trans-route">重庆江北T3 → 广州白云T3</div>
+        <div class="trans-time">
+          17:00 - 18:50
+          (110分钟)
+        </div>
+        <div class="trans-price">
+          参考价待核实
+          <small>已购票（美团）</small>
+        </div>
+        <div class="book-links">
+          <span class="book-label">去订票：</span>
+          
+            <a href="https://flights.ctrip.com/" target="_blank" rel="noopener">携程机票</a>
+            <a href="https://flight.qunar.com/" target="_blank" rel="noopener">去哪儿</a>
+            <a href="https://www.fliggy.com/" target="_blank" rel="noopener">飞猪</a>
+          
+        </div>
+        <span class="confidence-badge confidence-green"></span>
+      </div>
+    
+  </div>
+  
+    <div class="intra-tip">
+      <strong>市内交通</strong>
+      <ul>
+        <li>江北→解放碑：地铁10转1号线约50分钟¥6</li>
+        <li>主城地铁畅达；南岸下浩里可打车/轨道</li>
+      </ul>
+    </div>
+  
+</div>
+</section>
+
+<!--
+  🏨 住宿候选 · AGENT MUST-DO:
+  ① 至少 3 家酒店候选（不能凑数，宁少勿假）
+  ② 每家必须有：酒店全名 / 价格区间 / ≥2 个不同平台的预订链接 / 一句"为什么推荐"
+  ③ 数据来源：美团酒店 > xhs 真实评价 > WebSearch
+  ④ 凑不齐 3 家时，明确写"暂时只找到 X 家，建议你打开美团搜更多"，不要硬编造
+-->
+<section id="hotel">
+  <h2>住宿候选</h2>
+  <div class="hotel-grid">
+  
+    <div class="hotel-card">
+      <div class="h-rank">#1</div>
+      <h4>凤凰丽都精品酒店（观音桥花卉园地铁站店）</h4>
+      <div class="h-price">
+        参考价 ¥121/晚
+      </div>
+      <div class="h-rating">
+        美团 ⭐ 4.7 ｜ 小红书情感 -
+      </div>
+      <div class="h-loc">📍 江北区大石坝·花卉园（6号线花卉园站步行约2分钟） 8</div>
+      <div class="h-reason">推荐理由：【重庆用户锁定】美团4.7·约¥121/晚；D1+D3</div>
+      <div class="h-amenities">
+        <span class="tag">近地铁</span><span class="tag">停车场</span><span class="tag">行李寄存</span>
+      </div>
+      <div class="warning">⚠️ 偏花卉园，非观音桥步行街正中心</div>
+      <div class="book-links">
+        <span class="book-label">去预订：</span>
+        <a href="https://hotels.meituan.com/search/?q=%E5%87%A4%E5%87%B0%E4%B8%BD%E9%83%BD%E7%B2%BE%E5%93%81%E9%85%92%E5%BA%97%EF%BC%88%E8%A7%82%E9%9F%B3%E6%A1%A5%E8%8A%B1%E5%8D%89%E5%9B%AD%E5%9C%B0%E9%93%81%E7%AB%99%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">美团</a>
+        <a href="https://hotels.ctrip.com/hotels/list?city=&checkIn=&checkOut=&keyword=%E5%87%A4%E5%87%B0%E4%B8%BD%E9%83%BD%E7%B2%BE%E5%93%81%E9%85%92%E5%BA%97%EF%BC%88%E8%A7%82%E9%9F%B3%E6%A1%A5%E8%8A%B1%E5%8D%89%E5%9B%AD%E5%9C%B0%E9%93%81%E7%AB%99%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">携程</a>
+        <a href="https://hotel.fliggy.com/search.htm?searchType=hotel&keywords=%E5%87%A4%E5%87%B0%E4%B8%BD%E9%83%BD%E7%B2%BE%E5%93%81%E9%85%92%E5%BA%97%EF%BC%88%E8%A7%82%E9%9F%B3%E6%A1%A5%E8%8A%B1%E5%8D%89%E5%9B%AD%E5%9C%B0%E9%93%81%E7%AB%99%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">飞猪</a>
+        <a href="https://www.booking.com/searchresults.html?ss=%E5%87%A4%E5%87%B0%E4%B8%BD%E9%83%BD%E7%B2%BE%E5%93%81%E9%85%92%E5%BA%97%EF%BC%88%E8%A7%82%E9%9F%B3%E6%A1%A5%E8%8A%B1%E5%8D%89%E5%9B%AD%E5%9C%B0%E9%93%81%E7%AB%99%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">Booking</a>
+      </div>
+      <span class="confidence-badge confidence-green"></span>
+    </div>
+  
+    <div class="hotel-card">
+      <div class="h-rank">#2</div>
+      <h4>桐晖酒店（重庆巫山游客中心店）</h4>
+      <div class="h-price">
+        参考价 ¥117/晚
+      </div>
+      <div class="h-rating">
+        美团 ⭐ 4.9 ｜ 小红书情感 -
+      </div>
+      <div class="h-loc">📍 巫山·游客中心旁·距小三峡码头约0.3km 10</div>
+      <div class="h-reason">推荐理由：【巫山用户锁定B】美团4.9·2025开业·¥117；距码头约0.3km；临江双床可选；晚上滨江/游客中心一带可逛，早起步行赶小三峡头班</div>
+      <div class="h-amenities">
+        <span class="tag">近码头</span><span class="tag">新开业</span><span class="tag">临江双床可选</span><span class="tag">免费停车</span><span class="tag">空气净化器</span><span class="tag">干湿分离</span>
+      </div>
+      
+      <div class="book-links">
+        <span class="book-label">去预订：</span>
+        <a href="https://hotels.meituan.com/search/?q=%E6%A1%90%E6%99%96%E9%85%92%E5%BA%97%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E6%B8%B8%E5%AE%A2%E4%B8%AD%E5%BF%83%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">美团</a>
+        <a href="https://hotels.ctrip.com/hotels/list?city=&checkIn=&checkOut=&keyword=%E6%A1%90%E6%99%96%E9%85%92%E5%BA%97%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E6%B8%B8%E5%AE%A2%E4%B8%AD%E5%BF%83%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">携程</a>
+        <a href="https://hotel.fliggy.com/search.htm?searchType=hotel&keywords=%E6%A1%90%E6%99%96%E9%85%92%E5%BA%97%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E6%B8%B8%E5%AE%A2%E4%B8%AD%E5%BF%83%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">飞猪</a>
+        <a href="https://www.booking.com/searchresults.html?ss=%E6%A1%90%E6%99%96%E9%85%92%E5%BA%97%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E6%B8%B8%E5%AE%A2%E4%B8%AD%E5%BF%83%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">Booking</a>
+      </div>
+      <span class="confidence-badge confidence-green"></span>
+    </div>
+  
+    <div class="hotel-card">
+      <div class="h-rank">#3</div>
+      <h4>六柒八·酒店（市政广场店）</h4>
+      <div class="h-price">
+        参考价 ¥111/晚
+      </div>
+      <div class="h-rating">
+        美团 ⭐ 4.7 ｜ 小红书情感 -
+      </div>
+      <div class="h-loc">📍 巫山·距小三峡旅游码头约0.2km 10</div>
+      <div class="h-reason">推荐理由：备选：更近码头¥111·4.7分</div>
+      <div class="h-amenities">
+        <span class="tag">近码头</span><span class="tag">江景双床可选</span>
+      </div>
+      
+      <div class="book-links">
+        <span class="book-label">去预订：</span>
+        <a href="https://hotels.meituan.com/search/?q=%E5%85%AD%E6%9F%92%E5%85%AB%C2%B7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">美团</a>
+        <a href="https://hotels.ctrip.com/hotels/list?city=&checkIn=&checkOut=&keyword=%E5%85%AD%E6%9F%92%E5%85%AB%C2%B7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">携程</a>
+        <a href="https://hotel.fliggy.com/search.htm?searchType=hotel&keywords=%E5%85%AD%E6%9F%92%E5%85%AB%C2%B7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">飞猪</a>
+        <a href="https://www.booking.com/searchresults.html?ss=%E5%85%AD%E6%9F%92%E5%85%AB%C2%B7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">Booking</a>
+      </div>
+      <span class="confidence-badge confidence-green"></span>
+    </div>
+  
+    <div class="hotel-card">
+      <div class="h-rank">#4</div>
+      <h4>汉庭（重庆巫山店）</h4>
+      <div class="h-price">
+        参考价 ¥198/晚
+      </div>
+      <div class="h-rating">
+        美团 ⭐ 4.7 ｜ 小红书情感 -
+      </div>
+      <div class="h-loc">📍 巫山·距码头约0.5km 9</div>
+      <div class="h-reason">推荐理由：备选：连锁·夜逛配套略好</div>
+      <div class="h-amenities">
+        <span class="tag">连锁</span><span class="tag">免费停车</span>
+      </div>
+      
+      <div class="book-links">
+        <span class="book-label">去预订：</span>
+        <a href="https://hotels.meituan.com/search/?q=%E6%B1%89%E5%BA%AD%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">美团</a>
+        <a href="https://hotels.ctrip.com/hotels/list?city=&checkIn=&checkOut=&keyword=%E6%B1%89%E5%BA%AD%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">携程</a>
+        <a href="https://hotel.fliggy.com/search.htm?searchType=hotel&keywords=%E6%B1%89%E5%BA%AD%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">飞猪</a>
+        <a href="https://www.booking.com/searchresults.html?ss=%E6%B1%89%E5%BA%AD%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">Booking</a>
+      </div>
+      <span class="confidence-badge confidence-green"></span>
+    </div>
+  
+    <div class="hotel-card">
+      <div class="h-rank">#5</div>
+      <h4>江临大酒店（市政广场店）</h4>
+      <div class="h-price">
+        参考价 ¥73/晚
+      </div>
+      <div class="h-rating">
+        美团 ⭐ 4.5 ｜ 小红书情感 -
+      </div>
+      <div class="h-loc">📍 巫山县城·市政广场0.4km 8</div>
+      <div class="h-reason">推荐理由：备选最便宜¥73</div>
+      <div class="h-amenities">
+        <span class="tag">江景双床可选</span><span class="tag">停车场</span>
+      </div>
+      <div class="warning">⚠️ 到码头略远</div>
+      <div class="book-links">
+        <span class="book-label">去预订：</span>
+        <a href="https://hotels.meituan.com/search/?q=%E6%B1%9F%E4%B8%B4%E5%A4%A7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">美团</a>
+        <a href="https://hotels.ctrip.com/hotels/list?city=&checkIn=&checkOut=&keyword=%E6%B1%9F%E4%B8%B4%E5%A4%A7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">携程</a>
+        <a href="https://hotel.fliggy.com/search.htm?searchType=hotel&keywords=%E6%B1%9F%E4%B8%B4%E5%A4%A7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">飞猪</a>
+        <a href="https://www.booking.com/searchresults.html?ss=%E6%B1%9F%E4%B8%B4%E5%A4%A7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" target="_blank" rel="noopener">Booking</a>
+      </div>
+      <span class="confidence-badge confidence-green"></span>
+    </div>
+  
+</div>
+</section>
+
+<!--
+  📅 每日行程 · AGENT MUST-DO:
+  ① 必须按 trip.duration_days 给出**全部天数**的卡片（D1 ~ Dn 一个不能少）
+  ② 每天至少包含：当天主题 / 时间轴 / 3-6 个 POI / 三餐推荐
+  ③ 每个 POI 必须有：名称 / 推荐理由 / 用时建议 / 营业时间 / 评分（缺失时显式标）
+  ④ 每天必须有"当天小地图 + 当天路线"（路线规则同总览地图）
+  ⑤ 每天必须有：当天预算小计 + 体力指数（轻松/适中/暴走）
+-->
+<section id="days">
+  <h2>每日行程</h2>
+  
+    <!--
+  AGENT MUST-DO（每天卡片）:
+  ① day.theme / day.fatigue_index 必填（否则 header 残缺）
+  ② day.stops 至少 3-6 条（含三餐 + 景点），每条必须有 time / poi.name / duration_min
+  ③ day.routes 必填（实际道路 polyline 或 路径文字版，规则同总览地图）
+  ④ stop.poi 缺字段时，agent 自己用 WebSearch 补 rating/open_hours/ticket_price
+-->
+<article class="day-card" data-day="1" id="day-1">
+  <header class="day-header">
+    <h3>D1 · 2026-08-01 · 花卉园入住·解放碑洪崖洞夜景</h3>
+    <div class="day-meta">
+      <span>📍 6km</span>
+      <span>🚶 1.8 体力指数</span>
+      <span>☁️ 晴热 36-39℃，傍晚局部雷阵雨</span>
+    </div>
+  </header>
+<figure class="day-cover">
+  <img src="media/hongya-qiansimen.jpg" alt="实拍 · 洪崖洞夜景（千厮门大桥视角）" loading="lazy" decoding="async">
+  <figcaption>实拍 · 洪崖洞夜景（千厮门大桥视角）</figcaption>
+</figure>
+<div class="media-strip"><figure class="media-card">
+  <img src="media/jiefangbei-night.jpg" alt="实拍 · 解放碑夜景" loading="lazy" decoding="async">
+  <figcaption>实拍 · 解放碑夜景</figcaption>
+</figure><figure class="media-card">
+  <img src="media/cableway-chongqing.jpg" alt="实拍 · 重庆长江索道" loading="lazy" decoding="async">
+  <figcaption>实拍 · 重庆长江索道</figcaption>
+</figure><figure class="media-card">
+  <img src="media/hongya-qiansimen.jpg" alt="实拍 · 千厮门看洪崖洞" loading="lazy" decoding="async">
+  <figcaption>实拍 · 千厮门看洪崖洞</figcaption>
+</figure></div>
+<div class="day-routes">
+      <h4>🗺️ 当日路线</h4>
+      <ol class="route-steps">
+        
+          <li>
+            
+              <span class="route-source-text">路径：</span>江北机场→凤凰丽都(花卉园地铁站店)入住
+            
+            
+              · 江北机场→凤凰丽都(花卉园站)入住 → 解放碑·八一好吃街
+            
+          </li>
+        
+          <li>
+            
+              <span class="route-source-text">路径：</span>花卉园6号线→换乘至解放碑/较场口一带（约30-40分钟）
+            
+            
+              · 解放碑·八一好吃街 → 长江索道
+            
+          </li>
+        
+          <li>
+            
+              <span class="route-source-text">路径：</span>解放碑→长江索道
+            
+            
+              · 长江索道 → 解放碑居民楼火锅
+            
+          </li>
+        
+          <li>
+            
+              <span class="route-source-text">路径：</span>索道→千厮门·洪崖洞夜景→地铁回观音桥住
+            
+            
+              · 解放碑居民楼火锅 → 千厮门大桥·洪崖洞夜景
+            
+          </li>
+        
+      </ol>
+    </div>
+  
+
+  <ol class="timeline">
+    
+      <li class="stop stop-transport">
+        <div class="t-time">15:30</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">📌</span>
+            <strong>江北机场→凤凰丽都(花卉园站)入住</strong>
+            
+            
+          </div>
+          
+            <div class="t-reason">💡 用户锁定：凤凰丽都精品酒店(观音桥花卉园地铁站店) 美团4.7·约¥121/晚 🟢 6号线花卉园站步行2分钟 http://dpurl.cn/dpXYln9z；机场→6号线转乘约40-50分钟，或打车约25-40分钟</div>
+          
+          <div class="t-detail">
+            <span>🕐 -</span>
+            <span>🎫 ¥¥5-40</span>
+            <span>⏱️ 约 35 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-attraction">
+        <div class="t-time">16:00</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">📌</span>
+            <strong>解放碑·八一好吃街</strong>
+            <span class="rating">⭐ 4.5</span>
+            
+          </div>
+          
+            <div class="t-reason">💡 住观音桥：地铁约25-35分钟到解放碑；先放行李再进城，别拖箱逛</div>
+          
+          <div class="t-detail">
+            <span>🕐 全天</span>
+            <span>🎫 ¥免费</span>
+            <span>⏱️ 约 120 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-attraction">
+        <div class="t-time">18:00</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">📌</span>
+            <strong>长江索道</strong>
+            <span class="rating">⭐ 4.8</span>
+            
+          </div>
+          
+            <div class="t-reason">💡 夕阳横跨长江；南岸上新街反排人少；与D3下浩里同属南岸动线可呼应</div>
+          
+          <div class="t-detail">
+            <span>🕐 07:30-22:30</span>
+            <span>🎫 ¥单程¥20/人</span>
+            <span>⏱️ 约 40 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-dinner">
+        <div class="t-time">18:50</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">🍽️</span>
+            <strong>解放碑居民楼火锅</strong>
+            <span class="rating">⭐ 4.3</span>
+            <span class="warn-badge">⚠️ 坐标待校验</span>
+          </div>
+          
+            <div class="t-reason">💡 第一顿火锅：背街居民楼店，人均¥80-120</div>
+          
+          <div class="t-detail">
+            <span>🕐 11:00-23:00</span>
+            <span>🎫 ¥人均¥80-120</span>
+            <span>⏱️ 约 60 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-evening">
+        <div class="t-time">20:00</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">🌃</span>
+            <strong>千厮门大桥·洪崖洞夜景</strong>
+            <span class="rating">⭐ 4.9</span>
+            
+          </div>
+          
+            <div class="t-reason">💡 千厮门拍洪崖洞后，地铁回花卉园酒店（6号线，约35-45分钟）</div>
+          
+          <div class="t-detail">
+            <span>🕐 全天（亮灯19:00-23:00）</span>
+            <span>🎫 ¥免费</span>
+            <span>⏱️ 约 90 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+  </ol>
+
+  
+    <div class="day-budget">💸 当天预算约 ¥<span class="budget-count" data-count-to="560">560</span></div>
+  
+</article>
+  
+    <!--
+  AGENT MUST-DO（每天卡片）:
+  ① day.theme / day.fatigue_index 必填（否则 header 残缺）
+  ② day.stops 至少 3-6 条（含三餐 + 景点），每条必须有 time / poi.name / duration_min
+  ③ day.routes 必填（实际道路 polyline 或 路径文字版，规则同总览地图）
+  ④ stop.poi 缺字段时，agent 自己用 WebSearch 补 rating/open_hours/ticket_price
+-->
+<article class="day-card" data-day="2" id="day-2">
+  <header class="day-header">
+    <h3>D2 · 2026-08-02 · 磁器口·高铁巫山·桐晖入住·滨江夜逛</h3>
+    <div class="day-meta">
+      <span>📍 160km</span>
+      <span>🚶 2.0 体力指数</span>
+      <span>☁️ 重庆34-38℃，巫山32-36℃</span>
+    </div>
+  </header>
+<figure class="day-cover">
+  <img src="media/ciqikou-street.jpg" alt="实拍 · 磁器口古镇街景" loading="lazy" decoding="async">
+  <figcaption>实拍 · 磁器口古镇街景</figcaption>
+</figure>
+<div class="media-strip"><figure class="media-card">
+  <img src="media/ciqikou-gateway.jpg" alt="实拍 · 磁器口门楼" loading="lazy" decoding="async">
+  <figcaption>实拍 · 磁器口门楼</figcaption>
+</figure><figure class="media-card">
+  <img src="media/ciqikou-crowd.jpg" alt="实拍 · 磁器口人流" loading="lazy" decoding="async">
+  <figcaption>实拍 · 磁器口人流</figcaption>
+</figure><figure class="media-card">
+  <img src="media/wushan-bridge.jpg" alt="实拍 · 巫山 / 巫峡 / 长江大桥" loading="lazy" decoding="async">
+  <figcaption>实拍 · 巫山 / 巫峡 / 长江大桥</figcaption>
+</figure></div>
+<div class="day-routes">
+      <h4>🗺️ 当日路线</h4>
+      <ol class="route-steps">
+        
+          <li>
+            
+              <span class="route-source-text">路径：</span>观音桥酒店→地铁→磁器口（或直接去北站若想更松）
+            
+            
+              · 早餐+退房寄存行李（若需） → 磁器口古镇（压缩版）
+            
+          </li>
+        
+          <li>
+            
+              <span class="route-source-text">路径：</span>磁器口→重庆北站
+            
+            
+              · 磁器口古镇（压缩版） → 磁器口→重庆北站
+            
+          </li>
+        
+          <li>
+            
+              <span class="route-source-text">路径：</span>G1198 12:21→14:22 巫山
+            
+            
+              · 磁器口→重庆北站 → G1198 重庆北→巫山 🟢
+            
+          </li>
+        
+          <li>
+            
+              <span class="route-source-text">路径：</span>巫山站→酒店入住→滨江路/县城安顿
+            
+            
+              · G1198 重庆北→巫山 🟢 → 巫山站→桐晖酒店(游客中心店)入住
+            
+          </li>
+        
+          <li>
+            
+              <span class="route-source-text">路径：</span>巫山烤鱼晚餐
+            
+            
+              · 巫山站→桐晖酒店(游客中心店)入住 → 巫山滨江路/县城散步
+            
+          </li>
+        
+      </ol>
+    </div>
+  
+
+  <ol class="timeline">
+    
+      <li class="stop stop-breakfast">
+        <div class="t-time">07:30</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">🥐</span>
+            <strong>早餐+退房寄存行李（若需）</strong>
+            
+            <span class="warn-badge">⚠️ 坐标待校验</span>
+          </div>
+          
+            <div class="t-reason">💡 用户锁定：凤凰丽都精品酒店(观音桥花卉园地铁站店) 美团4.7·约¥121/晚 🟢 6号线花卉园站步行2分钟 http://dpurl.cn/dpXYln9z；去重庆北：6号线换乘，约30-40分钟，比渝中解放碑去北站仍合理</div>
+          
+          <div class="t-detail">
+            <span>🕐 -</span>
+            <span>🎫 ¥¥15-20</span>
+            <span>⏱️ 约 30 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-attraction">
+        <div class="t-time">08:30</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">📌</span>
+            <strong>磁器口古镇（压缩版）</strong>
+            <span class="rating">⭐ 3.8</span>
+            
+          </div>
+          
+            <div class="t-reason">💡 方案B砍山城步道，只留磁器口2.5h：后街茶馆+麻花手信，11:00前动身去北站</div>
+          
+          <div class="t-detail">
+            <span>🕐 全天</span>
+            <span>🎫 ¥免费</span>
+            <span>⏱️ 约 150 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-transport">
+        <div class="t-time">11:00</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">📌</span>
+            <strong>磁器口→重庆北站</strong>
+            
+            
+          </div>
+          
+            <div class="t-reason">💡 磁器口→重庆北约40-50分钟；酒店在花卉园，整体预留安检卡G1198 12:21</div>
+          
+          <div class="t-detail">
+            <span>🕐 -</span>
+            <span>🎫 ¥¥5</span>
+            <span>⏱️ 约 60 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-transport">
+        <div class="t-time">12:21</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">📌</span>
+            <strong>G1198 重庆北→巫山 🟢</strong>
+            
+            
+          </div>
+          
+            <div class="t-reason">💡 美团：12:21→14:22 2h1m 二等座¥198 🎫 http://dpurl.cn/jdyufK4z</div>
+          
+          <div class="t-detail">
+            <span>🕐 -</span>
+            <span>🎫 ¥¥198/人</span>
+            <span>⏱️ 约 121 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-transport">
+        <div class="t-time">14:30</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">📌</span>
+            <strong>巫山站→桐晖酒店(游客中心店)入住</strong>
+            <span class="rating">⭐ 4.9</span>
+            
+          </div>
+          
+            <div class="t-reason">💡 用户锁定B：桐晖酒店·美团4.9·约¥117·距小三峡码头约0.3km 🎫http://dpurl.cn/olXCgdvz；晚滨江/游客中心逛，早步行赶船</div>
+          
+          <div class="t-detail">
+            <span>🕐 -</span>
+            <span>🎫 ¥约¥117/晚</span>
+            <span>⏱️ 约 60 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-attraction">
+        <div class="t-time">16:00</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">📌</span>
+            <strong>巫山滨江路/县城散步</strong>
+            <span class="rating">⭐ 4.0</span>
+            
+          </div>
+          
+            <div class="t-reason">💡 住游客中心店：滨江路/江边散步+确认明早码头集合点；烤鱼可就近</div>
+          
+          <div class="t-detail">
+            <span>🕐 全天</span>
+            <span>🎫 ¥免费</span>
+            <span>⏱️ 约 90 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-dinner">
+        <div class="t-time">18:00</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">🍽️</span>
+            <strong>巫山烤鱼</strong>
+            <span class="rating">⭐ 4.2</span>
+            <span class="warn-badge">⚠️ 坐标待校验</span>
+          </div>
+          
+            <div class="t-reason">💡 游客中心/滨江一带烤鱼人均¥60-90；早睡备D3 8:30头班</div>
+          
+          <div class="t-detail">
+            <span>🕐 -</span>
+            <span>🎫 ¥人均¥60-90</span>
+            <span>⏱️ 约 90 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+  </ol>
+
+  
+    <div class="day-budget">💸 当天预算约 ¥<span class="budget-count" data-count-to="650">650</span></div>
+  
+</article>
+  
+    <!--
+  AGENT MUST-DO（每天卡片）:
+  ① day.theme / day.fatigue_index 必填（否则 header 残缺）
+  ② day.stops 至少 3-6 条（含三餐 + 景点），每条必须有 time / poi.name / duration_min
+  ③ day.routes 必填（实际道路 polyline 或 路径文字版，规则同总览地图）
+  ④ stop.poi 缺字段时，agent 自己用 WebSearch 补 rating/open_hours/ticket_price
+-->
+<article class="day-card" data-day="3" id="day-3">
+  <header class="day-header">
+    <h3>D3 · 2026-08-03 · 小三峡头班·高铁回渝·下浩里夜逛</h3>
+    <div class="day-meta">
+      <span>📍 170km</span>
+      <span>🚶 2.3 体力指数</span>
+      <span>☁️ 巫山30-35℃；重庆傍晚闷热局部雷阵雨</span>
+    </div>
+  </header>
+<figure class="day-cover">
+  <img src="media/little-three-gorges.jpg" alt="实拍 · 巫山小三峡（大宁河）" loading="lazy" decoding="async">
+  <figcaption>实拍 · 巫山小三峡（大宁河）</figcaption>
+</figure>
+<div class="media-strip"><figure class="media-card">
+  <img src="media/wu-gorge.jpg" alt="实拍 · 巫峡江景" loading="lazy" decoding="async">
+  <figcaption>实拍 · 巫峡江景</figcaption>
+</figure><figure class="media-card">
+  <img src="media/wushan-town.jpg" alt="实拍 · 巫山江边" loading="lazy" decoding="async">
+  <figcaption>实拍 · 巫山江边</figcaption>
+</figure><figure class="media-card">
+  <img src="media/longmenhao-cable-station.jpg" alt="实拍 · 南岸龙门浩索道站" loading="lazy" decoding="async">
+  <figcaption>实拍 · 南岸龙门浩索道站</figcaption>
+</figure></div>
+<div class="day-routes">
+      <h4>🗺️ 当日路线</h4>
+      <ol class="route-steps">
+        
+          <li>
+            
+              <span class="route-source-text">路径：</span>酒店→小三峡码头头班游船
+            
+            
+              · 退房+早餐 → 小三峡·小小三峡游船 5A（巫山唯一主项）
+            
+          </li>
+        
+          <li>
+            
+              <span class="route-source-text">路径：</span>游船结束→简单午餐→巫山站
+            
+            
+              · 小三峡·小小三峡游船 5A（巫山唯一主项） → 简餐/打包
+            
+          </li>
+        
+          <li>
+            
+              <span class="route-source-text">路径：</span>G3455 15:24→17:26 重庆北
+            
+            
+              · 简餐/打包 → G3455 巫山→重庆北 🟢
+            
+          </li>
+        
+          <li>
+            
+              <span class="route-source-text">路径：</span>重庆北→观音桥酒店放行李
+            
+            
+              · G3455 巫山→重庆北 🟢 → 重庆北→凤凰丽都(花卉园)放行李
+            
+          </li>
+        
+          <li>
+            
+              <span class="route-source-text">路径：</span>观音桥→打车/轨道跨江→南岸龙门浩·下浩里
+            
+            
+              · 重庆北→凤凰丽都(花卉园)放行李 → 下浩里·龙门浩老街
+            
+          </li>
+        
+      </ol>
+    </div>
+  
+
+  <ol class="timeline">
+    
+      <li class="stop stop-breakfast">
+        <div class="t-time">07:30</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">🥐</span>
+            <strong>退房+早餐</strong>
+            
+            <span class="warn-badge">⚠️ 坐标待校验</span>
+          </div>
+          
+            <div class="t-reason">💡 桐晖退房：步行约5-10分钟到小三峡码头赶8:30头班；行李放前台或随身</div>
+          
+          <div class="t-detail">
+            <span>🕐 -</span>
+            <span>🎫 ¥¥10-15</span>
+            <span>⏱️ 约 30 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-attraction">
+        <div class="t-time">08:30</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">📌</span>
+            <strong>小三峡·小小三峡游船 5A（巫山唯一主项）</strong>
+            <span class="rating">⭐ 4.9</span>
+            
+          </div>
+          
+            <div class="t-reason">💡 从桐晖游客中心店步行至码头；方案B只留小三峡；头班人少；备晕船药；约12:30返航后简餐再赶G3455 15:24</div>
+          
+          <div class="t-detail">
+            <span>🕐 08:00-18:00（首班8:30）</span>
+            <span>🎫 ¥约¥120/人</span>
+            <span>⏱️ 约 240 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-lunch">
+        <div class="t-time">12:30</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">🍜</span>
+            <strong>简餐/打包</strong>
+            
+            <span class="warn-badge">⚠️ 坐标待校验</span>
+          </div>
+          
+            <div class="t-reason">💡 不吃大餐，留时间回酒店取物→车站；15:24 G3455</div>
+          
+          <div class="t-detail">
+            <span>🕐 -</span>
+            <span>🎫 ¥人均¥30-50</span>
+            <span>⏱️ 约 50 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-transport">
+        <div class="t-time">15:24</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">📌</span>
+            <strong>G3455 巫山→重庆北 🟢</strong>
+            
+            
+          </div>
+          
+            <div class="t-reason">💡 美团：15:24→17:26 2h2m 二等座¥185；游船后最稳不赶 🎫 http://dpurl.cn/Mp95NSEz</div>
+          
+          <div class="t-detail">
+            <span>🕐 -</span>
+            <span>🎫 ¥¥185/人</span>
+            <span>⏱️ 约 122 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-transport">
+        <div class="t-time">17:40</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">📌</span>
+            <strong>重庆北→凤凰丽都(花卉园)放行李</strong>
+            
+            <span class="warn-badge">⚠️ 坐标待校验</span>
+          </div>
+          
+            <div class="t-reason">💡 北站回酒店约30-40分钟；用户锁定：凤凰丽都精品酒店(观音桥花卉园地铁站店) 美团4.7·约¥121/晚 🟢 6号线花卉园站步行2分钟 http://dpurl.cn/dpXYln9z</div>
+          
+          <div class="t-detail">
+            <span>🕐 -</span>
+            <span>🎫 ¥地铁约¥5</span>
+            <span>⏱️ 约 40 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-attraction">
+        <div class="t-time">18:30</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">📌</span>
+            <strong>下浩里·龙门浩老街</strong>
+            <span class="rating">⭐ 4.6</span>
+            
+          </div>
+          
+            <div class="t-reason">💡 从花卉园：建议打车约30-45分钟直达南岸龙门浩更省事；地铁需换乘。傍晚逛拍后回凤凰丽都住</div>
+          
+          <div class="t-detail">
+            <span>🕐 全天（商铺约10:00-22:00）</span>
+            <span>🎫 ¥免费</span>
+            <span>⏱️ 约 150 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-dinner">
+        <div class="t-time">20:00</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">🍽️</span>
+            <strong>下浩里/南滨路晚餐</strong>
+            <span class="rating">⭐ 4.2</span>
+            <span class="warn-badge">⚠️ 坐标待校验</span>
+          </div>
+          
+            <div class="t-reason">💡 下浩里/南滨路晚餐后打车或地铁回花卉园酒店</div>
+          
+          <div class="t-detail">
+            <span>🕐 -</span>
+            <span>🎫 ¥人均¥60-100</span>
+            <span>⏱️ 约 80 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+  </ol>
+
+  
+    <div class="day-budget">💸 当天预算约 ¥<span class="budget-count" data-count-to="720">720</span></div>
+  
+</article>
+  
+    <!--
+  AGENT MUST-DO（每天卡片）:
+  ① day.theme / day.fatigue_index 必填（否则 header 残缺）
+  ② day.stops 至少 3-6 条（含三餐 + 景点），每条必须有 time / poi.name / duration_min
+  ③ day.routes 必填（实际道路 polyline 或 路径文字版，规则同总览地图）
+  ④ stop.poi 缺字段时，agent 自己用 WebSearch 补 rating/open_hours/ticket_price
+-->
+<article class="day-card" data-day="4" id="day-4">
+  <header class="day-header">
+    <h3>D4 · 2026-08-04 · 花卉园轻松·CA4341飞广州</h3>
+    <div class="day-meta">
+      <span>📍 25km</span>
+      <span>🚶 1.0 体力指数</span>
+      <span>☁️ 晴热28-37℃</span>
+    </div>
+  </header>
+<figure class="day-cover">
+  <img src="media/cableway-chongqing.jpg" alt="实拍 · 重庆长江索道（主城返程动线）" loading="lazy" decoding="async">
+  <figcaption>实拍 · 重庆主城地标（解放碑）</figcaption>
+</figure>
+<div class="media-strip"><figure class="media-card">
+  <img src="media/cableway-chongqing.jpg" alt="实拍 · 长江索道" loading="lazy" decoding="async">
+  <figcaption>实拍 · 长江索道</figcaption>
+</figure><figure class="media-card">
+  <img src="media/longmenhao-cable-station.jpg" alt="实拍 · 龙门浩一带" loading="lazy" decoding="async">
+  <figcaption>实拍 · 龙门浩一带</figcaption>
+</figure><figure class="media-card">
+  <img src="media/hongya-qiansimen.jpg" alt="实拍 · 洪崖洞夜色" loading="lazy" decoding="async">
+  <figcaption>实拍 · 洪崖洞夜色</figcaption>
+</figure></div>
+<div class="day-routes">
+      <h4>🗺️ 当日路线</h4>
+      <ol class="route-steps">
+        
+          <li>
+            
+              <span class="route-source-text">路径：</span>凤凰丽都早餐→附近轻松（观音桥可地铁一站，不必硬去李子坝）
+            
+            
+              · 酒店早餐 → 花卉园/观音桥轻松半日（默认）
+            
+          </li>
+        
+          <li>
+            
+              <span class="route-source-text">路径：</span>午饭退房→地铁/打车直达江北T3（最近）
+            
+            
+              · 花卉园/观音桥轻松半日（默认） → 午饭+退房取行李
+            
+          </li>
+        
+          <li>
+            
+              <span class="route-source-text">路径：</span>CA4341 17:00飞广州
+            
+            
+              · 午饭+退房取行李 → 花卉园→江北机场T3
+            
+          </li>
+        
+      </ol>
+    </div>
+  
+
+  <ol class="timeline">
+    
+      <li class="stop stop-breakfast">
+        <div class="t-time">09:00</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">🥐</span>
+            <strong>酒店早餐</strong>
+            
+            <span class="warn-badge">⚠️ 坐标待校验</span>
+          </div>
+          
+            <div class="t-reason">💡 酒店早餐/附近；行李中午前打包</div>
+          
+          <div class="t-detail">
+            <span>🕐 -</span>
+            <span>🎫 ¥含/¥20</span>
+            <span>⏱️ 约 40 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-attraction">
+        <div class="t-time">10:00</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">📌</span>
+            <strong>花卉园/观音桥轻松半日（默认）</strong>
+            <span class="rating">⭐ 4.4</span>
+            
+          </div>
+          
+            <div class="t-reason">💡 酒店在6号线花卉园，可地铁去观音桥步行街逛吃；不去李子坝。12:30前回酒店退房</div>
+          
+          <div class="t-detail">
+            <span>🕐 全天</span>
+            <span>🎫 ¥免费</span>
+            <span>⏱️ 约 120 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-lunch">
+        <div class="t-time">12:00</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">🍜</span>
+            <strong>午饭+退房取行李</strong>
+            
+            <span class="warn-badge">⚠️ 坐标待校验</span>
+          </div>
+          
+            <div class="t-reason">💡 退房后简餐；13:00前出发去机场</div>
+          
+          <div class="t-detail">
+            <span>🕐 -</span>
+            <span>🎫 ¥人均¥40</span>
+            <span>⏱️ 约 50 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-transport">
+        <div class="t-time">13:00</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">📌</span>
+            <strong>花卉园→江北机场T3</strong>
+            
+            
+          </div>
+          
+            <div class="t-reason">💡 6号线花卉园→换乘去机场约40-55分钟/打车约25-40分钟；14:00-14:30到T3，17:00 CA4341很松</div>
+          
+          <div class="t-detail">
+            <span>🕐 -</span>
+            <span>🎫 ¥地铁¥6 / 打车¥50-70</span>
+            <span>⏱️ 约 70 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+      <li class="stop stop-transport">
+        <div class="t-time">14:30</div>
+        <div class="t-body">
+          <div class="t-title">
+            <span class="t-emoji">📌</span>
+            <strong>江北T3→CA4341 17:00→18:50 广州白云T3 🟢</strong>
+            
+            
+          </div>
+          
+            <div class="t-reason">💡 美团票面：国航CA4341 波音737，17:00起飞→18:50白云T3；建议15:00前值机安检</div>
+          
+          <div class="t-detail">
+            <span>🕐 -</span>
+            <span>🎫 ¥已购票</span>
+            <span>⏱️ 约 260 分钟</span>
+          </div>
+        </div>
+      </li>
+    
+  </ol>
+
+  
+    <div class="day-budget">💸 当天预算约 ¥<span class="budget-count" data-count-to="320">320</span></div>
+  
+</article>
+  
+</section>
+
+<!--
+  💰 预算明细 · AGENT MUST-DO:
+  ① 必须有总预算 + 6 类目占比（交通/住宿/餐饮/门票/购物/备用）
+  ② 必须有饼图（数据由 budget.categories 驱动，模板自带 Chart.js）
+  ③ 必须有"实际 vs 用户期望预算"对比，超支时标红
+  ④ 凑不齐细项时，按类目占比模板（见 data/skeleton_fallbacks.json）兜底
+-->
+<section id="budget">
+  <h2>预算明细</h2>
+  <div class="budget-section">
+  <div class="budget-pie-wrap">
+    <canvas id="budget-pie" width="320" height="320"></canvas>
+  </div>
+  <div class="budget-table">
+    <table>
+      <thead><tr><th>类目</th><th>金额（¥）</th><th>占比</th></tr></thead>
+      <tbody>
+        
+        
+        <tr><td>大交通</td><td>1166</td><td>39.3%</td></tr>
+        <tr><td>住宿</td><td>359</td><td>12.1%</td></tr>
+        <tr><td>餐饮</td><td>720</td><td>24.2%</td></tr>
+        <tr><td>门票</td><td>320</td><td>10.8%</td></tr>
+        <tr><td>市内交通</td><td>220</td><td>7.4%</td></tr>
+        <tr><td>备用</td><td>185</td><td>6.2%</td></tr>
+        <tr class="grand"><td>合计</td><td><span class="budget-count" data-count-to="2970">2970</span></td><td>人均 1485</td></tr>
+      </tbody>
+    </table>
+  </div>
+  
+</div>
+</section>
+
+<!--
+  ⚠️ 风险提示 · AGENT MUST-DO:
+  无论数据完整度，本节必须输出至少 3 类风险：
+    1. 天气（出行日预报 + 异常天气警告，缺时调 WebSearch）
+    2. 节假日 / 人流（结合 risk_knowledge.json + 出行日期）
+    3. 当地骗局 / 防坑（risk_knowledge.json 该城市条目 + xhs"X 避雷"补充）
+  每条风险必须标置信度 🟢🟡⚪
+-->
+<section id="risk">
+  <h2>风险提示</h2>
+  <!--
+  AGENT MUST-DO: 至少 3 类风险（天气 / 节假日 / 防坑），加 1 类应急联系。
+  上游 risk-check 给空时用 skeleton_fallbacks.risk_panel_default 兜底。
+-->
+<div class="risk-panel">
+  <div class="risk-block confidence-yellow">
+    <h4>🌤️ 天气</h4>
+    <p>8月重庆主城25-40℃晴热为主（火炉模式），午后局部雷阵雨，湿度大闷热；巫山海拔高约低3-5℃但仍有33-36℃。重庆已于7月23日发布高温中暑二级预警。务必避开10:00-16:00户外暴晒，随身藿香正气水+防晒霜+充足饮用水。</p>
+    
+      <ul><li>上午8点前出门开始游玩，下午尽量室内/高铁</li><li>每2小时补水，不喝冰啤酒后暴走</li><li>遮阳帽+防晒霜+折叠伞（防雨防晒）</li><li>关注中国天气App实时预警</li></ul>
+    
+  </div>
+
+  
+    <div class="risk-block confidence-gray">
+      <h4>🎉 节假日</h4>
+      <p>出行日期无重大节假日；常规人流参考正常水平。</p>
+    </div>
+  
+
+  <div class="risk-block">
+    <h4>🚨 防坑提示</h4>
+    
+    
+      <div class="scam-group">
+        <strong>交通防坑 · 重庆</strong>
+        <ul><li>机场/火车站出口&#39;黑车&#39;拼车坑率极高（用滴滴/高德叫车）</li><li>洪崖洞黄牛兜售&#39;快速通道&#39;就是免费电梯，勿信</li><li>长江索道排队超1小时？从南岸上新街站反排人少</li><li>巫山高铁站→景区建议坐旅游直通车（¥15-20），勿议价黑车</li></ul>
+      </div>
+    
+      <div class="scam-group">
+        <strong>餐饮防坑 · 重庆</strong>
+        <ul><li>景区附近火锅/江湖菜溢价+口味一般，去解放碑背街居民楼店（大众点评4.3+分）</li><li>磁器口主街&#39;现熬火锅底料&#39;贵且不如超市桥头牌，磁器口后街吃</li><li>部分餐厅按斤算价不透明，点菜前问清价格计量</li></ul>
+      </div>
+    
+      <div class="scam-group">
+        <strong>门票防坑 · 重庆/巫山</strong>
+        <ul><li>小三峡/神女景区建议官方渠道购票，第三方平台注意退改规则</li><li>三峡之光夜游看评价别买黄牛票</li></ul>
+      </div>
+    
+  </div>
+
+  <div class="risk-block confidence-green">
+    <h4>📞 应急电话</h4>
+    <ul class="emergency">
+      <li>报警 110</li>
+      <li>急救 120</li>
+      <li>旅游投诉 023-12301</li>
+      <li>消费维权 12315</li>
+      <li>气象预警 12379</li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<!--
+  📓 小红书真实笔记参考 · AGENT MUST-DO:
+  本节必出，至少 6-10 篇真实笔记，按主题分组（攻略/美食/住宿/拍照/避雷/其他）
+  数据获取（按优先级）：
+    Tier 1: 调 xhs CLI（用户已登录时）
+    Tier 2: WebSearch site:xiaohongshu.com（用户跳过登录时）
+    Tier 3: WebSearch 马蜂窝/抖音目的地关键词
+  完全失败时，渲染"本次未拿到第三方游记"提示卡 + 给一组手动搜索链接
+  （绝不允许这一节空白；本 section 即使 xhs_notes=None 也要 include）
+-->
+
+<section id="media-videos">
+  <h2>图文视频参考</h2>
+  <div class="video-section">
+    <p class="video-intro">为每天核心体验配了可点开的 B 站参考视频。若内嵌播放器因网络策略无法加载，可点右上角在 B 站打开；图片已缓存在本地 media 目录，离线也能看图。</p>
+    <div class="video-grid">
+      <article class="video-card">
+        <header>
+          <h3>洪崖洞 / 千厮门夜景</h3>
+          <a class="video-link" href="https://search.bilibili.com/all?keyword=%E6%B4%AA%E5%B4%96%E6%B4%9E%E5%A4%9C%E6%99%AF" target="_blank" rel="noopener noreferrer">B站搜索</a>
+        </header>
+        <div class="video-frame">
+          <iframe src="https://player.bilibili.com/player.html?bvid=BV1Qh411K79m&page=1&high_quality=1&danmaku=0&autoplay=0" title="洪崖洞夜景参考视频" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="video-fallback">
+          <img src="media/hongya-qiansimen.jpg" alt="洪崖洞实拍（千厮门视角）" loading="lazy">
+          <div>
+            <p>拍法重点：千厮门大桥中段外拍全景，亮灯后更出片；景区内极挤可只路过。</p>
+            <a href="https://search.bilibili.com/all?keyword=%E5%8D%83%E5%96%AC%E9%97%A8%E6%B4%AA%E5%B4%96%E6%B4%9E" target="_blank" rel="noopener noreferrer">更多千厮门机位视频 →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="video-card">
+        <header>
+          <h3>长江索道</h3>
+          <a class="video-link" href="https://search.bilibili.com/all?keyword=%E9%95%BF%E6%B1%9F%E7%B4%A2%E9%81%93" target="_blank" rel="noopener noreferrer">B站搜索</a>
+        </header>
+        <div class="video-frame">
+          <iframe src="https://player.bilibili.com/player.html?bvid=BV1gF4m1F7hP&page=1&high_quality=1&danmaku=0&autoplay=0" title="长江索道参考视频" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="video-fallback">
+          <img src="media/cableway-chongqing.jpg" alt="重庆长江索道实拍" loading="lazy">
+          <div>
+            <p>暑期建议南岸上新街反排；傍晚光线更好，也方便衔接下浩里或洪崖洞。</p>
+            <a href="https://search.bilibili.com/all?keyword=%E9%95%BF%E6%B1%9F%E7%B4%A2%E9%81%93%20%E4%B8%8A%E6%96%B0%E8%A1%97" target="_blank" rel="noopener noreferrer">反排攻略视频 →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="video-card">
+        <header>
+          <h3>磁器口古镇</h3>
+          <a class="video-link" href="https://search.bilibili.com/all?keyword=%E7%A3%81%E5%99%A8%E5%8F%A3%E5%8F%A4%E9%95%87" target="_blank" rel="noopener noreferrer">B站搜索</a>
+        </header>
+        <div class="video-frame">
+          <iframe src="https://player.bilibili.com/player.html?bvid=BV19Z421Y7yi&page=1&high_quality=1&danmaku=0&autoplay=0" title="磁器口参考视频" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="video-fallback">
+          <img src="media/ciqikou-street.jpg" alt="磁器口街景实拍" loading="lazy">
+          <div>
+            <p>本行程是压缩版：后街茶馆 + 手信即可，11:00 前必须动身去重庆北站。</p>
+            <a href="https://search.bilibili.com/all?keyword=%E7%A3%81%E5%99%A8%E5%8F%A3%20%E5%90%8E%E8%A1%97" target="_blank" rel="noopener noreferrer">后街避雷视频 →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="video-card">
+        <header>
+          <h3>巫山小三峡</h3>
+          <a class="video-link" href="https://search.bilibili.com/all?keyword=%E5%B7%AB%E5%B1%B1%E5%B0%8F%E4%B8%89%E5%B3%A1" target="_blank" rel="noopener noreferrer">B站搜索</a>
+        </header>
+        <div class="video-frame">
+          <iframe src="https://player.bilibili.com/player.html?bvid=BV19x4y1a7Vu&page=1&high_quality=1&danmaku=0&autoplay=0" title="小三峡参考视频" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="video-fallback">
+          <img src="media/little-three-gorges.jpg" alt="巫山小三峡实拍" loading="lazy">
+          <div>
+            <p>抢 8:30 头班、尽量坐右侧；晕船药必备，返航后留足时间赶 G3455。</p>
+            <a href="https://search.bilibili.com/all?keyword=%E5%B0%8F%E4%B8%89%E5%B3%A1%208%3A30%20%E5%A4%B4%E7%8F%AD" target="_blank" rel="noopener noreferrer">头班船体验视频 →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="video-card">
+        <header>
+          <h3>下浩里 / 龙门浩</h3>
+          <a class="video-link" href="https://search.bilibili.com/all?keyword=%E4%B8%8B%E6%B5%A9%E9%87%8C%20%E9%BE%99%E9%97%A8%E6%B5%A9" target="_blank" rel="noopener noreferrer">B站搜索</a>
+        </header>
+        <div class="video-frame">
+          <iframe src="https://player.bilibili.com/player.html?bvid=BV1KeCzYKEL1&page=1&high_quality=1&danmaku=0&autoplay=0" title="下浩里参考视频" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="video-fallback">
+          <img src="media/longmenhao-cable-station.jpg" alt="龙门浩索道站实拍" loading="lazy">
+          <div>
+            <p>比洪崖洞人少，灯笼巷与青石板很适合夜拍；从花卉园打车跨江更省事。</p>
+            <a href="https://search.bilibili.com/all?keyword=%E4%B8%8B%E6%B5%A9%E9%87%8C%20%E7%94%BB%E6%A1%86" target="_blank" rel="noopener noreferrer">画框机位视频 →</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="video-card">
+        <header>
+          <h3>重庆火锅 / 美食</h3>
+          <a class="video-link" href="https://search.bilibili.com/all?keyword=%E9%87%8D%E5%BA%86%E8%A7%A3%E6%94%BE%E7%A2%91%E7%81%AB%E9%94%85" target="_blank" rel="noopener noreferrer">B站搜索</a>
+        </header>
+        <div class="video-frame">
+          <iframe src="https://player.bilibili.com/player.html?bvid=BV1Vz4y1E722&page=1&high_quality=1&danmaku=0&autoplay=0" title="重庆火锅参考视频" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div class="video-fallback">
+          <img src="media/jiefangbei-night.jpg" alt="解放碑夜景实拍" loading="lazy">
+          <div>
+            <p>景区门口溢价高；优先大众点评 4.3+ 背街居民楼店，不吃辣点鸳鸯锅。</p>
+            <a href="https://search.bilibili.com/all?keyword=%E9%87%8D%E5%BA%86%E5%B1%85%E6%B0%91%E6%A5%BC%E7%81%AB%E9%94%85" target="_blank" rel="noopener noreferrer">居民楼火锅推荐 →</a>
+          </div>
+        </div>
+      </article>
+    </div>
+    <p class="media-note">图片均为 Wikimedia Commons 实拍：洪崖洞、解放碑、长江索道、龙门浩、磁器口、小三峡、巫峡、巫山等，本地缓存于 media/，出处见 media/SOURCES.md。B 站视频为公开内容外链/内嵌，版权归原作者。</p>
+  </div>
+</section>
+
+<section id="xhs-notes">
+  <h2>小红书真实笔记参考</h2>
+  <!--
+  AGENT MUST-DO: 至少 6-10 篇真实笔记，按主题分组。
+  完全没拿到时，自动渲染"未拿到第三方游记"提示 + 给一组手动搜索链接。
+-->
+<div class="xhs-section">
+  
+  <p class="xhs-intro">这里是搜索过程中找到的高质量真实笔记，按主题分类，点击直达原文。</p>
+  
+    <div class="xhs-group">
+      <h4>真实笔记参考 <span class="xhs-count">11 篇</span></h4>
+      <div class="xhs-grid">
+        
+          <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E6%B4%AA%E5%B4%96%E6%B4%9E%20%E5%8D%83%E6%96%AF%E9%97%A8%20%E6%9C%BA%E4%BD%8D" target="_blank" rel="noopener">
+            
+            <div class="xhs-body">
+              <div class="xhs-title">洪崖洞夜景：千厮门大桥拍全景更出片</div>
+              <div class="xhs-meta">
+                <span>@综合游记要点</span>
+                
+                
+              </div>
+              
+                <div class="xhs-snippet">亮灯约19:00-23:00；景区内极挤。多数攻略建议千厮门大桥中段俯拍全景免费。洪崖洞没有所谓快速通道，黄牛多是免费电梯。</div>
+              
+              
+                <span class="xhs-sentiment xhs-sentiment-positive">👍 推荐</span>
+              
+            </div>
+          </a>
+        
+          <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E9%95%BF%E6%B1%9F%E7%B4%A2%E9%81%93%20%E5%8D%97%E5%B2%B8%20%E4%B8%8A%E6%96%B0%E8%A1%97" target="_blank" rel="noopener">
+            
+            <div class="xhs-body">
+              <div class="xhs-title">长江索道：南岸上新街反排人少</div>
+              <div class="xhs-meta">
+                <span>@综合游记要点</span>
+                
+                
+              </div>
+              
+                <div class="xhs-snippet">单程约¥20；暑期主站排队久。抖音/网易多篇攻略写南站人少更快。建议傍晚坐，兼顾江景与衔接洪崖洞夜景。</div>
+              
+              
+                <span class="xhs-sentiment xhs-sentiment-positive">👍 推荐</span>
+              
+            </div>
+          </a>
+        
+          <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E9%87%8D%E5%BA%86%20%E5%9B%9B%E5%A4%A9%E4%B8%89%E5%A4%9C%20%E6%94%BB%E7%95%A5" target="_blank" rel="noopener">
+            
+            <div class="xhs-body">
+              <div class="xhs-title">重庆四天三夜：解放碑住/观音桥住怎么选</div>
+              <div class="xhs-meta">
+                <span>@综合游记要点</span>
+                
+                
+              </div>
+              
+                <div class="xhs-snippet">解放碑步行到夜景近；观音桥吃喝旺。本行程锁定花卉园（观音桥圈）更近机场/北站。穿防滑舒服鞋，坡道多。</div>
+              
+              
+                <span class="xhs-sentiment xhs-sentiment-neutral">🔍 参考</span>
+              
+            </div>
+          </a>
+        
+          <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E4%B8%8B%E6%B5%A9%E9%87%8C%20%E5%A4%9C%E6%99%AF%20%E6%94%BB%E7%95%A5" target="_blank" rel="noopener">
+            
+            <div class="xhs-body">
+              <div class="xhs-title">下浩里夜行：灯笼巷+老街，比洪崖洞人少</div>
+              <div class="xhs-meta">
+                <span>@综合游记要点</span>
+                
+                
+              </div>
+              
+                <div class="xhs-snippet">南岸龙门浩老街/下浩里，傍晚灯光氛围强。抖音攻略常接：索道南站→龙门浩→下浩里。适合D3回渝后轻松夜逛。</div>
+              
+              
+                <span class="xhs-sentiment xhs-sentiment-positive">👍 推荐</span>
+              
+            </div>
+          </a>
+        
+          <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E9%BE%99%E9%97%A8%E6%B5%A9%20%E8%80%81%E8%A1%97%20%E6%8B%8D%E7%85%A7" target="_blank" rel="noopener">
+            
+            <div class="xhs-body">
+              <div class="xhs-title">龙门浩机位：导航「下山民宿」画框感</div>
+              <div class="xhs-meta">
+                <span>@综合游记要点</span>
+                
+                
+              </div>
+              
+                <div class="xhs-snippet">多篇短视频提到画框机位与青石板巷；商铺约10:00-22:00。从花卉园打车约30-45分钟更省换乘。</div>
+              
+              
+                <span class="xhs-sentiment xhs-sentiment-positive">👍 推荐</span>
+              
+            </div>
+          </a>
+        
+          <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E7%A3%81%E5%99%A8%E5%8F%A3%20%E9%81%BF%E9%9B%B7%20%E5%90%8E%E8%A1%97" target="_blank" rel="noopener">
+            
+            <div class="xhs-body">
+              <div class="xhs-title">磁器口：主街挤、后街吃，麻花可买</div>
+              <div class="xhs-meta">
+                <span>@综合游记要点</span>
+                
+                
+              </div>
+              
+                <div class="xhs-snippet">商业化重。避雷：主街「现熬火锅底料」性价比差。压缩版2.5h够用；本行程11:00前必须离开赶G1198。</div>
+              
+              
+                <span class="xhs-sentiment xhs-sentiment-negative">⚠️ 避雷</span>
+              
+            </div>
+          </a>
+        
+          <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E5%B7%AB%E5%B1%B1%E5%B0%8F%E4%B8%89%E5%B3%A1%20%E5%A4%B4%E7%8F%AD%20%E6%94%BB%E7%95%A5" target="_blank" rel="noopener">
+            
+            <div class="xhs-body">
+              <div class="xhs-title">小三峡：一定抢8:30头班，坐船右侧</div>
+              <div class="xhs-meta">
+                <span>@综合游记要点</span>
+                
+                
+              </div>
+              
+                <div class="xhs-snippet">头班人少景好；甲板拍悬棺/猴群零食藏好。右侧位防晒更友好。全程约4h含小小三峡换乘。晕船药必备。</div>
+              
+              
+                <span class="xhs-sentiment xhs-sentiment-positive">👍 推荐</span>
+              
+            </div>
+          </a>
+        
+          <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E5%B7%AB%E5%B1%B1%E5%B0%8F%E4%B8%89%E5%B3%A1%20%E9%81%BF%E9%9B%B7" target="_blank" rel="noopener">
+            
+            <div class="xhs-body">
+              <div class="xhs-title">小三峡避雷：黑车、黄牛票、左侧暴晒</div>
+              <div class="xhs-meta">
+                <span>@综合游记要点</span>
+                
+                
+              </div>
+              
+                <div class="xhs-snippet">高铁站/码头少议价黑车。票走官方或美团正规店看退改。游船左侧夏季暴晒。住游客中心/码头旁可步行赶船。</div>
+              
+              
+                <span class="xhs-sentiment xhs-sentiment-negative">⚠️ 避雷</span>
+              
+            </div>
+          </a>
+        
+          <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E5%B7%AB%E5%B1%B1%20%E7%83%A4%E9%B1%BC%20%E6%8E%A8%E8%8D%90" target="_blank" rel="noopener">
+            
+            <div class="xhs-body">
+              <div class="xhs-title">巫山烤鱼+滨江夜逛</div>
+              <div class="xhs-meta">
+                <span>@综合游记要点</span>
+                
+                
+              </div>
+              
+                <div class="xhs-snippet">巫山/万州烤鱼都有名；县城滨江路夜景+路边小吃。人均烤鱼约60-90。D2晚吃完早睡备次日头班。</div>
+              
+              
+                <span class="xhs-sentiment xhs-sentiment-positive">👍 推荐</span>
+              
+            </div>
+          </a>
+        
+          <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E9%87%8D%E5%BA%86%20%E8%A7%A3%E6%94%BE%E7%A2%91%20%E5%B1%85%E6%B0%91%E6%A5%BC%20%E7%81%AB%E9%94%85" target="_blank" rel="noopener">
+            
+            <div class="xhs-body">
+              <div class="xhs-title">解放碑火锅：背街居民楼店更地道</div>
+              <div class="xhs-meta">
+                <span>@综合游记要点</span>
+                
+                
+              </div>
+              
+                <div class="xhs-snippet">景区门口溢价高。大众点评4.3+背街店；不吃辣点鸳鸯/微辣，备肠胃药。人均约80-120。</div>
+              
+              
+                <span class="xhs-sentiment xhs-sentiment-positive">👍 推荐</span>
+              
+            </div>
+          </a>
+        
+          <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E5%85%AB%E4%B8%80%E5%A5%BD%E5%90%83%E8%A1%97%20%E6%8E%A8%E8%8D%90" target="_blank" rel="noopener">
+            
+            <div class="xhs-body">
+              <div class="xhs-title">八一好吃街小吃清单（压缩逛）</div>
+              <div class="xhs-meta">
+                <span>@综合游记要点</span>
+                
+                
+              </div>
+              
+                <div class="xhs-snippet">酸辣粉、小汤圆、抄手、米凉虾等；与观音桥好吃街二选一即可。适合D1落地下午茶，别当正餐撑太饱。</div>
+              
+              
+                <span class="xhs-sentiment xhs-sentiment-positive">👍 推荐</span>
+              
+            </div>
+          </a>
+        
+      </div>
+    </div>
+  
+  <p class="xhs-disclaimer">
+    💡 笔记内容由作者发布，仅作参考。点击卡片跳转小红书原文。
+  </p>
+  
+</div>
+</section>
+
+<section id="data-completeness">
+  <h2>数据完整性</h2>
+  <!--
+  AGENT MUST-DO:
+  这是固定底部面板，告诉用户哪些数据是一手 / 哪些是兜底。
+  data_sources 由 check_deps + agent 实际调用情况组装。
+-->
+<div class="completeness-panel">
+  <div class="comp-row">
+    <strong>✅ 已启用</strong>
+    <ul>
+      
+      
+      
+      <li>WebSearch - 兜底数据源</li>
+    </ul>
+  </div>
+  
+  <p class="comp-tip">
+    💡 想升级数据可信度？把对应数据源配上后告诉 agent「重跑 XX」即可增量更新。
+  </p>
+</div>
+</section>
+
+<!--
+  🎒 行前清单 · AGENT MUST-DO:
+  无论数据完整度，必须输出至少 4 类清单：
+    1. 证件（身份证/驾照/学生证/老年证）
+    2. 充电（充电宝/数据线/转换头）
+    3. 现金/支付（少量现金/支付宝微信备用）
+    4. 应急（常用药/急救联系/保险卡）
+  risk-check 给了具体内容就用具体内容，没给就用以上 4 类硬清单
+  （兜底数据见 data/skeleton_fallbacks.json）
+-->
+<section id="checklist">
+  <h2>行前清单</h2>
+  <!--
+  AGENT MUST-DO: checklist 至少 4 类（证件/充电/支付/应急）。
+  risk-check 给了具体内容用具体内容，没给就用 skeleton_fallbacks.json 兜底。
+-->
+
+<div class="checklist">
+  
+    <div class="check-group">
+      <h4>🪪 证件</h4>
+      <ul>
+        <li><label><input type="checkbox"> 身份证（必带）</label></li><li><label><input type="checkbox"> 驾照（如考虑当地租车）</label></li>
+      </ul>
+    </div>
+  
+    <div class="check-group">
+      <h4>💊 健康/应急</h4>
+      <ul>
+        <li><label><input type="checkbox"> 藿香正气水/清凉油</label></li><li><label><input type="checkbox"> 防晒霜SPF50+</label></li><li><label><input type="checkbox"> 创可贴/云南白药</label></li><li><label><input type="checkbox"> 晕船药（小三峡游船）</label></li>
+      </ul>
+    </div>
+  
+    <div class="check-group">
+      <h4>☂️ 天气</h4>
+      <ul>
+        <li><label><input type="checkbox"> 遮阳帽+墨镜</label></li><li><label><input type="checkbox"> 折叠伞（防雨防晒）</label></li><li><label><input type="checkbox"> 薄长袖防晒衣</label></li><li><label><input type="checkbox"> 便携小风扇</label></li>
+      </ul>
+    </div>
+  
+    <div class="check-group">
+      <h4>🔌 充电/数码</h4>
+      <ul>
+        <li><label><input type="checkbox"> 充电宝≥20000mAh</label></li><li><label><input type="checkbox"> 手机数据线</label></li><li><label><input type="checkbox"> 广角/微距镜头</label></li>
+      </ul>
+    </div>
+  
+    <div class="check-group">
+      <h4>💵 现金/支付</h4>
+      <ul>
+        <li><label><input type="checkbox"> 现金¥500（巫山部分小店只收现金）</label></li><li><label><input type="checkbox"> 支付宝/微信余额充足</label></li>
+      </ul>
+    </div>
+  
+</div>
+</section>
+
+<footer>
+  <p>由出游规划师 v1.0.0 生成 · 2026-07-24T14:43:23+08:00</p>
+  <p>本报告所有价格 / 营业 / 评分均为查询时刻的参考值，请出行前再核实。</p>
+</footer>
+
+<script>
+  // 总览地图 -- 国内可用瓦片源（按可达性顺序），任何一个失败自动切下一个
+  const map = L.map('map', { preferCanvas: true });
+
+  const TILE_SOURCES = [
+    {
+      // 高德矢量瓦片（无需 key，国内最稳）
+      url: 'https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',
+      options: { subdomains: ['1','2','3','4'], attribution: '高德地图', maxZoom: 18 }
+    },
+    {
+      // 高德卫星瓦片（备用）
+      url: 'https://webst0{s}.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}',
+      options: { subdomains: ['1','2','3','4'], attribution: '高德卫星', maxZoom: 18 }
+    },
+    {
+      // 腾讯地图瓦片（再备用）
+      url: 'https://rt{s}.map.gtimg.com/realtimerender?z={z}&x={x}&y={y}&type=vector&style=0',
+      options: { subdomains: ['0','1','2','3'], attribution: '腾讯地图', maxZoom: 18 }
+    },
+    {
+      // OSM（最后兜底，国内可能慢）
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      options: { subdomains: ['a','b','c'], attribution: 'OSM', maxZoom: 18 }
+    }
+  ];
+
+  let tileLayer;
+  let sourceIdx = 0;
+  function loadTileSource(idx) {
+    if (idx >= TILE_SOURCES.length) {
+      document.getElementById('map').innerHTML =
+        '<div style="padding:40px;text-align:center;color:#888;">地图加载失败，请检查网络后刷新</div>';
+      return;
+    }
+    if (tileLayer) map.removeLayer(tileLayer);
+    const src = TILE_SOURCES[idx];
+    tileLayer = L.tileLayer(src.url, src.options);
+    let errorCount = 0;
+    tileLayer.on('tileerror', function () {
+      errorCount++;
+      if (errorCount > 3) {
+        console.warn('瓦片源失败，切换到下一个：', src.attribution);
+        loadTileSource(idx + 1);
+      }
+    });
+    tileLayer.addTo(map);
+  }
+  loadTileSource(0);
+
+  const dayColors = ['#e74c3c','#3498db','#2ecc71','#f39c12','#9b59b6','#1abc9c','#e67e22'];
+  const allLatLngs = [];
+  const days = [{"daily_budget": 560, "date": "2026-08-01", "day_index": 1, "fatigue_index": 1.8, "routes": [{"description": "\u6c5f\u5317\u673a\u573a\u2192\u51e4\u51f0\u4e3d\u90fd(\u82b1\u5349\u56ed\u5730\u94c1\u7ad9\u5e97)\u5165\u4f4f", "from": 0, "to": 1}, {"description": "\u82b1\u5349\u56ed6\u53f7\u7ebf\u2192\u6362\u4e58\u81f3\u89e3\u653e\u7891/\u8f83\u573a\u53e3\u4e00\u5e26\uff08\u7ea630-40\u5206\u949f\uff09", "from": 1, "to": 2}, {"description": "\u89e3\u653e\u7891\u2192\u957f\u6c5f\u7d22\u9053", "from": 2, "to": 3}, {"description": "\u7d22\u9053\u2192\u5343\u53ae\u95e8\u00b7\u6d2a\u5d16\u6d1e\u591c\u666f\u2192\u5730\u94c1\u56de\u89c2\u97f3\u6865\u4f4f", "from": 3, "to": 4}], "stops": [{"duration_display": "35 \u5206\u949f", "duration_min": 35, "poi": {"category": "\u4ea4\u901a/\u5165\u4f4f", "coord_status": "verified", "lat": 29.585, "lng": 106.515, "name": "\u6c5f\u5317\u673a\u573a\u2192\u51e4\u51f0\u4e3d\u90fd(\u82b1\u5349\u56ed\u7ad9)\u5165\u4f4f", "open_hours": "\u2014", "rating": "", "recommend_reason": "\u7528\u6237\u9501\u5b9a\uff1a\u51e4\u51f0\u4e3d\u90fd\u7cbe\u54c1\u9152\u5e97(\u89c2\u97f3\u6865\u82b1\u5349\u56ed\u5730\u94c1\u7ad9\u5e97) \u7f8e\u56e24.7\u00b7\u7ea6\u00a5121/\u665a \ud83d\udfe2 6\u53f7\u7ebf\u82b1\u5349\u56ed\u7ad9\u6b65\u884c2\u5206\u949f http://dpurl.cn/dpXYln9z\uff1b\u673a\u573a\u21926\u53f7\u7ebf\u8f6c\u4e58\u7ea640-50\u5206\u949f\uff0c\u6216\u6253\u8f66\u7ea625-40\u5206\u949f", "ticket_price": "\u00a55-40"}, "time": "15:30", "type": "transport"}, {"duration_display": "120 \u5206\u949f", "duration_min": 120, "poi": {"category": "\u57ce\u5e02\u5730\u6807", "coord_status": "verified", "lat": 29.5603, "lng": 106.5767, "name": "\u89e3\u653e\u7891\u00b7\u516b\u4e00\u597d\u5403\u8857", "open_hours": "\u5168\u5929", "rating": "4.5", "recommend_reason": "\u4f4f\u89c2\u97f3\u6865\uff1a\u5730\u94c1\u7ea625-35\u5206\u949f\u5230\u89e3\u653e\u7891\uff1b\u5148\u653e\u884c\u674e\u518d\u8fdb\u57ce\uff0c\u522b\u62d6\u7bb1\u901b", "ticket_price": "\u514d\u8d39"}, "time": "16:00", "type": "attraction"}, {"duration_display": "40 \u5206\u949f", "duration_min": 40, "poi": {"category": "\u7279\u8272\u4f53\u9a8c", "coord_status": "verified", "lat": 29.5592, "lng": 106.5835, "name": "\u957f\u6c5f\u7d22\u9053", "open_hours": "07:30-22:30", "rating": "4.8", "recommend_reason": "\u5915\u9633\u6a2a\u8de8\u957f\u6c5f\uff1b\u5357\u5cb8\u4e0a\u65b0\u8857\u53cd\u6392\u4eba\u5c11\uff1b\u4e0eD3\u4e0b\u6d69\u91cc\u540c\u5c5e\u5357\u5cb8\u52a8\u7ebf\u53ef\u547c\u5e94", "ticket_price": "\u5355\u7a0b\u00a520/\u4eba"}, "time": "18:00", "type": "attraction"}, {"duration_display": "60 \u5206\u949f", "duration_min": 60, "poi": {"category": "\u665a\u9910", "coord_status": "unverified", "lat": 29.56, "lng": 106.575, "name": "\u89e3\u653e\u7891\u5c45\u6c11\u697c\u706b\u9505", "open_hours": "11:00-23:00", "rating": "4.3", "recommend_reason": "\u7b2c\u4e00\u987f\u706b\u9505\uff1a\u80cc\u8857\u5c45\u6c11\u697c\u5e97\uff0c\u4eba\u5747\u00a580-120", "ticket_price": "\u4eba\u5747\u00a580-120"}, "time": "18:50", "type": "dinner"}, {"duration_display": "90 \u5206\u949f", "duration_min": 90, "poi": {"category": "\u591c\u666f\u5730\u6807", "coord_status": "verified", "lat": 29.5673, "lng": 106.574, "name": "\u5343\u53ae\u95e8\u5927\u6865\u00b7\u6d2a\u5d16\u6d1e\u591c\u666f", "open_hours": "\u5168\u5929\uff08\u4eae\u706f19:00-23:00\uff09", "rating": "4.9", "recommend_reason": "\u5343\u53ae\u95e8\u62cd\u6d2a\u5d16\u6d1e\u540e\uff0c\u5730\u94c1\u56de\u82b1\u5349\u56ed\u9152\u5e97\uff086\u53f7\u7ebf\uff0c\u7ea635-45\u5206\u949f\uff09", "ticket_price": "\u514d\u8d39"}, "time": "20:00", "type": "evening"}], "theme": "\u82b1\u5349\u56ed\u5165\u4f4f\u00b7\u89e3\u653e\u7891\u6d2a\u5d16\u6d1e\u591c\u666f", "total_distance_km": 6, "weather": {"summary": "\u6674\u70ed 36-39\u2103\uff0c\u508d\u665a\u5c40\u90e8\u96f7\u9635\u96e8"}}, {"daily_budget": 650, "date": "2026-08-02", "day_index": 2, "fatigue_index": 2.0, "routes": [{"description": "\u89c2\u97f3\u6865\u9152\u5e97\u2192\u5730\u94c1\u2192\u78c1\u5668\u53e3\uff08\u6216\u76f4\u63a5\u53bb\u5317\u7ad9\u82e5\u60f3\u66f4\u677e\uff09", "from": 0, "to": 1}, {"description": "\u78c1\u5668\u53e3\u2192\u91cd\u5e86\u5317\u7ad9", "from": 1, "to": 2}, {"description": "G1198 12:21\u219214:22 \u5deb\u5c71", "from": 2, "to": 3}, {"description": "\u5deb\u5c71\u7ad9\u2192\u9152\u5e97\u5165\u4f4f\u2192\u6ee8\u6c5f\u8def/\u53bf\u57ce\u5b89\u987f", "from": 3, "to": 4}, {"description": "\u5deb\u5c71\u70e4\u9c7c\u665a\u9910", "from": 4, "to": 5}], "stops": [{"duration_display": "30 \u5206\u949f", "duration_min": 30, "poi": {"category": "\u65e9\u9910", "coord_status": "unverified", "lat": 29.56, "lng": 106.575, "name": "\u65e9\u9910+\u9000\u623f\u5bc4\u5b58\u884c\u674e\uff08\u82e5\u9700\uff09", "open_hours": "\u2014", "rating": "", "recommend_reason": "\u7528\u6237\u9501\u5b9a\uff1a\u51e4\u51f0\u4e3d\u90fd\u7cbe\u54c1\u9152\u5e97(\u89c2\u97f3\u6865\u82b1\u5349\u56ed\u5730\u94c1\u7ad9\u5e97) \u7f8e\u56e24.7\u00b7\u7ea6\u00a5121/\u665a \ud83d\udfe2 6\u53f7\u7ebf\u82b1\u5349\u56ed\u7ad9\u6b65\u884c2\u5206\u949f http://dpurl.cn/dpXYln9z\uff1b\u53bb\u91cd\u5e86\u5317\uff1a6\u53f7\u7ebf\u6362\u4e58\uff0c\u7ea630-40\u5206\u949f\uff0c\u6bd4\u6e1d\u4e2d\u89e3\u653e\u7891\u53bb\u5317\u7ad9\u4ecd\u5408\u7406", "ticket_price": "\u00a515-20"}, "time": "07:30", "type": "breakfast"}, {"duration_display": "150 \u5206\u949f", "duration_min": 150, "poi": {"category": "\u53e4\u9547", "coord_status": "verified", "lat": 29.5789, "lng": 106.4467, "name": "\u78c1\u5668\u53e3\u53e4\u9547\uff08\u538b\u7f29\u7248\uff09", "open_hours": "\u5168\u5929", "rating": "3.8", "recommend_reason": "\u65b9\u6848B\u780d\u5c71\u57ce\u6b65\u9053\uff0c\u53ea\u7559\u78c1\u5668\u53e32.5h\uff1a\u540e\u8857\u8336\u9986+\u9ebb\u82b1\u624b\u4fe1\uff0c11:00\u524d\u52a8\u8eab\u53bb\u5317\u7ad9", "ticket_price": "\u514d\u8d39"}, "time": "08:30", "type": "attraction"}, {"duration_display": "60 \u5206\u949f", "duration_min": 60, "poi": {"category": "\u5e02\u5185\u4ea4\u901a", "coord_status": "verified", "lat": 29.6104, "lng": 106.5474, "name": "\u78c1\u5668\u53e3\u2192\u91cd\u5e86\u5317\u7ad9", "open_hours": "\u2014", "rating": "", "recommend_reason": "\u78c1\u5668\u53e3\u2192\u91cd\u5e86\u5317\u7ea640-50\u5206\u949f\uff1b\u9152\u5e97\u5728\u82b1\u5349\u56ed\uff0c\u6574\u4f53\u9884\u7559\u5b89\u68c0\u5361G1198 12:21", "ticket_price": "\u00a55"}, "time": "11:00", "type": "transport"}, {"duration_display": "121 \u5206\u949f", "duration_min": 121, "poi": {"category": "\u5927\u4ea4\u901a", "coord_status": "verified", "lat": 29.6104, "lng": 106.5474, "name": "G1198 \u91cd\u5e86\u5317\u2192\u5deb\u5c71 \ud83d\udfe2", "open_hours": "\u2014", "rating": "", "recommend_reason": "\u7f8e\u56e2\uff1a12:21\u219214:22 2h1m \u4e8c\u7b49\u5ea7\u00a5198 \ud83c\udfab http://dpurl.cn/jdyufK4z", "ticket_price": "\u00a5198/\u4eba"}, "time": "12:21", "type": "transport"}, {"duration_display": "60 \u5206\u949f", "duration_min": 60, "poi": {"category": "\u5165\u4f4f", "coord_status": "verified", "lat": 31.0766, "lng": 109.8789, "name": "\u5deb\u5c71\u7ad9\u2192\u6850\u6656\u9152\u5e97(\u6e38\u5ba2\u4e2d\u5fc3\u5e97)\u5165\u4f4f", "open_hours": "\u2014", "rating": "4.9", "recommend_reason": "\u7528\u6237\u9501\u5b9aB\uff1a\u6850\u6656\u9152\u5e97\u00b7\u7f8e\u56e24.9\u00b7\u7ea6\u00a5117\u00b7\u8ddd\u5c0f\u4e09\u5ce1\u7801\u5934\u7ea60.3km \ud83c\udfabhttp://dpurl.cn/olXCgdvz\uff1b\u665a\u6ee8\u6c5f/\u6e38\u5ba2\u4e2d\u5fc3\u901b\uff0c\u65e9\u6b65\u884c\u8d76\u8239", "ticket_price": "\u7ea6\u00a5117/\u665a"}, "time": "14:30", "type": "transport"}, {"duration_display": "90 \u5206\u949f", "duration_min": 90, "poi": {"category": "\u6563\u6b65", "coord_status": "verified", "lat": 31.0746, "lng": 109.882, "name": "\u5deb\u5c71\u6ee8\u6c5f\u8def/\u53bf\u57ce\u6563\u6b65", "open_hours": "\u5168\u5929", "rating": "4.0", "recommend_reason": "\u4f4f\u6e38\u5ba2\u4e2d\u5fc3\u5e97\uff1a\u6ee8\u6c5f\u8def/\u6c5f\u8fb9\u6563\u6b65+\u786e\u8ba4\u660e\u65e9\u7801\u5934\u96c6\u5408\u70b9\uff1b\u70e4\u9c7c\u53ef\u5c31\u8fd1", "ticket_price": "\u514d\u8d39"}, "time": "16:00", "type": "attraction"}, {"duration_display": "90 \u5206\u949f", "duration_min": 90, "poi": {"category": "\u665a\u9910", "coord_status": "unverified", "lat": 31.0766, "lng": 109.8789, "name": "\u5deb\u5c71\u70e4\u9c7c", "open_hours": "\u2014", "rating": "4.2", "recommend_reason": "\u6e38\u5ba2\u4e2d\u5fc3/\u6ee8\u6c5f\u4e00\u5e26\u70e4\u9c7c\u4eba\u5747\u00a560-90\uff1b\u65e9\u7761\u5907D3 8:30\u5934\u73ed", "ticket_price": "\u4eba\u5747\u00a560-90"}, "time": "18:00", "type": "dinner"}], "theme": "\u78c1\u5668\u53e3\u00b7\u9ad8\u94c1\u5deb\u5c71\u00b7\u6850\u6656\u5165\u4f4f\u00b7\u6ee8\u6c5f\u591c\u901b", "total_distance_km": 160, "weather": {"summary": "\u91cd\u5e8634-38\u2103\uff0c\u5deb\u5c7132-36\u2103"}}, {"daily_budget": 720, "date": "2026-08-03", "day_index": 3, "fatigue_index": 2.3, "routes": [{"description": "\u9152\u5e97\u2192\u5c0f\u4e09\u5ce1\u7801\u5934\u5934\u73ed\u6e38\u8239", "from": 0, "to": 1}, {"description": "\u6e38\u8239\u7ed3\u675f\u2192\u7b80\u5355\u5348\u9910\u2192\u5deb\u5c71\u7ad9", "from": 1, "to": 2}, {"description": "G3455 15:24\u219217:26 \u91cd\u5e86\u5317", "from": 2, "to": 3}, {"description": "\u91cd\u5e86\u5317\u2192\u89c2\u97f3\u6865\u9152\u5e97\u653e\u884c\u674e", "from": 3, "to": 4}, {"description": "\u89c2\u97f3\u6865\u2192\u6253\u8f66/\u8f68\u9053\u8de8\u6c5f\u2192\u5357\u5cb8\u9f99\u95e8\u6d69\u00b7\u4e0b\u6d69\u91cc", "from": 4, "to": 5}], "stops": [{"duration_display": "30 \u5206\u949f", "duration_min": 30, "poi": {"category": "\u65e9\u9910", "coord_status": "unverified", "lat": 31.076, "lng": 109.88, "name": "\u9000\u623f+\u65e9\u9910", "open_hours": "\u2014", "rating": "", "recommend_reason": "\u6850\u6656\u9000\u623f\uff1a\u6b65\u884c\u7ea65-10\u5206\u949f\u5230\u5c0f\u4e09\u5ce1\u7801\u5934\u8d768:30\u5934\u73ed\uff1b\u884c\u674e\u653e\u524d\u53f0\u6216\u968f\u8eab", "ticket_price": "\u00a510-15"}, "time": "07:30", "type": "breakfast"}, {"duration_display": "240 \u5206\u949f", "duration_min": 240, "poi": {"category": "\u5ce1\u8c37\u6e38\u8239", "coord_status": "verified", "lat": 31.073, "lng": 109.88, "name": "\u5c0f\u4e09\u5ce1\u00b7\u5c0f\u5c0f\u4e09\u5ce1\u6e38\u8239 5A\uff08\u5deb\u5c71\u552f\u4e00\u4e3b\u9879\uff09", "open_hours": "08:00-18:00\uff08\u9996\u73ed8:30\uff09", "rating": "4.9", "recommend_reason": "\u4ece\u6850\u6656\u6e38\u5ba2\u4e2d\u5fc3\u5e97\u6b65\u884c\u81f3\u7801\u5934\uff1b\u65b9\u6848B\u53ea\u7559\u5c0f\u4e09\u5ce1\uff1b\u5934\u73ed\u4eba\u5c11\uff1b\u5907\u6655\u8239\u836f\uff1b\u7ea612:30\u8fd4\u822a\u540e\u7b80\u9910\u518d\u8d76G3455 15:24", "ticket_price": "\u7ea6\u00a5120/\u4eba"}, "time": "08:30", "type": "attraction"}, {"duration_display": "50 \u5206\u949f", "duration_min": 50, "poi": {"category": "\u5348\u9910", "coord_status": "unverified", "lat": 31.076, "lng": 109.88, "name": "\u7b80\u9910/\u6253\u5305", "open_hours": "\u2014", "rating": "", "recommend_reason": "\u4e0d\u5403\u5927\u9910\uff0c\u7559\u65f6\u95f4\u56de\u9152\u5e97\u53d6\u7269\u2192\u8f66\u7ad9\uff1b15:24 G3455", "ticket_price": "\u4eba\u5747\u00a530-50"}, "time": "12:30", "type": "lunch"}, {"duration_display": "122 \u5206\u949f", "duration_min": 122, "poi": {"category": "\u5927\u4ea4\u901a", "coord_status": "verified", "lat": 31.0766, "lng": 109.8789, "name": "G3455 \u5deb\u5c71\u2192\u91cd\u5e86\u5317 \ud83d\udfe2", "open_hours": "\u2014", "rating": "", "recommend_reason": "\u7f8e\u56e2\uff1a15:24\u219217:26 2h2m \u4e8c\u7b49\u5ea7\u00a5185\uff1b\u6e38\u8239\u540e\u6700\u7a33\u4e0d\u8d76 \ud83c\udfab http://dpurl.cn/Mp95NSEz", "ticket_price": "\u00a5185/\u4eba"}, "time": "15:24", "type": "transport"}, {"duration_display": "40 \u5206\u949f", "duration_min": 40, "poi": {"category": "\u5e02\u5185\u4ea4\u901a", "coord_status": "unverified", "lat": 29.585, "lng": 106.515, "name": "\u91cd\u5e86\u5317\u2192\u51e4\u51f0\u4e3d\u90fd(\u82b1\u5349\u56ed)\u653e\u884c\u674e", "open_hours": "\u2014", "rating": "", "recommend_reason": "\u5317\u7ad9\u56de\u9152\u5e97\u7ea630-40\u5206\u949f\uff1b\u7528\u6237\u9501\u5b9a\uff1a\u51e4\u51f0\u4e3d\u90fd\u7cbe\u54c1\u9152\u5e97(\u89c2\u97f3\u6865\u82b1\u5349\u56ed\u5730\u94c1\u7ad9\u5e97) \u7f8e\u56e24.7\u00b7\u7ea6\u00a5121/\u665a \ud83d\udfe2 6\u53f7\u7ebf\u82b1\u5349\u56ed\u7ad9\u6b65\u884c2\u5206\u949f http://dpurl.cn/dpXYln9z", "ticket_price": "\u5730\u94c1\u7ea6\u00a55"}, "time": "17:40", "type": "transport"}, {"duration_display": "150 \u5206\u949f", "duration_min": 150, "poi": {"category": "\u8001\u8857\u6587\u521b", "coord_status": "verified", "lat": 29.5585, "lng": 106.588, "name": "\u4e0b\u6d69\u91cc\u00b7\u9f99\u95e8\u6d69\u8001\u8857", "open_hours": "\u5168\u5929\uff08\u5546\u94fa\u7ea610:00-22:00\uff09", "rating": "4.6", "recommend_reason": "\u4ece\u82b1\u5349\u56ed\uff1a\u5efa\u8bae\u6253\u8f66\u7ea630-45\u5206\u949f\u76f4\u8fbe\u5357\u5cb8\u9f99\u95e8\u6d69\u66f4\u7701\u4e8b\uff1b\u5730\u94c1\u9700\u6362\u4e58\u3002\u508d\u665a\u901b\u62cd\u540e\u56de\u51e4\u51f0\u4e3d\u90fd\u4f4f", "ticket_price": "\u514d\u8d39"}, "time": "18:30", "type": "attraction"}, {"duration_display": "80 \u5206\u949f", "duration_min": 80, "poi": {"category": "\u665a\u9910", "coord_status": "unverified", "lat": 29.56, "lng": 106.59, "name": "\u4e0b\u6d69\u91cc/\u5357\u6ee8\u8def\u665a\u9910", "open_hours": "\u2014", "rating": "4.2", "recommend_reason": "\u4e0b\u6d69\u91cc/\u5357\u6ee8\u8def\u665a\u9910\u540e\u6253\u8f66\u6216\u5730\u94c1\u56de\u82b1\u5349\u56ed\u9152\u5e97", "ticket_price": "\u4eba\u5747\u00a560-100"}, "time": "20:00", "type": "dinner"}], "theme": "\u5c0f\u4e09\u5ce1\u5934\u73ed\u00b7\u9ad8\u94c1\u56de\u6e1d\u00b7\u4e0b\u6d69\u91cc\u591c\u901b", "total_distance_km": 170, "weather": {"summary": "\u5deb\u5c7130-35\u2103\uff1b\u91cd\u5e86\u508d\u665a\u95f7\u70ed\u5c40\u90e8\u96f7\u9635\u96e8"}}, {"daily_budget": 320, "date": "2026-08-04", "day_index": 4, "fatigue_index": 1.0, "routes": [{"description": "\u51e4\u51f0\u4e3d\u90fd\u65e9\u9910\u2192\u9644\u8fd1\u8f7b\u677e\uff08\u89c2\u97f3\u6865\u53ef\u5730\u94c1\u4e00\u7ad9\uff0c\u4e0d\u5fc5\u786c\u53bb\u674e\u5b50\u575d\uff09", "from": 0, "to": 1}, {"description": "\u5348\u996d\u9000\u623f\u2192\u5730\u94c1/\u6253\u8f66\u76f4\u8fbe\u6c5f\u5317T3\uff08\u6700\u8fd1\uff09", "from": 1, "to": 2}, {"description": "CA4341 17:00\u98de\u5e7f\u5dde", "from": 2, "to": 3}], "stops": [{"duration_display": "40 \u5206\u949f", "duration_min": 40, "poi": {"category": "\u65e9\u9910", "coord_status": "unverified", "lat": 29.56, "lng": 106.575, "name": "\u9152\u5e97\u65e9\u9910", "open_hours": "\u2014", "rating": "", "recommend_reason": "\u9152\u5e97\u65e9\u9910/\u9644\u8fd1\uff1b\u884c\u674e\u4e2d\u5348\u524d\u6253\u5305", "ticket_price": "\u542b/\u00a520"}, "time": "09:00", "type": "breakfast"}, {"duration_display": "120 \u5206\u949f", "duration_min": 120, "poi": {"category": "\u57ce\u5e02\u6253\u5361", "coord_status": "verified", "lat": 29.5755, "lng": 106.5325, "name": "\u82b1\u5349\u56ed/\u89c2\u97f3\u6865\u8f7b\u677e\u534a\u65e5\uff08\u9ed8\u8ba4\uff09", "open_hours": "\u5168\u5929", "rating": "4.4", "recommend_reason": "\u9152\u5e97\u57286\u53f7\u7ebf\u82b1\u5349\u56ed\uff0c\u53ef\u5730\u94c1\u53bb\u89c2\u97f3\u6865\u6b65\u884c\u8857\u901b\u5403\uff1b\u4e0d\u53bb\u674e\u5b50\u575d\u300212:30\u524d\u56de\u9152\u5e97\u9000\u623f", "ticket_price": "\u514d\u8d39"}, "time": "10:00", "type": "attraction"}, {"duration_display": "50 \u5206\u949f", "duration_min": 50, "poi": {"category": "\u5348\u9910", "coord_status": "unverified", "lat": 29.56, "lng": 106.575, "name": "\u5348\u996d+\u9000\u623f\u53d6\u884c\u674e", "open_hours": "\u2014", "rating": "", "recommend_reason": "\u9000\u623f\u540e\u7b80\u9910\uff1b13:00\u524d\u51fa\u53d1\u53bb\u673a\u573a", "ticket_price": "\u4eba\u5747\u00a540"}, "time": "12:00", "type": "lunch"}, {"duration_display": "70 \u5206\u949f", "duration_min": 70, "poi": {"category": "\u5e02\u5185\u4ea4\u901a", "coord_status": "verified", "lat": 29.7196, "lng": 106.6417, "name": "\u82b1\u5349\u56ed\u2192\u6c5f\u5317\u673a\u573aT3", "open_hours": "\u2014", "rating": "", "recommend_reason": "6\u53f7\u7ebf\u82b1\u5349\u56ed\u2192\u6362\u4e58\u53bb\u673a\u573a\u7ea640-55\u5206\u949f/\u6253\u8f66\u7ea625-40\u5206\u949f\uff1b14:00-14:30\u5230T3\uff0c17:00 CA4341\u5f88\u677e", "ticket_price": "\u5730\u94c1\u00a56 / \u6253\u8f66\u00a550-70"}, "time": "13:00", "type": "transport"}, {"duration_display": "260 \u5206\u949f", "duration_min": 260, "poi": {"category": "\u5927\u4ea4\u901a", "coord_status": "verified", "lat": 29.7196, "lng": 106.6417, "name": "\u6c5f\u5317T3\u2192CA4341 17:00\u219218:50 \u5e7f\u5dde\u767d\u4e91T3 \ud83d\udfe2", "open_hours": "\u2014", "rating": "", "recommend_reason": "\u7f8e\u56e2\u7968\u9762\uff1a\u56fd\u822aCA4341 \u6ce2\u97f3737\uff0c17:00\u8d77\u98de\u219218:50\u767d\u4e91T3\uff1b\u5efa\u8bae15:00\u524d\u503c\u673a\u5b89\u68c0", "ticket_price": "\u5df2\u8d2d\u7968"}, "time": "14:30", "type": "transport"}], "theme": "\u82b1\u5349\u56ed\u8f7b\u677e\u00b7CA4341\u98de\u5e7f\u5dde", "total_distance_km": 25, "weather": {"summary": "\u6674\u70ed28-37\u2103"}}];
+
+  days.forEach((day, idx) => {
+    const color = dayColors[idx % dayColors.length];
+
+    // === 路线绘制 ===
+    // 优先使用 day.routes[].geometry（真实道路 polyline）
+    // 拿不到时退到 day.routes[].description（路径文字版，画虚线）
+    // 都没有时退到直接连点（虚线 + 红字提示）
+    const routes = day.routes || [];
+    if (routes.length > 0) {
+      routes.forEach(r => {
+        if (r.geometry && r.geometry.length >= 2) {
+          // 真实路线（lng,lat → lat,lng for Leaflet）
+          const latlngs = r.geometry.map(p => [p[1], p[0]]);
+          L.polyline(latlngs, {
+            color, weight: 5, opacity: 0.85
+          }).addTo(map).bindTooltip(`D${day.day_index} 路段 ${r.from}→${r.to} · 实际道路`, {sticky: true});
+        } else if (r.source === "straight_line_unavailable" || !r.geometry) {
+          // 兜底：直线 + 虚线 + 红字提示
+          const stopFrom = day.stops[r.from], stopTo = day.stops[r.to];
+          if (stopFrom && stopTo && stopFrom.poi.lat && stopTo.poi.lat) {
+            L.polyline([
+              [stopFrom.poi.lat, stopFrom.poi.lng],
+              [stopTo.poi.lat,   stopTo.poi.lng]
+            ], {
+              color: '#999', weight: 3, opacity: 0.6, dashArray: '8,8'
+            }).addTo(map).bindTooltip(
+              `⚠️ D${day.day_index} 路段 ${r.from}→${r.to} 实际路线未获取`,
+              {sticky: true}
+            );
+          }
+        }
+      });
+    } else {
+      // 完全没 routes 字段时，老兼容：按 stops 顺序连虚线
+      const dayLatLngs = day.stops.map(s => [s.poi.lat, s.poi.lng])
+                                  .filter(p => p[0] && p[1]);
+      if (dayLatLngs.length >= 2) {
+        L.polyline(dayLatLngs, {
+          color: '#999', weight: 3, opacity: 0.6, dashArray: '8,8'
+        }).addTo(map).bindTooltip(
+          `⚠️ D${day.day_index} 实际路线数据缺失（agent 未生成 routes 字段）`,
+          {sticky: true}
+        );
+      }
+    }
+
+    // === Marker 绘制 ===
+    day.stops.forEach((s, i) => {
+      if (!s.poi.lat || !s.poi.lng) return;
+      const isUnverified = s.poi.coord_status === "unverified";
+      const icon = L.divIcon({
+        className: 'day-marker',
+        html: `<div style="background:${color};color:#fff;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;border:${isUnverified?'2px dashed #fff':'2px solid #fff'};box-shadow:0 1px 4px rgba(0,0,0,0.3);">D${day.day_index}·${i+1}</div>`,
+        iconSize: [26, 26],
+        iconAnchor: [13, 13]
+      });
+      const m = L.marker([s.poi.lat, s.poi.lng], { icon }).addTo(map);
+      const verifyTag = isUnverified ? '<br><span style="color:#e67e22;">⚠️ 坐标待校验</span>' : '';
+      m.bindPopup(`<b>D${day.day_index} 第 ${i+1} 站 · ${s.poi.name}</b><br>🕐 ${s.time}<br>${s.poi.category||''}${verifyTag}`);
+      allLatLngs.push([s.poi.lat, s.poi.lng]);
+    });
+  });
+
+  // === 路线图例 ===
+  const legend = L.control({position: 'bottomleft'});
+  legend.onAdd = function() {
+    const div = L.DomUtil.create('div', 'map-legend');
+    div.innerHTML = `
+      <div style="background:rgba(255,255,255,0.95);padding:8px 12px;border-radius:6px;font-size:12px;line-height:1.6;box-shadow:0 1px 4px rgba(0,0,0,0.2);">
+        <div><span style="display:inline-block;width:24px;height:3px;background:#3498db;vertical-align:middle;"></span> 实际道路路线</div>
+        <div><span style="display:inline-block;width:24px;height:3px;background:#999;border-top:1px dashed #999;vertical-align:middle;"></span> 实际路线未获取（直线示意）</div>
+      </div>`;
+    return div;
+  };
+  legend.addTo(map);
+  if (allLatLngs.length === 1) {
+    map.setView(allLatLngs[0], 13);
+  } else if (allLatLngs.length > 1) {
+    map.fitBounds(allLatLngs, { padding: [60, 60], maxZoom: 14 });
+  } else {
+    map.setView([35, 105], 5);
+  }
+
+  // 预算饼图：由交互脚本在进入视口后绘制一次
+  window.__BUDGET_DATA__ = {"accommodation": 359, "buffer": 185, "food": 720, "ticket": 320, "transport_intra": 220, "transport_long": 1166};
+  window.__drawBudgetChart = function () {
+    const ctx = document.getElementById('budget-pie');
+    if (!ctx || ctx.dataset.drawn === '1' || typeof Chart === 'undefined') return;
+    const bd = window.__BUDGET_DATA__;
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['大交通','住宿','餐饮','门票','市内交通','备用'],
+        datasets: [{
+          data: [bd.transport_long, bd.accommodation, bd.food, bd.ticket, bd.transport_intra, bd.buffer],
+          backgroundColor: ['#2aa8e0','#ff6a3d','#f5b301','#14b8a6','#7c9cff','#95a5a6'],
+        }]
+      },
+      options: {
+        animation: { duration: 900, easing: 'easeOutQuart' },
+        plugins: { legend: { position: 'bottom' } }
+      }
+    });
+    ctx.dataset.drawn = '1';
+  };
+</script>
+
+<script>
+(() => {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const nav = document.querySelector('.site-nav');
+  const hero = document.querySelector('.hero');
+  const backTop = document.getElementById('back-to-top');
+
+  if (!reduce) document.documentElement.classList.add('motion-ready');
+
+  // Hero staged entrance: double rAF ensures initial hidden frame paints first
+  if (hero) {
+    if (reduce) {
+      hero.classList.add('is-ready');
+    } else {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => hero.classList.add('is-ready'));
+      });
+    }
+  }
+
+  // Safety: never leave content hidden if observer misses
+  window.setTimeout(() => {
+    document.querySelectorAll('.reveal-target').forEach((el) => el.classList.add('is-visible'));
+    if (hero) hero.classList.add('is-ready');
+    if (typeof window.__drawBudgetChart === 'function') window.__drawBudgetChart();
+  }, 1800);
+
+  // Mark reveal targets
+  const revealNodes = [
+    ...document.querySelectorAll('section'),
+    ...document.querySelectorAll('.day-card, .hotel-card, .trans-card, .risk-block, .xhs-section, .completeness-panel')
+  ];
+  revealNodes.forEach((el) => el.classList.add('reveal-target'));
+
+  const revealIO = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      obs.unobserve(entry.target);
+    });
+  }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
+
+  if (reduce) {
+    revealNodes.forEach((el) => el.classList.add('is-visible'));
+  } else {
+    revealNodes.forEach((el) => revealIO.observe(el));
+  }
+
+  // Nav scrolled state via sentinel (no per-frame scroll math)
+  const sentinel = document.getElementById('nav-sentinel');
+  if (nav && sentinel) {
+    const navIO = new IntersectionObserver(([entry]) => {
+      nav.classList.toggle('is-scrolled', !entry.isIntersecting);
+      if (backTop) backTop.classList.toggle('is-visible', !entry.isIntersecting);
+    }, { threshold: 1 });
+    navIO.observe(sentinel);
+  }
+
+  // Day progress rail
+  const dayCards = [...document.querySelectorAll('.day-card[data-day]')];
+  const dayLinks = [...document.querySelectorAll('[data-day-link]')];
+  const setActiveDay = (day) => {
+    dayLinks.forEach((link) => {
+      link.classList.toggle('is-active', link.getAttribute('data-day-link') === String(day));
+    });
+  };
+  if (dayCards.length) {
+    const dayIO = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((e) => e.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      setActiveDay(visible.target.getAttribute('data-day'));
+    }, { threshold: [0.25, 0.45, 0.6], rootMargin: '-20% 0px -35% 0px' });
+    dayCards.forEach((card) => dayIO.observe(card));
+    setActiveDay(dayCards[0].getAttribute('data-day'));
+  }
+
+  // Timeline reading focus
+  const stops = [...document.querySelectorAll('.timeline .stop')];
+  if (stops.length) {
+    const stopIO = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle('is-active', entry.isIntersecting && entry.intersectionRatio > 0.45);
+      });
+    }, { threshold: [0.45, 0.7], rootMargin: '-30% 0px -35% 0px' });
+    stops.forEach((stop) => stopIO.observe(stop));
+  }
+
+  // Budget chart + count-up once in view
+  const animateCount = (el) => {
+    if (el.dataset.counted === '1') return;
+    const target = Number(el.getAttribute('data-count-to') || el.textContent.replace(/[^\d.]/g, ''));
+    if (!Number.isFinite(target)) return;
+    el.dataset.counted = '1';
+    if (reduce) {
+      el.textContent = String(Math.round(target));
+      return;
+    }
+    const start = performance.now();
+    const dur = 900;
+    const from = 0;
+    const tick = (now) => {
+      const p = Math.min(1, (now - start) / dur);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = String(Math.round(from + (target - from) * eased));
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const budgetSection = document.getElementById('budget');
+  if (budgetSection) {
+    const budgetIO = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        if (typeof window.__drawBudgetChart === 'function') window.__drawBudgetChart();
+        entry.target.querySelectorAll('[data-count-to]').forEach(animateCount);
+        obs.unobserve(entry.target);
+      });
+    }, { threshold: 0.25 });
+    budgetIO.observe(budgetSection);
+  }
+
+  // Day budget counts when day card visible
+  document.querySelectorAll('.day-card').forEach((card) => {
+    const counts = card.querySelectorAll('.day-budget [data-count-to]');
+    if (!counts.length) return;
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        counts.forEach(animateCount);
+        obs.unobserve(entry.target);
+      });
+    }, { threshold: 0.3 });
+    io.observe(card);
+  });
+
+  // Back to top
+  if (backTop) {
+    backTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  }
+})();
+</script>
+
+<button type="button" class="back-to-top" id="back-to-top" aria-label="回到顶部">↑</button>
+</body>
+</html>
