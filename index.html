@@ -2323,7 +2323,7 @@ main, body > section, #snapshot, #route, #days, #hotel, #essentials {
 </style>
 
 <style id="dossier-craft-v3">
-/* craft-v3: unmistakable body website system — last word in cascade */
+/* craft-v3: unmistakable body website system ： last word in cascade */
 html body {
   background: #F3EFE8 !important;
   color: #1E1B18 !important;
@@ -3862,12 +3862,1896 @@ html body .period-col .timeline .stop:last-child {
 }
 
 /* ===== end v6 continuum ===== */
+
+
+/* ===== craft-v8: day-body as paper card nested into photo stage ===== */
+/*
+  Spatial thesis:
+  - Stage = continuous photography field (media-strip full-bleed)
+  - Body = relative paper card overlapping the bottom of the photos
+  - One composition: image world holds the schedule sheet
+  - Long content grows below the fold; no absolute collapse
+*/
+html body .day-photo-stage {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: visible !important;
+  margin: 0 0 5.75rem !important;
+  padding: 0 0 0.25rem !important;
+  background: transparent !important;
+}
+
+/* photography field stays edge-to-edge; no bottom gutter before the card */
+html body .day-photo-stage > .media-strip,
+html body .day-photo-stage .media-strip {
+  position: relative !important;
+  z-index: 1 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  background: #14110F !important;
+}
+
+/* soft depth cue under the strip so the paper sheet reads as resting on film */
+html body .day-photo-stage::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: auto !important;
+  bottom: auto !important;
+  /* anchor near the strip/card seam via the first child height is hard;
+     instead use a gradient veil painted on the strip itself */
+  display: none !important;
+}
+
+html body .day-photo-stage > .media-strip::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  height: min(48%, 14rem) !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  background: linear-gradient(180deg, rgba(20,17,15,0) 0%, rgba(20,17,15,0.28) 55%, rgba(20,17,15,0.55) 100%) !important;
+}
+
+/* THE card: relative, pulled up into the photography */
+html body .day-photo-stage > .day-body-pad,
+html body .day-photo-stage .day-body-pad {
+  position: relative !important;
+  z-index: 3 !important;
+  width: min(1120px, calc(100% - 3rem)) !important;
+  max-width: 1120px !important;
+  margin: -6.25rem auto 0 !important; /* nest deeper into media photos */
+  padding: 1.85rem 1.85rem 1.55rem !important;
+  background: #F7F3EC !important;
+  background-image: none !important;
+  border: 1px solid rgba(28, 24, 20, 0.08) !important;
+  border-radius: 14px !important;
+  box-shadow:
+    0 1px 0 rgba(255, 252, 246, 0.7) inset,
+    0 18px 50px rgba(18, 12, 8, 0.18),
+    0 4px 14px rgba(18, 12, 8, 0.08) !important;
+  overflow: visible !important;
+}
+
+/* kill continuum hairline ： the card edge is the bridge now */
+html body .day-photo-stage .day-body-pad::before {
+  display: none !important;
+  content: none !important;
+}
+
+/* inner rhythm on the sheet */
+html body .day-photo-stage .day-routes,
+html body .day-photo-stage .day-body-pad > .day-routes {
+  margin: 0 0 1.75rem !important;
+  max-width: none !important;
+}
+html body .day-photo-stage .period-grid {
+  margin: 0 !important;
+}
+html body .day-photo-stage .day-footer-note {
+  margin: 1.35rem 0 0 !important;
+  padding: 1rem 0 0 !important;
+  border-top: 1px solid #D9D3C9 !important;
+  background: transparent !important;
+}
+html body .day-photo-stage .day-budget {
+  margin-top: 0.65rem !important;
+  padding: 0.55rem 0 0 !important;
+  border-top: 1px solid #E7E1D7 !important;
+  background: transparent !important;
+}
+
+/* day-card no longer needs huge bottom pad; stage owns chapter spacing */
+html body .day-card,
+html body article.day-card {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* keep cover → stage continuous (no paper gutter between hero and strip) */
+html body .day-cover {
+  margin-bottom: 0 !important;
+}
+
+@media (max-width: 899px) {
+  html body .day-photo-stage > .day-body-pad,
+  html body .day-photo-stage .day-body-pad {
+    width: calc(100% - 1.5rem) !important;
+    margin-top: -3.75rem !important;
+    padding: 1.35rem 1.15rem 1.2rem !important;
+    border-radius: 12px !important;
+    box-shadow:
+      0 1px 0 rgba(255, 252, 246, 0.65) inset,
+      0 14px 36px rgba(18, 12, 8, 0.16),
+      0 3px 10px rgba(18, 12, 8, 0.07) !important;
+  }
+  html body .day-photo-stage {
+    margin-bottom: 4.25rem !important;
+  }
+  html body .day-photo-stage > .media-strip::before {
+    height: min(52%, 10rem) !important;
+  }
+}
+
+@media (max-width: 520px) {
+  html body .day-photo-stage > .day-body-pad,
+  html body .day-photo-stage .day-body-pad {
+    width: calc(100% - 1rem) !important;
+    margin-top: -3rem !important;
+    padding: 1.15rem 0.95rem 1.05rem !important;
+    border-radius: 12px !important;
+  }
+}
+
+@media print {
+  html body .day-photo-stage > .media-strip::before { display: none !important; }
+  html body .day-photo-stage > .day-body-pad,
+  html body .day-photo-stage .day-body-pad {
+    margin-top: 0.75rem !important;
+    box-shadow: none !important;
+    border: 1px solid #C4BDB2 !important;
+    width: 100% !important;
+  }
+}
+
+/* ===== end craft-v8 photo-nested card ===== */
+
+
+/* ===== craft-v9: hotel primary as paper card nested into stay photo ===== */
+/*
+  Same spatial thesis as day-photo-stage:
+  - Full-bleed stay photography leads
+  - Facts ride as a relative paper sheet overlapping the hero
+  - Alternates become one dossier sheet, not a stack of app cards
+*/
+html body #hotel {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 0 5.5rem !important;
+  padding: 0 !important;
+}
+html body #hotel > .section-label,
+html body #hotel > h2,
+html body #hotel > p {
+  width: min(1120px, calc(100% - 3rem)) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+html body #hotel > p {
+  margin-bottom: 2rem !important;
+  max-width: 38em !important;
+}
+html body #hotel .hotel-grid {
+  display: block !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  gap: 0 !important;
+}
+
+html body .hotel-card.is-primary {
+  display: block !important;
+  width: 100% !important;
+  margin: 0 0 2.75rem !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+html body .hotel-photo-stage {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: visible !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+/* hero stays full-bleed; no bottom gutter before the sheet */
+html body .hotel-photo-stage > .hotel-primary-media,
+html body .hotel-photo-stage .hotel-primary-media {
+  position: relative !important;
+  z-index: 1 !important;
+  display: block !important;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  margin-bottom: 0 !important;
+  overflow: hidden !important;
+  background: #14110F !important;
+  border-radius: 0 !important;
+}
+html body .hotel-photo-stage .hotel-primary-media img {
+  width: 100% !important;
+  max-width: none !important;
+  height: min(72vh, 760px) !important;
+  min-height: 420px !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  display: block !important;
+  border-radius: 0 !important;
+}
+html body .hotel-photo-stage .hotel-primary-media::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  height: min(42%, 12rem) !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+  background: linear-gradient(180deg, rgba(20,17,15,0) 0%, rgba(20,17,15,0.22) 45%, rgba(20,17,15,0.5) 100%) !important;
+}
+
+/* paper facts card nested into stay photo */
+html body .hotel-photo-stage > .hotel-primary-copy,
+html body .hotel-photo-stage .hotel-primary-copy {
+  position: relative !important;
+  z-index: 3 !important;
+  width: min(720px, calc(100% - 3rem)) !important;
+  max-width: 720px !important;
+  margin: -5.5rem auto 0 !important;
+  padding: 1.75rem 1.75rem 1.45rem !important;
+  background: #F7F3EC !important;
+  background-image: none !important;
+  border: 1px solid rgba(28, 24, 20, 0.08) !important;
+  border-radius: 14px !important;
+  box-shadow:
+    0 1px 0 rgba(255, 252, 246, 0.7) inset,
+    0 18px 50px rgba(18, 12, 8, 0.18),
+    0 4px 14px rgba(18, 12, 8, 0.08) !important;
+  overflow: visible !important;
+}
+
+/* on-photo overlay stays cinematic; sheet below carries operable facts */
+html body .hotel-photo-stage .hotel-media-overlay {
+  left: max(1.25rem, calc((100vw - 1120px) / 2)) !important;
+  right: auto !important;
+  bottom: clamp(5.5rem, 12vh, 8.5rem) !important; /* keep title clear of nested sheet */
+  max-width: min(34rem, 72vw) !important;
+}
+html body .hotel-photo-stage .hotel-primary-copy .h-rank {
+  margin: 0 0 0.35rem !important;
+  color: #8C6B45 !important;
+  letter-spacing: 0.14em !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+}
+html body .hotel-photo-stage .hotel-primary-copy h4 {
+  margin: 0 0 0.55rem !important;
+  font-family: "Noto Serif SC", serif !important;
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem) !important;
+  font-weight: 500 !important;
+  color: #1E1B18 !important;
+  line-height: 1.25 !important;
+}
+html body .hotel-photo-stage .h-price {
+  margin: 0 0 0.35rem !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 13px !important;
+  color: #5E574F !important;
+}
+html body .hotel-photo-stage .h-rating,
+html body .hotel-photo-stage .h-loc {
+  margin: 0 0 0.45rem !important;
+  color: #5E574F !important;
+  font-size: 0.95rem !important;
+  line-height: 1.55 !important;
+}
+html body .hotel-photo-stage .h-reason {
+  margin: 0.75rem 0 1rem !important;
+  max-width: 36em !important;
+  color: #3F3A34 !important;
+  font-size: 0.98rem !important;
+  line-height: 1.7 !important;
+}
+html body .hotel-photo-stage .h-amenities {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.45rem 0.65rem !important;
+  margin: 0 0 1rem !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+html body .hotel-photo-stage .h-amenities .tag {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: #8C6B45 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.04em !important;
+}
+html body .hotel-photo-stage .h-amenities .tag:not(:last-child)::after {
+  content: " · " !important;
+  color: #C4BDB2 !important;
+}
+html body .hotel-photo-stage .warning {
+  margin: 0 0 1rem !important;
+  padding: 0.85rem 0 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-top: 1px solid #E7E1D7 !important;
+  border-radius: 0 !important;
+  color: #8C6B45 !important;
+  font-size: 0.92rem !important;
+  line-height: 1.55 !important;
+}
+html body .hotel-photo-stage .book-links {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 0.55rem 0.85rem !important;
+  margin: 0 !important;
+  padding: 0.85rem 0 0 !important;
+  border-top: 1px solid #D9D3C9 !important;
+  background: transparent !important;
+}
+html body .hotel-photo-stage .book-label {
+  color: #8A8278 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.06em !important;
+}
+html body .hotel-photo-stage .book-links a {
+  color: #1E1B18 !important;
+  font-size: 0.95rem !important;
+  text-decoration: underline !important;
+  text-underline-offset: 0.18em !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+html body .hotel-photo-stage .confidence-badge { display: none !important; }
+
+/* alternates: one dossier sheet, not app-card stack */
+html body .hotel-alt-sheet {
+  width: min(1120px, calc(100% - 3rem)) !important;
+  margin: 0 auto !important;
+  padding: 1.75rem 1.75rem 1.25rem !important;
+  background: #F7F3EC !important;
+  border: 1px solid rgba(28, 24, 20, 0.08) !important;
+  border-radius: 14px !important;
+  box-shadow:
+    0 1px 0 rgba(255, 252, 246, 0.65) inset,
+    0 10px 28px rgba(18, 12, 8, 0.06) !important;
+}
+html body .hotel-alt-kicker {
+  margin: 0 0 0.35rem !important;
+  color: #8C6B45 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.14em !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+}
+html body .hotel-alt-title {
+  margin: 0 0 0.4rem !important;
+  font-family: "Noto Serif SC", serif !important;
+  font-size: clamp(1.25rem, 2vw, 1.55rem) !important;
+  font-weight: 500 !important;
+  color: #1E1B18 !important;
+}
+html body .hotel-alt-lede {
+  margin: 0 0 1.25rem !important;
+  max-width: 36em !important;
+  color: #5E574F !important;
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+}
+html body .hotel-alt-list {
+  display: grid !important;
+  gap: 0 !important;
+}
+html body .hotel-alt-sheet .hotel-card.is-secondary,
+html body .hotel-alt-sheet .hotel-card.is-secondary:nth-child(n) {
+  display: grid !important;
+  grid-template-columns: minmax(5.5rem, 7rem) minmax(0, 1fr) !important;
+  column-gap: 1.25rem !important;
+  row-gap: 0.35rem !important;
+  margin: 0 !important;
+  padding: 1.15rem 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-top: 1px solid #E7E1D7 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+html body .hotel-alt-sheet .hotel-card.is-secondary .h-rank {
+  grid-row: 1 / span 4 !important;
+  align-self: start !important;
+  margin: 0.15rem 0 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  color: #8C6B45 !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 12px !important;
+  letter-spacing: 0.04em !important;
+}
+html body .hotel-alt-sheet .hotel-card.is-secondary h4 {
+  grid-column: 2 !important;
+  margin: 0 !important;
+  font-family: "Noto Serif SC", serif !important;
+  font-size: 1.05rem !important;
+  font-weight: 500 !important;
+  color: #1E1B18 !important;
+}
+html body .hotel-alt-sheet .hotel-card.is-secondary .h-price,
+html body .hotel-alt-sheet .hotel-card.is-secondary .h-rating,
+html body .hotel-alt-sheet .hotel-card.is-secondary .h-loc,
+html body .hotel-alt-sheet .hotel-card.is-secondary .h-reason {
+  grid-column: 2 !important;
+  margin: 0 !important;
+  color: #5E574F !important;
+  font-size: 0.92rem !important;
+  line-height: 1.55 !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+html body .hotel-alt-sheet .hotel-card.is-secondary .h-price {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 12px !important;
+  color: #8A8278 !important;
+}
+html body .hotel-alt-sheet .hotel-card.is-secondary .h-amenities,
+html body .hotel-alt-sheet .hotel-card.is-secondary .warning {
+  display: none !important; /* keep alternates scannable; details live in primary */
+}
+html body .hotel-alt-sheet .hotel-card.is-secondary .book-links {
+  grid-column: 2 !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.45rem 0.75rem !important;
+  margin: 0.35rem 0 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+html body .hotel-alt-sheet .hotel-card.is-secondary .book-label {
+  color: #8A8278 !important;
+  font-size: 12px !important;
+}
+html body .hotel-alt-sheet .hotel-card.is-secondary .book-links a {
+  color: #1E1B18 !important;
+  font-size: 0.9rem !important;
+  text-decoration: underline !important;
+  text-underline-offset: 0.16em !important;
+  background: transparent !important;
+  border: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+}
+html body .hotel-alt-sheet .confidence-badge { display: none !important; }
+
+@media (max-width: 720px) {
+  html body .hotel-photo-stage .hotel-primary-media img {
+    height: min(56vh, 480px) !important;
+    min-height: 280px !important;
+  }
+  html body .hotel-photo-stage > .hotel-primary-copy,
+  html body .hotel-photo-stage .hotel-primary-copy {
+    width: calc(100% - 1.5rem) !important;
+    margin-top: -3.5rem !important;
+    padding: 1.25rem 1.1rem 1.15rem !important;
+    border-radius: 12px !important;
+  }
+  html body .hotel-photo-stage .hotel-media-overlay {
+    left: 1rem !important;
+    right: 1rem !important;
+    bottom: clamp(4.5rem, 16vh, 6.5rem) !important;
+    max-width: none !important;
+  }
+  html body .hotel-alt-sheet {
+    width: calc(100% - 1.5rem) !important;
+    padding: 1.25rem 1.1rem 1rem !important;
+    border-radius: 12px !important;
+  }
+  html body .hotel-alt-sheet .hotel-card.is-secondary,
+  html body .hotel-alt-sheet .hotel-card.is-secondary:nth-child(n) {
+    display: block !important;
+    padding: 1rem 0 !important;
+  }
+  html body .hotel-alt-sheet .hotel-card.is-secondary .h-rank {
+    display: block !important;
+    margin: 0 0 0.35rem !important;
+  }
+}
+
+@media print {
+  html body .hotel-photo-stage .hotel-primary-media::before { display: none !important; }
+  html body .hotel-photo-stage > .hotel-primary-copy,
+  html body .hotel-photo-stage .hotel-primary-copy {
+    margin-top: 0.75rem !important;
+    box-shadow: none !important;
+    width: 100% !important;
+  }
+  html body .hotel-photo-stage .hotel-primary-media,
+  html body .hotel-photo-stage .hotel-primary-media {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+/* ===== end craft-v9 hotel nested card ===== */
+
+/* ===== craft-v10: Omai-inspired type choreography and scroll narrative ===== */
+html body .site-nav {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 80 !important;
+  background: transparent !important;
+  border-bottom-color: transparent !important;
+  box-shadow: none !important;
+  color: #F7F1E8 !important;
+}
+html body .site-nav.is-scrolled {
+  background: rgba(247, 243, 236, 0.94) !important;
+  border-bottom: 1px solid rgba(30, 27, 24, 0.1) !important;
+  box-shadow: 0 10px 30px rgba(20, 17, 15, 0.08) !important;
+  color: #1E1B18 !important;
+}
+html body .site-nav:not(.is-scrolled) .nav-brand,
+html body .site-nav:not(.is-scrolled) .nav-links a {
+  color: #F7F1E8 !important;
+}
+html body .site-nav.is-scrolled .nav-brand,
+html body .site-nav.is-scrolled .nav-links a {
+  color: #1E1B18 !important;
+}
+
+html body .hero {
+  min-height: 100dvh !important;
+  display: block !important;
+  padding: 0 !important;
+  background: #14110F !important;
+  isolation: isolate !important;
+}
+html body .hero-media,
+html body .hero-scrim {
+  position: absolute !important;
+  inset: 0 !important;
+}
+html body .hero-media {
+  z-index: 0 !important;
+  overflow: hidden !important;
+  background: #14110F !important;
+}
+html body .hero-media img {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  transform: scale(1) !important;
+  transform-origin: center center !important;
+}
+html body .hero-scrim {
+  z-index: 1 !important;
+  pointer-events: none !important;
+  background:
+    linear-gradient(180deg, rgba(12, 10, 8, 0.24) 0%, rgba(12, 10, 8, 0.04) 42%, rgba(12, 10, 8, 0.5) 100%),
+    linear-gradient(90deg, rgba(12, 10, 8, 0.42) 0%, rgba(12, 10, 8, 0.1) 42%, transparent 70%) !important;
+}
+html body .hero-copy {
+  position: absolute !important;
+  z-index: 3 !important;
+  top: 50% !important;
+  left: max(1.75rem, calc((100vw - 1320px) / 2)) !important;
+  width: min(34rem, calc(100vw - 3.5rem)) !important;
+  max-width: none !important;
+  transform: translateY(-50%) !important;
+}
+html body .hero-kicker {
+  margin: 0 0 1.05rem !important;
+  font-family: var(--font-body) !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.12em !important;
+  color: rgba(247, 241, 232, 0.8) !important;
+}
+html body .hero h1 {
+  width: max-content !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  font-family: var(--font-display) !important;
+  font-size: clamp(3.35rem, 5vw, 4.7rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.03 !important;
+  letter-spacing: 0 !important;
+}
+html body .kinetic-line {
+  display: block !important;
+  overflow: hidden !important;
+  padding: 0.03em 0.08em 0.08em 0 !important;
+}
+html body .kinetic-word {
+  display: block !important;
+  width: max-content !important;
+  color: #F7F1E8 !important;
+  -webkit-text-fill-color: #F7F1E8 !important;
+  text-shadow: 0 1px 18px rgba(0, 0, 0, 0.3) !important;
+}
+html body .hero-sub,
+html body .hero-meta-row {
+  display: none !important;
+}
+html body .hero-folio {
+  position: absolute !important;
+  z-index: 3 !important;
+  right: max(1.75rem, calc((100vw - 1320px) / 2)) !important;
+  bottom: 2rem !important;
+  margin: 0 !important;
+  display: flex !important;
+  gap: 0.8rem !important;
+  color: rgba(247, 241, 232, 0.72) !important;
+  font-family: var(--font-mono) !important;
+  font-size: 11px !important;
+  line-height: 1 !important;
+  letter-spacing: 0.08em !important;
+}
+html body .hero-folio span {
+  padding-left: 0.8rem !important;
+  border-left: 1px solid rgba(247, 241, 232, 0.28) !important;
+}
+html body .hero-scroll-hint {
+  z-index: 3 !important;
+  bottom: 1.9rem !important;
+  display: grid !important;
+  justify-items: center !important;
+  gap: 0.65rem !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.12em !important;
+}
+html body .hero-scroll-hint::after {
+  content: "" !important;
+  width: 1px !important;
+  height: 2.75rem !important;
+  background: rgba(247, 241, 232, 0.62) !important;
+}
+
+/* Hero: image establishes the scene, then title fragments enter like Omai. */
+.motion-ready .hero:not(.is-ready) .hero-copy > * {
+  opacity: 1 !important;
+  transform: none !important;
+}
+.motion-ready .hero:not(.is-ready) .hero-media img {
+  opacity: 0 !important;
+  transform: scale(1.05) !important;
+}
+.motion-ready .hero:not(.is-ready) .hero-scrim,
+.motion-ready .hero:not(.is-ready) .hero-kicker,
+.motion-ready .hero:not(.is-ready) .hero-folio,
+.motion-ready .hero:not(.is-ready) .hero-scroll-hint,
+.motion-ready .hero:not(.is-ready) .kinetic-word {
+  opacity: 0 !important;
+}
+.motion-ready .hero:not(.is-ready) .hero-kicker,
+.motion-ready .hero:not(.is-ready) .kinetic-word {
+  transform: translateX(-20px) !important;
+}
+.motion-ready .hero.is-ready .hero-media img {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+  transition: opacity 1.8s cubic-bezier(0.22, 1, 0.36, 1), transform 1.8s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+.motion-ready .hero.is-ready .hero-scrim {
+  opacity: 1 !important;
+  transition: opacity 1.8s cubic-bezier(0.22, 1, 0.36, 1) 80ms !important;
+}
+.motion-ready .hero.is-ready .hero-kicker,
+.motion-ready .hero.is-ready .kinetic-word {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+  transition: opacity 1s cubic-bezier(0.25, 0.5, 0, 1), transform 1s cubic-bezier(0.25, 0.5, 0, 1) !important;
+}
+.motion-ready .hero.is-ready .hero-kicker { transition-delay: 320ms !important; }
+.motion-ready .hero.is-ready .kinetic-line:nth-child(1) .kinetic-word { transition-delay: 420ms !important; }
+.motion-ready .hero.is-ready .kinetic-line:nth-child(2) .kinetic-word { transition-delay: 520ms !important; }
+.motion-ready .hero.is-ready .hero-folio,
+.motion-ready .hero.is-ready .hero-scroll-hint {
+  opacity: 1 !important;
+  transition: opacity 0.8s ease-out !important;
+}
+.motion-ready .hero.is-ready .hero-folio { transition-delay: 900ms !important; }
+.motion-ready .hero.is-ready .hero-scroll-hint { transition-delay: 1100ms !important; }
+
+/* Generic sections stay quiet; photographic chapters receive the cinematic motion. */
+.motion-ready .reveal-target {
+  opacity: 0 !important;
+  transform: translateY(24px) !important;
+  transition: opacity 0.8s cubic-bezier(0.25, 0.5, 0, 1), transform 0.8s cubic-bezier(0.25, 0.5, 0, 1) !important;
+}
+.motion-ready .reveal-target.is-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+.motion-ready .story-reveal {
+  will-change: opacity, transform !important;
+}
+.motion-ready .day-cover.story-reveal:not(.is-visible),
+.motion-ready .hotel-primary-media.story-reveal:not(.is-visible) {
+  opacity: 0 !important;
+}
+.motion-ready .day-cover.story-reveal.is-visible,
+.motion-ready .hotel-primary-media.story-reveal.is-visible {
+  opacity: 1 !important;
+  transition: opacity 1.25s cubic-bezier(0.25, 0.5, 0, 1) !important;
+}
+.motion-ready .day-cover.story-reveal:not(.is-visible) .day-cover-overlay > *,
+.motion-ready .hotel-primary-media.story-reveal:not(.is-visible) .hotel-media-overlay > * {
+  opacity: 0 !important;
+  transform: translateX(-20px) !important;
+}
+.motion-ready .day-cover.story-reveal.is-visible .day-cover-overlay > *,
+.motion-ready .hotel-primary-media.story-reveal.is-visible .hotel-media-overlay > * {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+  transition: opacity 1s cubic-bezier(0.25, 0.5, 0, 1), transform 1s cubic-bezier(0.25, 0.5, 0, 1) !important;
+}
+.motion-ready .story-reveal.is-visible .day-cover-overlay > *:nth-child(1),
+.motion-ready .story-reveal.is-visible .hotel-media-overlay > *:nth-child(1) { transition-delay: 140ms !important; }
+.motion-ready .story-reveal.is-visible .day-cover-overlay > *:nth-child(2),
+.motion-ready .story-reveal.is-visible .hotel-media-overlay > *:nth-child(2) { transition-delay: 240ms !important; }
+.motion-ready .story-reveal.is-visible .day-cover-overlay > *:nth-child(3),
+.motion-ready .story-reveal.is-visible .hotel-media-overlay > *:nth-child(3) { transition-delay: 340ms !important; }
+.motion-ready .story-reveal.is-visible .day-cover-overlay > *:nth-child(4),
+.motion-ready .story-reveal.is-visible .hotel-media-overlay > *:nth-child(4) { transition-delay: 440ms !important; }
+
+.motion-ready .media-strip.story-reveal:not(.is-visible) .media-card {
+  opacity: 0 !important;
+  transform: translateY(34px) !important;
+}
+.motion-ready .media-strip.story-reveal.is-visible .media-card {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity 1s cubic-bezier(0.25, 0.5, 0, 1), transform 1s cubic-bezier(0.25, 0.5, 0, 1) !important;
+}
+.motion-ready .media-strip.story-reveal.is-visible .media-card:nth-child(2) { transition-delay: 90ms !important; }
+.motion-ready .media-strip.story-reveal.is-visible .media-card:nth-child(3) { transition-delay: 180ms !important; }
+
+.motion-ready .day-body-pad.story-reveal:not(.is-visible),
+.motion-ready .hotel-primary-copy.story-reveal:not(.is-visible),
+.motion-ready .hotel-alt-sheet.story-reveal:not(.is-visible) {
+  opacity: 0 !important;
+  transform: translateY(56px) !important;
+}
+.motion-ready .day-body-pad.story-reveal.is-visible,
+.motion-ready .hotel-primary-copy.story-reveal.is-visible,
+.motion-ready .hotel-alt-sheet.story-reveal.is-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity 1s cubic-bezier(0.25, 0.5, 0, 1), transform 1s cubic-bezier(0.25, 0.5, 0, 1) !important;
+}
+
+/* Native view timelines create Omai-like depth without a per-frame scroll listener. */
+@supports (animation-timeline: view()) {
+  html body .day-cover > img,
+  html body .media-card > img,
+  html body .hotel-primary-media > img {
+    transform-origin: center center !important;
+    animation: photo-drift linear both !important;
+    animation-timeline: view() !important;
+    animation-range: entry 0% exit 100% !important;
+  }
+  html body .day-cover-overlay,
+  html body .hotel-media-overlay {
+    animation: copy-drift linear both !important;
+    animation-timeline: view() !important;
+    animation-range: entry 0% exit 100% !important;
+  }
+  @keyframes photo-drift {
+    from { transform: scale(1.08) translateY(-1.5%); }
+    to { transform: scale(1.02) translateY(1.5%); }
+  }
+  @keyframes copy-drift {
+    0% { transform: translateY(68px); }
+    50% { transform: translateY(0); }
+    100% { transform: translateY(-68px); }
+  }
+}
+
+@media (max-width: 720px) {
+  html body .site-nav {
+    height: 60px !important;
+    min-height: 60px !important;
+    flex-wrap: nowrap !important;
+    padding: 0 1rem !important;
+  }
+  html body .nav-links {
+    width: auto !important;
+    max-width: none !important;
+    margin-left: auto !important;
+    gap: 0.2rem !important;
+  }
+  html body .nav-links a {
+    min-height: 40px !important;
+    padding: 0 0.35rem !important;
+    font-size: 10px !important;
+  }
+  html body .nav-links a:nth-child(1),
+  html body .nav-links a:nth-child(5) {
+    display: none !important;
+  }
+  html body .hero-copy {
+    top: auto !important;
+    bottom: 18vh !important;
+    left: 1.15rem !important;
+    width: calc(100vw - 2.3rem) !important;
+    transform: none !important;
+  }
+  html body .hero h1 {
+    font-size: clamp(3rem, 15vw, 4.25rem) !important;
+  }
+  html body .hero-folio {
+    left: 1.15rem !important;
+    right: auto !important;
+    bottom: 1.35rem !important;
+  }
+  html body .hero-scroll-hint { display: none !important; }
+  html body .day-cover-overlay .day-cover-lede {
+    max-width: 24em !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+  html body .day-cover-overlay .day-meta-on-photo > span:nth-child(3) {
+    flex-basis: 100% !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html body .hero-media img,
+  html body .hero-scrim,
+  html body .hero-kicker,
+  html body .kinetic-word,
+  html body .hero-folio,
+  html body .hero-scroll-hint,
+  html body .story-reveal,
+  html body .story-reveal *,
+  html body .reveal-target {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media print {
+  html body .hero-media { display: none !important; }
+  html body .hero-copy { position: static !important; transform: none !important; }
+  html body .hero-folio { position: static !important; }
+}
+/* ===== end craft-v10 motion narrative ===== */
+
+/* ===== craft-v11: day dossier anchored inside the media field ===== */
+/*
+  The day sheet deliberately occupies only the left reading measure. The exposed
+  right-hand photography keeps route context present while the long schedule stays readable.
+*/
+html body .day-photo-stage {
+  margin-bottom: 6.5rem !important;
+  padding-bottom: 0.5rem !important;
+  background: linear-gradient(180deg, transparent 0, transparent 25rem, #F7F3EC 25rem, #F7F3EC 100%) !important;
+}
+html body .day-photo-stage > .media-strip::before {
+  height: min(62%, 17rem) !important;
+  background: linear-gradient(180deg, rgba(20, 17, 15, 0) 0%, rgba(20, 17, 15, 0.18) 38%, rgba(20, 17, 15, 0.6) 100%) !important;
+}
+html body .day-photo-stage > .day-body-pad,
+html body .day-photo-stage .day-body-pad {
+  width: 66.6667vw !important;
+  max-width: none !important;
+  margin: -12rem 0 0 calc(50% - 50vw) !important;
+  padding: 2.4rem clamp(2rem, calc((100vw - 1120px) / 2), 25rem) 2.1rem !important;
+  background: #FDFBF7 !important;
+  border: 0 !important;
+  border-right: 1px solid rgba(28, 24, 20, 0.14) !important;
+  border-radius: 0 !important;
+  box-shadow: 0 16px 42px rgba(18, 12, 8, 0.13) !important;
+}
+html body .day-photo-stage .day-body-pad::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  right: -1px !important;
+  bottom: 0 !important;
+  width: 1px !important;
+  background: rgba(140, 107, 69, 0.22) !important;
+  pointer-events: none !important;
+}
+html body .day-photo-stage .day-routes,
+html body .day-photo-stage .day-body-pad > .day-routes {
+  margin-bottom: 2rem !important;
+  max-width: 43rem !important;
+}
+html body .day-photo-stage .period-grid,
+html body .day-photo-stage .day-footer-note,
+html body .day-photo-stage .day-budget {
+  max-width: 43rem !important;
+}
+.motion-ready .day-body-pad.story-reveal:not(.is-visible) {
+  transform: translateY(104px) !important;
+}
+
+@media (max-width: 899px) {
+  html body .day-photo-stage {
+    margin-bottom: 4.75rem !important;
+    background: linear-gradient(180deg, transparent 0, transparent 15rem, #F7F3EC 15rem, #F7F3EC 100%) !important;
+  }
+  html body .day-photo-stage > .day-body-pad,
+  html body .day-photo-stage .day-body-pad {
+    width: min(720px, calc(100% - 3rem)) !important;
+    max-width: 720px !important;
+    margin: -6.5rem 1.5rem 0 !important;
+    padding: 1.55rem 1.4rem 1.35rem !important;
+    border: 0 !important;
+    border-right: 1px solid rgba(28, 24, 20, 0.12) !important;
+    border-radius: 0 !important;
+    box-shadow: 0 14px 32px rgba(18, 12, 8, 0.12) !important;
+  }
+}
+
+@media (max-width: 520px) {
+  html body .day-photo-stage {
+    background: linear-gradient(180deg, transparent 0, transparent 10rem, #F7F3EC 10rem, #F7F3EC 100%) !important;
+  }
+  html body .day-photo-stage > .day-body-pad,
+  html body .day-photo-stage .day-body-pad {
+    width: calc(100vw - 2rem) !important;
+    margin: -4.75rem 0 0 calc(50% - 50vw + 1rem) !important;
+    padding: 1.25rem 1rem 1.15rem !important;
+  }
+  html body .day-photo-stage .day-body-pad::after { display: none !important; }
+}
+/* ===== end craft-v11 day dossier ===== */
+
+/* ===== craft-v12: split day-body into photo embeds ===== */
+/*
+  Spatial thesis:
+  - Photography is the carrier. Key itinerary fragments live inside each media frame.
+  - day-body-pad is no longer a paper card nested into photos.
+  - Full schedule returns as an unframed reading sheet under the photo chapter.
+  DESIGN_VARIANCE:8 MOTION_INTENSITY:7 VISUAL_DENSITY:3
+*/
+html body .day-photo-stage {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: visible !important;
+  margin: 0 0 5.5rem !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+/* kill craft-v8/v11 seam veil made for the nested card */
+html body .day-photo-stage > .media-strip::before,
+html body .day-photo-stage .media-strip::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* stacked full-bleed photo chapters, not a 3-up strip + floating sheet */
+html body .day-photo-stage > .media-strip,
+html body .day-photo-stage .media-strip {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  background: #14110F !important;
+  border: 0 !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+html body .day-photo-stage .media-card {
+  position: relative !important;
+  isolation: isolate !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  min-height: min(68vh, 720px) !important;
+}
+
+html body .day-photo-stage .media-card > img {
+  width: 100% !important;
+  height: min(68vh, 720px) !important;
+  min-height: 420px !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  display: block !important;
+  border-radius: 0 !important;
+  aspect-ratio: auto !important;
+}
+
+/* deeper editorial scrim for multi-line embeds */
+html body .day-photo-stage .media-card::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  background:
+    linear-gradient(90deg, rgba(12,10,8,0.62) 0%, rgba(12,10,8,0.28) 38%, rgba(12,10,8,0.08) 62%, transparent 78%),
+    linear-gradient(180deg, rgba(12,10,8,0.12) 0%, rgba(12,10,8,0.08) 42%, rgba(12,10,8,0.55) 78%, rgba(12,10,8,0.78) 100%) !important;
+}
+
+/* THE split: itinerary fragment lives in the photograph */
+html body .day-photo-stage .media-overlay,
+html body .day-photo-stage .media-embed,
+html body .day-photo-stage figcaption.media-overlay {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-end !important;
+  gap: 0.45rem !important;
+  position: absolute !important;
+  left: max(1.35rem, calc((100vw - 1120px) / 2)) !important;
+  right: auto !important;
+  bottom: clamp(1.4rem, 4vh, 2.6rem) !important;
+  width: min(34rem, calc(100vw - 2.7rem)) !important;
+  max-width: min(34rem, calc(100vw - 2.7rem)) !important;
+  z-index: 2 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #F7F1E8 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  text-shadow: 0 1px 18px rgba(0,0,0,0.35) !important;
+  pointer-events: none !important;
+}
+
+html body .day-photo-stage .media-kicker {
+  display: block !important;
+  margin: 0 !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.14em !important;
+  color: rgba(247,241,232,0.72) !important;
+  text-transform: none !important;
+}
+
+html body .day-photo-stage .media-title,
+html body .day-photo-stage .media-overlay strong,
+html body .day-photo-stage .media-embed strong {
+  display: block !important;
+  margin: 0 !important;
+  font-family: "Noto Serif SC", serif !important;
+  font-size: clamp(1.55rem, 3.2vw, 2.35rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.18 !important;
+  letter-spacing: 0.02em !important;
+  color: #F7F1E8 !important;
+  -webkit-text-fill-color: #F7F1E8 !important;
+  background: none !important;
+}
+
+html body .day-photo-stage .media-lede,
+html body .day-photo-stage .media-overlay p,
+html body .day-photo-stage .media-embed p {
+  display: block !important;
+  margin: 0.15rem 0 0 !important;
+  max-width: 28em !important;
+  font-family: "Noto Serif SC", "Songti SC", serif !important;
+  font-size: clamp(0.95rem, 1.2vw, 1.06rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.65 !important;
+  letter-spacing: 0.01em !important;
+  color: rgba(247,241,232,0.86) !important;
+}
+
+/* alternate composition: even cards lean copy slightly higher for rhythm */
+html body .day-photo-stage .media-card:nth-child(2) .media-overlay,
+html body .day-photo-stage .media-card:nth-child(2) .media-embed {
+  bottom: clamp(18%, 22vh, 11rem) !important;
+}
+html body .day-photo-stage .media-card:nth-child(3) .media-overlay,
+html body .day-photo-stage .media-card:nth-child(3) .media-embed {
+  bottom: clamp(1.4rem, 5vh, 3rem) !important;
+}
+
+/* day-body-pad: unframed dossier under photos. NOT a nested card. */
+html body .day-photo-stage > .day-body-pad,
+html body .day-photo-stage .day-body-pad {
+  position: relative !important;
+  z-index: 1 !important;
+  width: min(1120px, calc(100% - 3rem)) !important;
+  max-width: 1120px !important;
+  margin: 2.85rem auto 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-right: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  transform: none !important;
+}
+
+html body .day-photo-stage .day-body-pad::before,
+html body .day-photo-stage .day-body-pad::after {
+  content: none !important;
+  display: none !important;
+}
+
+html body .day-photo-stage .day-routes,
+html body .day-photo-stage .day-body-pad > .day-routes {
+  margin: 0 0 2.35rem !important;
+  max-width: 46rem !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+html body .day-photo-stage .period-grid,
+html body .day-photo-stage .day-footer-note,
+html body .day-photo-stage .day-budget {
+  max-width: none !important;
+}
+
+/* motion: each photo embed reveals as its own story beat */
+.motion-ready .media-strip.story-reveal:not(.is-visible) .media-card {
+  opacity: 0 !important;
+  transform: translateY(42px) !important;
+}
+.motion-ready .media-strip.story-reveal.is-visible .media-card {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity 1.05s cubic-bezier(0.25, 0.5, 0, 1), transform 1.05s cubic-bezier(0.25, 0.5, 0, 1) !important;
+}
+.motion-ready .media-strip.story-reveal.is-visible .media-card:nth-child(1) { transition-delay: 0ms !important; }
+.motion-ready .media-strip.story-reveal.is-visible .media-card:nth-child(2) { transition-delay: 120ms !important; }
+.motion-ready .media-strip.story-reveal.is-visible .media-card:nth-child(3) { transition-delay: 220ms !important; }
+
+.motion-ready .media-strip.story-reveal:not(.is-visible) .media-overlay,
+.motion-ready .media-strip.story-reveal:not(.is-visible) .media-embed {
+  opacity: 0 !important;
+  transform: translateX(-18px) !important;
+}
+.motion-ready .media-strip.story-reveal.is-visible .media-overlay,
+.motion-ready .media-strip.story-reveal.is-visible .media-embed {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+  transition: opacity 0.95s cubic-bezier(0.25, 0.5, 0, 1), transform 0.95s cubic-bezier(0.25, 0.5, 0, 1) !important;
+  transition-delay: 180ms !important;
+}
+.motion-ready .media-strip.story-reveal.is-visible .media-card:nth-child(2) .media-overlay,
+.motion-ready .media-strip.story-reveal.is-visible .media-card:nth-child(2) .media-embed { transition-delay: 280ms !important; }
+.motion-ready .media-strip.story-reveal.is-visible .media-card:nth-child(3) .media-overlay,
+.motion-ready .media-strip.story-reveal.is-visible .media-card:nth-child(3) .media-embed { transition-delay: 380ms !important; }
+
+/* dossier sheet rises gently, not as a heavy card slam */
+.motion-ready .day-body-pad.story-reveal:not(.is-visible) {
+  opacity: 0 !important;
+  transform: translateY(28px) !important;
+}
+.motion-ready .day-body-pad.story-reveal.is-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity 0.9s cubic-bezier(0.25, 0.5, 0, 1), transform 0.9s cubic-bezier(0.25, 0.5, 0, 1) !important;
+}
+
+@supports (animation-timeline: view()) {
+  html body .day-photo-stage .media-overlay,
+  html body .day-photo-stage .media-embed {
+    animation: copy-drift linear both !important;
+    animation-timeline: view() !important;
+    animation-range: entry 0% exit 100% !important;
+  }
+}
+
+@media (max-width: 899px) {
+  html body .day-photo-stage .media-card,
+  html body .day-photo-stage .media-card > img {
+    min-height: 320px !important;
+    height: min(62vh, 560px) !important;
+  }
+  html body .day-photo-stage .media-overlay,
+  html body .day-photo-stage .media-embed,
+  html body .day-photo-stage figcaption.media-overlay {
+    left: 1.15rem !important;
+    width: calc(100vw - 2.3rem) !important;
+    max-width: calc(100vw - 2.3rem) !important;
+    bottom: 1.2rem !important;
+  }
+  html body .day-photo-stage .media-card:nth-child(2) .media-overlay,
+  html body .day-photo-stage .media-card:nth-child(2) .media-embed {
+    bottom: 1.2rem !important;
+  }
+  html body .day-photo-stage > .day-body-pad,
+  html body .day-photo-stage .day-body-pad {
+    width: calc(100% - 2rem) !important;
+    margin: 2rem auto 0 !important;
+  }
+}
+
+@media (max-width: 520px) {
+  html body .day-photo-stage .media-card,
+  html body .day-photo-stage .media-card > img {
+    min-height: 280px !important;
+    height: min(58vh, 460px) !important;
+  }
+  html body .day-photo-stage .media-title,
+  html body .day-photo-stage .media-overlay strong,
+  html body .day-photo-stage .media-embed strong {
+    font-size: clamp(1.35rem, 7vw, 1.8rem) !important;
+  }
+  html body .day-photo-stage > .day-body-pad,
+  html body .day-photo-stage .day-body-pad {
+    width: calc(100vw - 2rem) !important;
+    margin: 1.65rem auto 0 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-ready .media-strip.story-reveal .media-card,
+  .motion-ready .media-strip.story-reveal .media-overlay,
+  .motion-ready .media-strip.story-reveal .media-embed,
+  .motion-ready .day-body-pad.story-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media print {
+  html body .day-photo-stage > .media-strip,
+  html body .day-photo-stage .media-strip {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  html body .day-photo-stage .media-card > img {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 260px !important;
+  }
+  html body .day-photo-stage > .day-body-pad,
+  html body .day-photo-stage .day-body-pad {
+    margin-top: 1rem !important;
+  }
+}
+/* ===== end craft-v12 split embed ===== */
+
+/* ===== craft-v13: Omai interaction system ===== */
+/*
+  Mapped from omaivillas.com:
+  - [data-animate-text]: opacity 0 + translateY(40px) -> visible in 0.7s ease-in-out
+  - [data-animate-img]: opacity 0 -> 1 in 1s / .1s delay
+  - hero words: x -20 -> 0, stagger ~100ms, duration ~1s
+  - hero image: scale 1.05 -> 1 over ~1.8s
+  - hover: 200ms basic-animation, photo scale 1.02
+  - no forced full-page reveal after 2.6s
+  - per media-card IO, not whole strip at once
+  DESIGN_VARIANCE:8 MOTION_INTENSITY:7 VISUAL_DENSITY:3
+*/
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* clickable affordances */
+html body a,
+html body button,
+html body .nav-links a,
+html body .day-rail a,
+html body #back-to-top {
+  cursor: pointer !important;
+  transition: opacity 0.2s ease-in-out, color 0.2s ease-in-out, background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, transform 0.2s ease-in-out !important;
+}
+html body .nav-links a:hover,
+html body .day-rail a:hover {
+  opacity: 0.8 !important;
+}
+html body a:focus-visible,
+html body button:focus-visible,
+html body .nav-links a:focus-visible,
+html body .day-rail a:focus-visible {
+  outline: 2px solid rgba(140, 107, 69, 0.85) !important;
+  outline-offset: 3px !important;
+}
+
+/* ---- Omai text/image enter primitives ---- */
+.motion-ready [data-animate][data-animate-text]:not(.is-visible) {
+  opacity: 0 !important;
+  transform: translateY(40px) !important;
+}
+.motion-ready [data-animate][data-animate-text].is-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out !important;
+}
+.motion-ready [data-animate][data-animate-img]:not(.is-visible) {
+  opacity: 0 !important;
+}
+.motion-ready [data-animate][data-animate-img].is-visible {
+  opacity: 1 !important;
+  transition: opacity 1s ease-in-out 0.1s !important;
+}
+
+/* hero: match Omai word + image choreography more closely */
+.motion-ready .hero:not(.is-ready) .hero-media img {
+  opacity: 0 !important;
+  transform: scale(1.05) !important;
+}
+.motion-ready .hero.is-ready .hero-media img {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+  transition: opacity 1.8s cubic-bezier(0.22, 1, 0.36, 1), transform 1.8s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+.motion-ready .hero:not(.is-ready) .kinetic-word {
+  opacity: 0 !important;
+  transform: translateX(-20px) !important;
+}
+.motion-ready .hero.is-ready .kinetic-word {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+  transition: opacity 1s cubic-bezier(0.25, 0.5, 0, 1), transform 1s cubic-bezier(0.25, 0.5, 0, 1) !important;
+}
+.motion-ready .hero.is-ready .kinetic-line:nth-child(1) .kinetic-word { transition-delay: 0.08s !important; }
+.motion-ready .hero.is-ready .kinetic-line:nth-child(2) .kinetic-word { transition-delay: 0.18s !important; }
+.motion-ready .hero.is-ready .kinetic-line:nth-child(3) .kinetic-word { transition-delay: 0.28s !important; }
+.motion-ready .hero.is-ready .kinetic-line:nth-child(4) .kinetic-word { transition-delay: 0.38s !important; }
+.motion-ready .hero:not(.is-ready) .hero-kicker,
+.motion-ready .hero:not(.is-ready) .hero-folio,
+.motion-ready .hero:not(.is-ready) .hero-scroll-hint,
+.motion-ready .hero:not(.is-ready) .hero-scrim {
+  opacity: 0 !important;
+}
+.motion-ready .hero.is-ready .hero-kicker {
+  opacity: 1 !important;
+  transition: opacity 0.8s ease-in-out 0.05s, transform 0.8s ease-in-out 0.05s !important;
+}
+.motion-ready .hero.is-ready .hero-folio,
+.motion-ready .hero.is-ready .hero-scroll-hint,
+.motion-ready .hero.is-ready .hero-scrim {
+  opacity: 1 !important;
+  transition: opacity 1s ease-in-out 0.55s !important;
+}
+.motion-ready .hero:not(.is-ready) .hero-kicker {
+  transform: translateX(-16px) !important;
+}
+.motion-ready .hero.is-ready .hero-kicker {
+  transform: translateX(0) !important;
+}
+
+/* day cover: image first, copy fragments after */
+.motion-ready .day-cover.story-reveal:not(.is-visible) > img {
+  opacity: 0 !important;
+  transform: scale(1.05) !important;
+}
+.motion-ready .day-cover.story-reveal.is-visible > img {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+  transition: opacity 1.35s cubic-bezier(0.22, 1, 0.36, 1), transform 1.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+.motion-ready .day-cover.story-reveal:not(.is-visible) .day-cover-overlay > * {
+  opacity: 0 !important;
+  transform: translateY(40px) !important;
+}
+.motion-ready .day-cover.story-reveal.is-visible .day-cover-overlay > * {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out !important;
+}
+.motion-ready .day-cover.story-reveal.is-visible .day-cover-overlay > *:nth-child(1) { transition-delay: 180ms !important; }
+.motion-ready .day-cover.story-reveal.is-visible .day-cover-overlay > *:nth-child(2) { transition-delay: 280ms !important; }
+.motion-ready .day-cover.story-reveal.is-visible .day-cover-overlay > *:nth-child(3) { transition-delay: 380ms !important; }
+.motion-ready .day-cover.story-reveal.is-visible .day-cover-overlay > *:nth-child(4) { transition-delay: 480ms !important; }
+
+/* per media-card Omai beat */
+.motion-ready .media-card.story-reveal:not(.is-visible) {
+  opacity: 1 !important; /* keep layout, animate internals */
+  transform: none !important;
+}
+.motion-ready .media-card.story-reveal:not(.is-visible) > img {
+  opacity: 0 !important;
+  transform: scale(1.05) !important;
+}
+.motion-ready .media-card.story-reveal.is-visible > img {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+  transition: opacity 1.15s ease-in-out 0.08s, transform 1.35s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+.motion-ready .media-card.story-reveal:not(.is-visible) .media-embed,
+.motion-ready .media-card.story-reveal:not(.is-visible) .media-overlay {
+  opacity: 0 !important;
+  transform: translateY(40px) !important;
+}
+.motion-ready .media-card.story-reveal.is-visible .media-embed,
+.motion-ready .media-card.story-reveal.is-visible .media-overlay {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity 0.75s ease-in-out 0.22s, transform 0.75s ease-in-out 0.22s !important;
+}
+.motion-ready .media-card.story-reveal:not(.is-visible) .media-title .kinetic-word,
+.motion-ready .media-card.story-reveal:not(.is-visible) .media-title .omai-word {
+  opacity: 0 !important;
+  transform: translateX(-18px) !important;
+}
+.motion-ready .media-card.story-reveal.is-visible .media-title .kinetic-word,
+.motion-ready .media-card.story-reveal.is-visible .media-title .omai-word {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+  transition: opacity 0.9s cubic-bezier(0.25, 0.5, 0, 1), transform 0.9s cubic-bezier(0.25, 0.5, 0, 1) !important;
+}
+.motion-ready .media-card.story-reveal.is-visible .media-title .omai-word:nth-child(1),
+.motion-ready .media-card.story-reveal.is-visible .media-title .kinetic-word:nth-child(1) { transition-delay: 280ms !important; }
+.motion-ready .media-card.story-reveal.is-visible .media-title .omai-word:nth-child(2),
+.motion-ready .media-card.story-reveal.is-visible .media-title .kinetic-word:nth-child(2) { transition-delay: 380ms !important; }
+.motion-ready .media-card.story-reveal.is-visible .media-title .omai-word:nth-child(3),
+.motion-ready .media-card.story-reveal.is-visible .media-title .kinetic-word:nth-child(3) { transition-delay: 480ms !important; }
+.motion-ready .media-card.story-reveal.is-visible .media-title .omai-word:nth-child(4),
+.motion-ready .media-card.story-reveal.is-visible .media-title .kinetic-word:nth-child(4) { transition-delay: 580ms !important; }
+.motion-ready .media-card.story-reveal.is-visible .media-title .omai-word:nth-child(5),
+.motion-ready .media-card.story-reveal.is-visible .media-title .kinetic-word:nth-child(5) { transition-delay: 680ms !important; }
+.motion-ready .media-card.story-reveal.is-visible .media-title .omai-word:nth-child(n+6),
+.motion-ready .media-card.story-reveal.is-visible .media-title .kinetic-word:nth-child(n+6) { transition-delay: 760ms !important; }
+
+html body .media-title .omai-word,
+html body .media-title .kinetic-word {
+  display: inline-block !important;
+  will-change: transform, opacity !important;
+}
+
+/* photo hover like Omai card links */
+html body .day-photo-stage .media-card > img,
+html body .day-cover > img,
+html body .hotel-primary-media > img {
+  transition: transform 0.6s cubic-bezier(0.25, 0.5, 0, 1), opacity 1s ease-in-out !important;
+}
+@media (hover: hover) and (pointer: fine) {
+  html body .day-photo-stage .media-card:hover > img {
+    transform: scale(1.02) !important;
+  }
+}
+
+/* dossier sheet: staggered children, not one slab */
+.motion-ready .day-body-pad.story-reveal:not(.is-visible) {
+  opacity: 1 !important;
+  transform: none !important;
+}
+.motion-ready .day-body-pad.story-reveal:not(.is-visible) > * {
+  opacity: 0 !important;
+  transform: translateY(40px) !important;
+}
+.motion-ready .day-body-pad.story-reveal.is-visible > * {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out !important;
+}
+.motion-ready .day-body-pad.story-reveal.is-visible > *:nth-child(1) { transition-delay: 40ms !important; }
+.motion-ready .day-body-pad.story-reveal.is-visible > *:nth-child(2) { transition-delay: 140ms !important; }
+.motion-ready .day-body-pad.story-reveal.is-visible > *:nth-child(3) { transition-delay: 220ms !important; }
+.motion-ready .day-body-pad.story-reveal.is-visible > *:nth-child(4) { transition-delay: 300ms !important; }
+
+/* route steps cascade */
+.motion-ready .day-body-pad.story-reveal:not(.is-visible) .route-steps li {
+  opacity: 0 !important;
+  transform: translateY(18px) !important;
+}
+.motion-ready .day-body-pad.story-reveal.is-visible .route-steps li {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity 0.55s ease-in-out, transform 0.55s ease-in-out !important;
+}
+.motion-ready .day-body-pad.story-reveal.is-visible .route-steps li:nth-child(1) { transition-delay: 120ms !important; }
+.motion-ready .day-body-pad.story-reveal.is-visible .route-steps li:nth-child(2) { transition-delay: 180ms !important; }
+.motion-ready .day-body-pad.story-reveal.is-visible .route-steps li:nth-child(3) { transition-delay: 240ms !important; }
+.motion-ready .day-body-pad.story-reveal.is-visible .route-steps li:nth-child(4) { transition-delay: 300ms !important; }
+.motion-ready .day-body-pad.story-reveal.is-visible .route-steps li:nth-child(5) { transition-delay: 360ms !important; }
+.motion-ready .day-body-pad.story-reveal.is-visible .route-steps li:nth-child(n+6) { transition-delay: 420ms !important; }
+
+/* reading focus for stops */
+html body .timeline .stop {
+  transition: opacity 0.25s ease-in-out, border-color 0.25s ease-in-out !important;
+}
+html body .timeline .stop.is-active {
+  opacity: 1 !important;
+  border-bottom-color: rgba(140, 107, 69, 0.45) !important;
+}
+html body .timeline .stop:not(.is-active) {
+  opacity: 0.72 !important;
+}
+
+/* continuous scroll depth: Omai-like photo drift, no scroll listener */
+@supports (animation-timeline: view()) {
+  /* Entrance uses opacity; continuous scale/drift is owned by view timeline. */
+  .motion-ready .day-cover.story-reveal:not(.is-visible) > img,
+  .motion-ready .media-card.story-reveal:not(.is-visible) > img,
+  .motion-ready .hotel-primary-media.story-reveal:not(.is-visible) > img {
+    transform: none !important;
+  }
+  .motion-ready .day-cover.story-reveal.is-visible > img,
+  .motion-ready .media-card.story-reveal.is-visible > img,
+  .motion-ready .hotel-primary-media.story-reveal.is-visible > img {
+    transform: none !important;
+    transition: opacity 1.15s ease-in-out 0.08s !important;
+  }
+  html body .day-cover > img,
+  html body .day-photo-stage .media-card > img,
+  html body .hotel-primary-media > img {
+    animation: omai-photo-drift linear both !important;
+    animation-timeline: view() !important;
+    animation-range: entry 0% exit 100% !important;
+    transform-origin: center center !important;
+  }
+  .motion-ready .day-cover.story-reveal:not(.is-visible) > img,
+  .motion-ready .media-card.story-reveal:not(.is-visible) > img,
+  .motion-ready .hotel-primary-media.story-reveal:not(.is-visible) > img {
+    animation-play-state: paused !important;
+  }
+  html body .day-cover-overlay,
+  html body .day-photo-stage .media-embed,
+  html body .hotel-media-overlay {
+    animation: omai-copy-drift linear both !important;
+    animation-timeline: view() !important;
+    animation-range: entry 0% exit 100% !important;
+  }
+  .motion-ready .day-cover.story-reveal:not(.is-visible) .day-cover-overlay,
+  .motion-ready .media-card.story-reveal:not(.is-visible) .media-embed,
+  .motion-ready .media-card.story-reveal:not(.is-visible) .media-overlay {
+    animation-play-state: paused !important;
+  }
+  @keyframes omai-photo-drift {
+    from { transform: scale(1.08) translateY(-2%); }
+    to { transform: scale(1.01) translateY(2%); }
+  }
+  @keyframes omai-copy-drift {
+    0% { transform: translateY(36px); }
+    45% { transform: translateY(0); }
+    100% { transform: translateY(-28px); }
+  }
+}
+
+/* hotel primary follows same language */
+.motion-ready .hotel-primary-media.story-reveal:not(.is-visible) > img {
+  opacity: 0 !important;
+  transform: scale(1.05) !important;
+}
+.motion-ready .hotel-primary-media.story-reveal.is-visible > img {
+  opacity: 1 !important;
+  transform: scale(1) !important;
+  transition: opacity 1.2s ease-in-out 0.08s, transform 1.4s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+.motion-ready .hotel-primary-copy.story-reveal:not(.is-visible) > * {
+  opacity: 0 !important;
+  transform: translateY(40px) !important;
+}
+.motion-ready .hotel-primary-copy.story-reveal.is-visible > * {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out !important;
+}
+.motion-ready .hotel-primary-copy.story-reveal.is-visible > *:nth-child(1) { transition-delay: 60ms !important; }
+.motion-ready .hotel-primary-copy.story-reveal.is-visible > *:nth-child(2) { transition-delay: 140ms !important; }
+.motion-ready .hotel-primary-copy.story-reveal.is-visible > *:nth-child(3) { transition-delay: 220ms !important; }
+.motion-ready .hotel-primary-copy.story-reveal.is-visible > *:nth-child(4) { transition-delay: 300ms !important; }
+
+/* day rail interaction polish */
+html body .day-rail a.is-active {
+  color: #8C6B45 !important;
+  opacity: 1 !important;
+}
+html body #back-to-top {
+  transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out !important;
+}
+html body #back-to-top:not(.is-visible) {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(8px) !important;
+}
+html body #back-to-top.is-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Omai-style menu interaction: quiet header, full-height reading drawer. */
+html body .nav-menu-trigger,
+html body .nav-action {
+  appearance: none !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  padding: 0 0.65rem !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: inherit !important;
+  font: inherit !important;
+  letter-spacing: 0.1em !important;
+  cursor: pointer !important;
+}
+html body .nav-menu-trigger {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.55rem !important;
+}
+html body .nav-menu-lines {
+  display: inline-grid !important;
+  gap: 4px !important;
+  width: 17px !important;
+}
+html body .nav-menu-lines::before,
+html body .nav-menu-lines::after {
+  content: "" !important;
+  display: block !important;
+  height: 1px !important;
+  width: 17px !important;
+  background: currentColor !important;
+  transition: transform 0.25s ease-in-out !important;
+}
+html body .nav-menu-trigger[aria-expanded="true"] .nav-menu-lines::before {
+  transform: translateY(2.5px) rotate(45deg) !important;
+}
+html body .nav-menu-trigger[aria-expanded="true"] .nav-menu-lines::after {
+  transform: translateY(-2.5px) rotate(-45deg) !important;
+}
+html body .nav-action {
+  border-bottom: 1px solid currentColor !important;
+  padding-inline: 0 !important;
+  min-width: auto !important;
+}
+html body .nav-action:hover,
+html body .nav-menu-trigger:hover {
+  opacity: 0.72 !important;
+}
+
+html body .trip-drawer-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 140 !important;
+  background: rgba(18, 15, 12, 0.42) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.35s ease-in-out !important;
+}
+html body .trip-drawer-backdrop.is-open {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+html body .trip-drawer {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  z-index: 150 !important;
+  width: min(430px, calc(100vw - 2rem)) !important;
+  padding: 1.3rem 1.35rem 1.5rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: #F7F3EC !important;
+  color: #1E1B18 !important;
+  box-shadow: 18px 0 50px rgba(18, 12, 8, 0.18) !important;
+  transform: translateX(-105%) !important;
+  visibility: hidden !important;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.45s !important;
+}
+html body .trip-drawer.is-open {
+  transform: translateX(0) !important;
+  visibility: visible !important;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0s !important;
+}
+html body .trip-drawer-head {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding-bottom: 1.2rem !important;
+  border-bottom: 1px solid rgba(30, 27, 24, 0.14) !important;
+}
+html body .trip-drawer-kicker {
+  margin: 0 !important;
+  color: #8C6B45 !important;
+  font-size: 10px !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+}
+html body .trip-drawer-close {
+  appearance: none !important;
+  width: 44px !important;
+  height: 44px !important;
+  border: 1px solid rgba(30, 27, 24, 0.18) !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  color: #1E1B18 !important;
+  font-size: 21px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+}
+html body .trip-drawer-title {
+  margin: 2.2rem 0 0.65rem !important;
+  max-width: 12em !important;
+  font-family: "Noto Serif SC", serif !important;
+  font-size: clamp(1.7rem, 5vw, 2.25rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+}
+html body .trip-drawer-note {
+  margin: 0 0 1.6rem !important;
+  max-width: 29em !important;
+  color: #5E574F !important;
+  font-size: 0.94rem !important;
+  line-height: 1.7 !important;
+}
+html body .trip-drawer-nav {
+  display: grid !important;
+  gap: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  border-top: 1px solid rgba(30, 27, 24, 0.14) !important;
+}
+html body .trip-drawer-nav a {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  min-height: 58px !important;
+  border-bottom: 1px solid rgba(30, 27, 24, 0.12) !important;
+  color: #1E1B18 !important;
+  text-decoration: none !important;
+  font-family: "Noto Serif SC", serif !important;
+  font-size: 1.05rem !important;
+}
+html body .trip-drawer-nav a::after {
+  content: "↗" !important;
+  color: #8C6B45 !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 0.9rem !important;
+  transition: transform 0.25s ease-in-out !important;
+}
+html body .trip-drawer-nav a:hover::after {
+  transform: translate(3px, -3px) !important;
+}
+html body .trip-drawer-footer {
+  margin-top: auto !important;
+  padding-top: 1.1rem !important;
+  border-top: 1px solid rgba(30, 27, 24, 0.14) !important;
+  color: #8A8278 !important;
+  font-size: 11px !important;
+  line-height: 1.6 !important;
+}
+html body.trip-drawer-open {
+  overflow: hidden !important;
+}
+
+/* Photo chapters behave like Omai cards: tap/click goes to the matching stop. */
+html body .media-card {
+  cursor: pointer !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+html body .media-card.is-focused::after {
+  background:
+    linear-gradient(90deg, rgba(140, 107, 69, 0.32) 0%, rgba(12, 10, 8, 0.28) 44%, rgba(12, 10, 8, 0.08) 70%, transparent 100%),
+    linear-gradient(180deg, rgba(12, 10, 8, 0.12) 0%, rgba(12, 10, 8, 0.08) 42%, rgba(12, 10, 8, 0.55) 78%, rgba(12, 10, 8, 0.78) 100%) !important;
+}
+html body .media-card.is-focused .media-embed::after {
+  content: "正在阅读这一段" !important;
+  display: block !important;
+  margin-top: 0.35rem !important;
+  color: rgba(247, 241, 232, 0.7) !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 10px !important;
+  letter-spacing: 0.1em !important;
+}
+html body .timeline .stop.is-focus-target {
+  opacity: 1 !important;
+  border-bottom-color: #8C6B45 !important;
+  background: rgba(140, 107, 69, 0.07) !important;
+  box-shadow: inset 3px 0 0 #8C6B45 !important;
+}
+
+@media (max-width: 720px) {
+  html body .site-nav {
+    display: grid !important;
+    grid-template-columns: auto 1fr auto !important;
+    align-items: center !important;
+    gap: 0.35rem !important;
+  }
+  html body .nav-menu-trigger {
+    padding-inline: 0.25rem !important;
+  }
+  html body .nav-menu-trigger > span:last-child,
+  html body .nav-action {
+    font-size: 10px !important;
+  }
+  html body .nav-brand {
+    justify-self: center !important;
+  }
+  html body .nav-links {
+    display: none !important;
+  }
+  html body .trip-drawer {
+    width: min(390px, calc(100vw - 1rem)) !important;
+  }
+}
+/* ===== end v13 interaction controls ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  html body .day-cover > img,
+  html body .day-photo-stage .media-card > img,
+  html body .hotel-primary-media > img,
+  html body .day-cover-overlay,
+  html body .day-photo-stage .media-embed,
+  html body .hotel-media-overlay,
+  .motion-ready [data-animate],
+  .motion-ready .story-reveal,
+  .motion-ready .story-reveal *,
+  .motion-ready .kinetic-word,
+  .motion-ready .omai-word {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+/* ===== end craft-v13 omai interaction ===== */
+
+
 </style>
 
 </head>
-<body data-dossier-build="craft-v7-linear-timeline-20260727" >
+<body data-dossier-build="craft-v14-omai-controls-20260727" >
 <div aria-hidden="true" id="nav-sentinel" style="position:absolute;top:0;left:0;width:1px;height:1px;"></div>
 <nav aria-label="本页导航" class="site-nav" id="site-nav">
+<button aria-controls="trip-drawer" aria-expanded="false" class="nav-menu-trigger" id="nav-menu-trigger" type="button"><span aria-hidden="true" class="nav-menu-lines"></span><span>目录</span></button>
 <a class="nav-brand" href="#top"><span aria-hidden="true" class="nav-mark"></span><span>重庆 · 巫山</span></a>
 <div class="nav-links">
 <a href="#top">封面</a>
@@ -3876,11 +5760,28 @@ html body .period-col .timeline .stop:last-child {
 <a href="#essentials">须知</a>
 <a href="#appendix">附录</a>
 </div>
+<button aria-controls="trip-drawer" aria-expanded="false" class="nav-action" id="nav-action" type="button">行程摘要</button>
 </nav>
+<div aria-hidden="true" class="trip-drawer-backdrop" id="trip-drawer-backdrop"></div>
+<aside aria-labelledby="trip-drawer-title" aria-modal="true" class="trip-drawer" id="trip-drawer" role="dialog">
+<div class="trip-drawer-head"><p class="trip-drawer-kicker">Private itinerary · 2026.08</p><button aria-label="关闭目录" class="trip-drawer-close" id="trip-drawer-close" type="button">×</button></div>
+<h2 class="trip-drawer-title" id="trip-drawer-title">把四天行程，读成一条线。</h2>
+<p class="trip-drawer-note">从第一夜的江面灯火，到小三峡的头班船。打开任一章节，页面会把你带到对应的图片与时间轴。</p>
+<nav aria-label="行程章节" class="trip-drawer-nav">
+<a href="#day-1">D1 · 城夜重庆</a>
+<a href="#day-2">D2 · 从老街出城</a>
+<a href="#day-3">D3 · 头班船进峡江</a>
+<a href="#day-4">D4 · 熊猫与返程</a>
+<a href="#appendix">查看预算、风险与清单</a>
+</nav>
+<p class="trip-drawer-footer">滚动阅读每个章节，点击照片可回到对应的具体时刻。</p>
+</aside>
 <header class="hero" id="top">
+<div class="hero-media"><img alt="巫峡江面与两岸群山" decoding="async" fetchpriority="high" src="media/wu-gorge.jpg"/></div>
+<div aria-hidden="true" class="hero-scrim"></div>
 <div class="hero-copy">
 <div class="hero-kicker">私人行程 · 2026.08</div>
-<h1>重庆 · 巫山</h1>
+<h1 aria-label="重庆 · 巫山"><span class="kinetic-line"><span class="kinetic-word">重庆</span></span><span class="kinetic-line"><span class="kinetic-word">巫山</span></span></h1>
 <p class="hero-sub">四日三夜 · 城夜与峡江。从洪崖洞的江风走到小三峡的头班船，把重庆的层叠夜色与巫山的水道收进一册可执行的行程里。</p>
 <div class="hero-meta-row">
 <span class="chip"><span>日期</span><strong>2026-08-01 ~ 2026-08-04</strong></span>
@@ -3888,7 +5789,8 @@ html body .period-col .timeline .stop:last-child {
 <span class="chip"><span>参考预算</span><strong>¥2870 / 2人</strong></span>
 </div>
 </div>
-<div class="hero-scroll-hint" aria-hidden="true">下阅</div>
+<p class="hero-folio">2026.08.01 - 08.04 <span>4天3夜</span></p>
+<div class="hero-scroll-hint" aria-hidden="true">继续下阅</div>
 </header>
 <section class="snapshot" id="snapshot" aria-label="行程扉页">
 <div class="snapshot-grid">
@@ -3968,21 +5870,22 @@ html body .period-col .timeline .stop:last-child {
 <div class="day-cover-overlay">
 <p class="day-kicker">D1 · 2026-08-01</p>
 <h3 class="day-theme-title"><span class="day-theme">江上的第一夜城</span></h3>
-<p class="day-cover-lede">千厮门桥上的洪崖洞灯海——把第一夜交给江面与层叠屋檐。</p>
+<p class="day-cover-lede">千厮门桥上的洪崖洞灯海，把第一夜交给江面与层叠屋檐。</p>
 <div class="day-meta day-meta-on-photo"><span>📍 8km</span>
 <span>🚶 2.0 体力指数</span>
 <span>☁️ 小雨 27-37℃（趋势🟡）· 傍晚雷阵雨风险</span></div>
 </div>
 <figcaption class="day-cover-credit">实拍 · 洪崖洞夜景（千厮门大桥视角）</figcaption>
-</figure><div class="media-strip"><figure class="media-card">
+</figure><div class="day-photo-stage">
+<div class="media-strip"><figure class="media-card">
 <img alt="实拍 · 解放碑夜景" decoding="async" loading="lazy" src="media/jiefangbei-night.jpg"/>
-<figcaption class="media-overlay"><span>解放碑夜色</span></figcaption>
+<figcaption class="media-overlay media-embed"><span class="media-kicker">16:30 · 解放碑</span><strong class="media-title">八一好吃街的第一口</strong><p class="media-lede">夜色还未全亮，先把小吃和步行尺度交给解放碑。</p></figcaption>
 </figure><figure class="media-card">
 <img alt="实拍 · 重庆长江索道" decoding="async" loading="lazy" src="media/cableway-chongqing.jpg"/>
-<figcaption class="media-overlay"><span>长江索道</span></figcaption>
+<figcaption class="media-overlay media-embed"><span class="media-kicker">18:00 · 长江索道</span><strong class="media-title">单程越过江面</strong><p class="media-lede">新华路到上新街，把日落留在车厢与江风之间。</p></figcaption>
 </figure><figure class="media-card">
 <img alt="实拍 · 千厮门看洪崖洞" decoding="async" loading="lazy" src="media/hongya-qiansimen.jpg"/>
-<figcaption class="media-overlay"><span>洪崖洞灯海</span></figcaption>
+<figcaption class="media-overlay media-embed"><span class="media-kicker">20:10 · 洪崖洞</span><strong class="media-title">千厮门桥上的灯海</strong><p class="media-lede">桥面看层叠屋檐，第一夜用江景收束。</p></figcaption>
 </figure></div>
 <div class="day-body-pad">
 <div class="day-routes">
@@ -4003,7 +5906,7 @@ html body .period-col .timeline .stop:last-child {
 <strong>江北机场→江美舍北滨路(华新街站)入住</strong>
 </div>
 <div class="t-reason">锁定：江美舍公寓(观音桥北滨路店)·美团4.7·¥132/晚·🟢 3号线华新街站步行约400m·嘉陵江景大床房 http://dpurl.cn/8i97Tcxz</div>
-<div class="t-detail"><span>—</span>
+<div class="t-detail"><span>：</span>
 <span>¥地铁¥7/人 或 打车¥50-60</span>
 <span>约50 分钟</span></div>
 </div>
@@ -4060,30 +5963,33 @@ html body .period-col .timeline .stop:last-child {
 <span>约80 分钟</span></div>
 </div>
 </li></ol></div></div>
-</div>
+
 <div class="day-footer-note">当晚江美舍 · 傍晚注意雷阵雨窗口</div>
 <div class="day-budget">💸 当天预算约 ¥<span class="budget-count" data-count-to="480">480</span></div>
+</div>
+</div>
 </article><article class="day-card" data-day="2" id="day-2">
 <figure class="day-cover">
 <img alt="实拍 · 磁器口古镇街景" decoding="async" loading="lazy" src="media/ciqikou-street.jpg"/>
 <div class="day-cover-overlay">
 <p class="day-kicker">D2 · 2026-08-02</p>
 <h3 class="day-theme-title"><span class="day-theme">从老街驶向峡江</span></h3>
-<p class="day-cover-lede">磁器口老街的石板与屋檐——出城前，先走一段重庆的烟火尺度。</p>
+<p class="day-cover-lede">磁器口老街的石板与屋檐，出城前，先走一段重庆的烟火尺度。</p>
 <div class="day-meta day-meta-on-photo"><span>📍 160km</span>
 <span>🚶 2.2 体力指数</span>
 <span>☁️ 雨 27-35℃ 重庆 / 巫山约22-34℃（趋势🟡）</span></div>
 </div>
 <figcaption class="day-cover-credit">实拍 · 磁器口古镇街景</figcaption>
-</figure><div class="media-strip"><figure class="media-card">
+</figure><div class="day-photo-stage">
+<div class="media-strip"><figure class="media-card">
 <img alt="实拍 · 磁器口门楼" decoding="async" loading="lazy" src="media/ciqikou-gateway.jpg"/>
-<figcaption class="media-overlay"><span>磁器口门楼</span></figcaption>
+<figcaption class="media-overlay media-embed"><span class="media-kicker">08:00 · 磁器口</span><strong class="media-title">门楼后的石板老街</strong><p class="media-lede">完整两小时半：后街茶馆、陈麻花，再慢慢走到江边。</p></figcaption>
 </figure><figure class="media-card">
 <img alt="实拍 · 磁器口人流" decoding="async" loading="lazy" src="media/ciqikou-crowd.jpg"/>
-<figcaption class="media-overlay"><span>老街人流</span></figcaption>
+<figcaption class="media-overlay media-embed"><span class="media-kicker">上午 · 老街人流</span><strong class="media-title">出城前的烟火尺度</strong><p class="media-lede">人声与屋檐并排，把重庆的白昼温度先走一遍。</p></figcaption>
 </figure><figure class="media-card">
 <img alt="实拍 · 巫山 / 巫峡 / 长江大桥" decoding="async" loading="lazy" src="media/wushan-bridge.jpg"/>
-<figcaption class="media-overlay"><span>巫山江桥</span></figcaption>
+<figcaption class="media-overlay media-embed"><span class="media-kicker">14:22 · 巫山</span><strong class="media-title">列车驶向江桥</strong><p class="media-lede">C9174 重庆北到巫山，1 小时 32 分后看见峡江。</p></figcaption>
 </figure></div>
 <div class="day-body-pad">
 <div class="day-routes">
@@ -4105,7 +6011,7 @@ html body .period-col .timeline .stop:last-child {
 <span class="warn-badge">⚠️ 坐标待校验</span>
 </div>
 <div class="t-reason">江美舍北滨路退房，行李寄存前台；只带巫山一晚换洗衣物（轻装去巫山，D3回重庆继续住）</div>
-<div class="t-detail"><span>—</span>
+<div class="t-detail"><span>：</span>
 <span>¥¥15-20</span>
 <span>约30 分钟</span></div>
 </div>
@@ -4130,7 +6036,7 @@ html body .period-col .timeline .stop:last-child {
 <strong>磁器口→石油路（1号线直达）</strong>
 </div>
 <div class="t-reason">1号线磁器口→石油路约7站·20分钟；赶耶屹口11:00开门第一波</div>
-<div class="t-detail"><span>—</span>
+<div class="t-detail"><span>：</span>
 <span>¥¥4/人</span>
 <span>约20 分钟</span></div>
 </div>
@@ -4155,7 +6061,7 @@ html body .period-col .timeline .stop:last-child {
 <strong>石油路→重庆北站</strong>
 </div>
 <div class="t-reason">1号线石油路→两路口换3号线→重庆北站南广场；约35-40分钟；14:22发车，充裕</div>
-<div class="t-detail"><span>—</span>
+<div class="t-detail"><span>：</span>
 <span>¥¥5/人</span>
 <span>约40 分钟</span></div>
 </div>
@@ -4167,7 +6073,7 @@ html body .period-col .timeline .stop:last-child {
 <strong>C9174 重庆北→巫山 🟢</strong>
 </div>
 <div class="t-reason">暑假加开·14:22→15:54·仅1h32m·二等座约¥196 🎫 12306可查；备选G372(12:23→14:25)或C9194(14:10→16:11)；⚠️暑假加开车次请提前在12306确认2026年8月排图</div>
-<div class="t-detail"><span>—</span>
+<div class="t-detail"><span>：</span>
 <span>¥¥196/人</span>
 <span>约92 分钟</span></div>
 </div>
@@ -4180,7 +6086,7 @@ html body .period-col .timeline .stop:last-child {
 <span class="rating">4.9</span>
 </div>
 <div class="t-reason">巫山站打车约15分钟到桐晖·美团4.9·¥117/晚·距小三峡码头约0.3km 🎫http://dpurl.cn/olXCgdvz</div>
-<div class="t-detail"><span>—</span>
+<div class="t-detail"><span>：</span>
 <span>¥约¥117/晚</span>
 <span>约30 分钟</span></div>
 </div>
@@ -4207,35 +6113,38 @@ html body .period-col .timeline .stop:last-child {
 <span class="warn-badge">⚠️ 坐标待校验</span>
 </div>
 <div class="t-reason">游客中心/滨江一带烤鱼人均¥60-90；早睡备D3 8:30头班游船</div>
-<div class="t-detail"><span>—</span>
+<div class="t-detail"><span>：</span>
 <span>¥人均¥60-90</span>
 <span>约90 分钟</span></div>
 </div>
 </li></ol></div></div>
-</div>
+
 <div class="day-footer-note">当晚巫山滨江 · 预留 C9174 检票缓冲</div>
 <div class="day-budget">💸 当天预算约 ¥<span class="budget-count" data-count-to="780">780</span></div>
+</div>
+</div>
 </article><article class="day-card" data-day="3" id="day-3">
 <figure class="day-cover">
 <img alt="实拍 · 巫山小三峡（大宁河）" decoding="async" loading="lazy" src="media/little-three-gorges.jpg"/>
 <div class="day-cover-overlay">
 <p class="day-kicker">D3 · 2026-08-03</p>
 <h3 class="day-theme-title"><span class="day-theme">头班船与回渝的水位</span></h3>
-<p class="day-cover-lede">峡江桥影下的水道——头班船与水位，决定这一天的全部开合。</p>
+<p class="day-cover-lede">峡江桥影下的水道，头班船与水位，决定这一天的全部开合。</p>
 <div class="day-meta day-meta-on-photo"><span>📍 170km</span>
 <span>🚶 2.3 体力指数</span>
 <span>☁️ 多云 约26-34℃，雨约40%（用户自查 7/27 🟡）· 主方案小三峡</span></div>
 </div>
 <figcaption class="day-cover-credit">实拍 · 巫山小三峡（大宁河）</figcaption>
-</figure><div class="media-strip"><figure class="media-card">
+</figure><div class="day-photo-stage">
+<div class="media-strip"><figure class="media-card">
 <img alt="实拍 · 巫峡江景" decoding="async" loading="lazy" src="media/wu-gorge.jpg"/>
-<figcaption class="media-overlay"><span>巫峡江面</span></figcaption>
+<figcaption class="media-overlay media-embed"><span class="media-kicker">08:30 · 小三峡</span><strong class="media-title">头班船进巫峡</strong><p class="media-lede">码头步行即达，人少水静，把江面留给整段上午。</p></figcaption>
 </figure><figure class="media-card">
 <img alt="实拍 · 巫山江边" decoding="async" loading="lazy" src="media/wushan-town.jpg"/>
-<figcaption class="media-overlay"><span>巫山江边</span></figcaption>
+<figcaption class="media-overlay media-embed"><span class="media-kicker">午后 · 巫山江边</span><strong class="media-title">返航后的县城节奏</strong><p class="media-lede">简餐、取行李，再把时间对准回重庆的列车。</p></figcaption>
 </figure><figure class="media-card">
 <img alt="实拍 · 南岸龙门浩索道站" decoding="async" loading="lazy" src="media/longmenhao-cable-station.jpg"/>
-<figcaption class="media-overlay"><span>龙门浩一带</span></figcaption>
+<figcaption class="media-overlay media-embed"><span class="media-kicker">18:30 · 龙门浩</span><strong class="media-title">下浩里老街夜色将起</strong><p class="media-lede">跨江南岸，用老街与江景接住回城后的第一晚。</p></figcaption>
 </figure></div>
 <div class="day-body-pad">
 <div class="day-routes">
@@ -4258,7 +6167,7 @@ html body .period-col .timeline .stop:last-child {
 <span class="warn-badge">⚠️ 坐标待校验</span>
 </div>
 <div class="t-reason">桐晖退房，步行约5-10分钟到小三峡码头赶8:30头班</div>
-<div class="t-detail"><span>—</span>
+<div class="t-detail"><span>：</span>
 <span>¥¥10-15</span>
 <span>约30 分钟</span></div>
 </div>
@@ -4284,7 +6193,7 @@ html body .period-col .timeline .stop:last-child {
 <span class="warn-badge">⚠️ 坐标待校验</span>
 </div>
 <div class="t-reason">码头附近简餐，留时间回酒店取行李→去巫山站</div>
-<div class="t-detail"><span>—</span>
+<div class="t-detail"><span>：</span>
 <span>¥人均¥30-50</span>
 <span>约50 分钟</span></div>
 </div>
@@ -4296,7 +6205,7 @@ html body .period-col .timeline .stop:last-child {
 <strong>G3455 巫山→重庆北 🟢</strong>
 </div>
 <div class="t-reason">美团：15:24→17:26 2h2m 二等座¥185；游船后最稳不赶 🎫 http://dpurl.cn/Mp95NSEz</div>
-<div class="t-detail"><span>—</span>
+<div class="t-detail"><span>：</span>
 <span>¥¥185/人</span>
 <span>约122 分钟</span></div>
 </div>
@@ -4308,7 +6217,7 @@ html body .period-col .timeline .stop:last-child {
 <strong>重庆北→江美舍北滨路入住(续住)</strong>
 </div>
 <div class="t-reason">北站3号线→华新街约25分钟；D3续住江美舍北滨路（已含在住宿费中）</div>
-<div class="t-detail"><span>—</span>
+<div class="t-detail"><span>：</span>
 <span>¥地铁¥5/人</span>
 <span>约40 分钟</span></div>
 </div>
@@ -4339,30 +6248,33 @@ html body .period-col .timeline .stop:last-child {
 <span>约90 分钟</span></div>
 </div>
 </li></ol></div></div>
-</div>
+
 <div class="day-footer-note">雨天 B 仅小三峡停航启用 · 回渝衔接</div>
 <div class="day-budget">💸 当天预算约 ¥<span class="budget-count" data-count-to="720">720</span></div>
+</div>
+</div>
 </article><article class="day-card" data-day="4" id="day-4">
 <figure class="day-cover">
 <img alt="主城返程动线参考" decoding="async" loading="lazy" src="media/cableway-chongqing.jpg"/>
 <div class="day-cover-overlay">
 <p class="day-kicker">D4 · 2026-08-04</p>
 <h3 class="day-theme-title"><span class="day-theme">熊猫、火锅与返程</span></h3>
-<p class="day-cover-lede">长江索道横切两江——返程日用主城动线收束，给机场留足缓冲。</p>
+<p class="day-cover-lede">长江索道横切两江，返程日用主城动线收束，给机场留足缓冲。</p>
 <div class="day-meta day-meta-on-photo"><span>📍 35km</span>
 <span>🚶 1.5 体力指数</span>
 <span>☁️ 雨 27-35℃ · 动物园户外湿滑（趋势🟡）</span></div>
 </div>
 <figcaption class="day-cover-credit">主城返程动线参考（动物园后前往机场）</figcaption>
-</figure><div class="media-strip"><figure class="media-card">
+</figure><div class="day-photo-stage">
+<div class="media-strip"><figure class="media-card">
 <img alt="实拍 · 长江索道" decoding="async" loading="lazy" src="media/cableway-chongqing.jpg"/>
-<figcaption class="media-overlay"><span>长江索道</span></figcaption>
+<figcaption class="media-overlay media-embed"><span class="media-kicker">上午 · 穿城</span><strong class="media-title">江上城市还在运行</strong><p class="media-lede">索道与山地交通同属重庆骨架，返程日仍从江面感开始。</p></figcaption>
 </figure><figure class="media-card">
 <img alt="实拍 · 龙门浩一带" decoding="async" loading="lazy" src="media/longmenhao-cable-station.jpg"/>
-<figcaption class="media-overlay"><span>龙门浩一带</span></figcaption>
+<figcaption class="media-overlay media-embed"><span class="media-kicker">白昼 · 街巷</span><strong class="media-title">离城前的坡地肌理</strong><p class="media-lede">龙门浩一带的屋脊与台阶，提醒这是一座走出来的城。</p></figcaption>
 </figure><figure class="media-card">
 <img alt="实拍 · 洪崖洞夜色" decoding="async" loading="lazy" src="media/hongya-qiansimen.jpg"/>
-<figcaption class="media-overlay"><span>洪崖洞灯海</span></figcaption>
+<figcaption class="media-overlay media-embed"><span class="media-kicker">收束 · 灯海</span><strong class="media-title">把夜色留给记忆</strong><p class="media-lede">飞回广州前，重庆最深的印象仍是层叠灯火。</p></figcaption>
 </figure></div>
 <div class="day-body-pad">
 <div class="day-routes">
@@ -4383,7 +6295,7 @@ html body .period-col .timeline .stop:last-child {
 <span class="warn-badge">⚠️ 坐标待校验</span>
 </div>
 <div class="t-reason">江美舍北滨路退房，行李寄存前台；轻装出发看熊猫</div>
-<div class="t-detail"><span>—</span>
+<div class="t-detail"><span>：</span>
 <span>¥¥15-20</span>
 <span>约30 分钟</span></div>
 </div>
@@ -4395,7 +6307,7 @@ html body .period-col .timeline .stop:last-child {
 <strong>华新街(3号线)→牛角沱换2号线→动物园站A口</strong>
 </div>
 <div class="t-reason">3号线→牛角沱换2号线→动物园站A口步行约450m；约35分钟</div>
-<div class="t-detail"><span>—</span>
+<div class="t-detail"><span>：</span>
 <span>¥¥5/人</span>
 <span>约35 分钟</span></div>
 </div>
@@ -4420,7 +6332,7 @@ html body .period-col .timeline .stop:last-child {
 <strong>动物园→大坪站（2号线1站）</strong>
 </div>
 <div class="t-reason">2号线动物园→大坪仅1站·3分钟；出站步行至渝味响火锅</div>
-<div class="t-detail"><span>—</span>
+<div class="t-detail"><span>：</span>
 <span>¥¥2/人</span>
 <span>约10 分钟</span></div>
 </div>
@@ -4446,7 +6358,7 @@ html body .period-col .timeline .stop:last-child {
 <span class="warn-badge">⚠️ 坐标待校验</span>
 </div>
 <div class="t-reason">大坪2号线→牛角沱换3号线→华新街；约25-30分钟</div>
-<div class="t-detail"><span>—</span>
+<div class="t-detail"><span>：</span>
 <span>¥¥4/人</span>
 <span>约30 分钟</span></div>
 </div>
@@ -4458,7 +6370,7 @@ html body .period-col .timeline .stop:last-child {
 <strong>江美舍取行李→打车→江北机场T3</strong>
 </div>
 <div class="t-reason">华新街打车约25-35分钟到T3；约13:30到机场·距17:00起飞仍有3.5h·绰绰有余</div>
-<div class="t-detail"><span>—</span>
+<div class="t-detail"><span>：</span>
 <span>¥打车¥50-60</span>
 <span>约40 分钟</span></div>
 </div>
@@ -4470,14 +6382,16 @@ html body .period-col .timeline .stop:last-child {
 <strong>江北T3→CA4341 17:00→18:50 广州白云T3 🟢</strong>
 </div>
 <div class="t-reason">国航CA4341 波音737·17:00起飞→18:50白云T3；吃完火锅到机场仍有3h+缓冲</div>
-<div class="t-detail"><span>—</span>
+<div class="t-detail"><span>：</span>
 <span>¥已购票</span>
 <span>约350 分钟</span></div>
 </div>
 </li></ol></div><div class="period-col"><h4>夜</h4><p class="t-reason">本日此时段较轻。</p></div></div>
-</div>
+
 <div class="day-footer-note">预留前往江北 T3 的交通时间</div>
 <div class="day-budget">💸 当天预算约 ¥<span class="budget-count" data-count-to="420">420</span></div>
+</div>
+</div>
 </article></section>
 <!--
   🏨 住宿候选 · AGENT MUST-DO:
@@ -4490,21 +6404,23 @@ html body .period-col .timeline .stop:last-child {
 <p class="section-label">Stay</p><h2>住宿</h2><p style="color:var(--ink-soft);max-width:36em;line-height:1.7;margin:0 0 1rem;">主推一处便于执行的落脚点，其余保留为可切换备选；价格与预订链接保持原数据。</p>
 <div class="hotel-grid">
 <div class="hotel-card is-primary">
+<div class="hotel-photo-stage">
 <div class="hotel-primary-media">
 <img alt="滨江住宿氛围参考" decoding="async" loading="lazy" src="media/wushan-bridge.jpg"/>
 <div class="hotel-media-overlay">
 <p class="hotel-overlay-kicker">主推 · Stay</p>
 <h4 class="hotel-overlay-title">江美舍公寓（观音桥北滨路店）</h4>
 <p class="hotel-overlay-price">参考价 ¥132/晚</p>
-<p class="hotel-overlay-lede">峡江滨江尺度的落脚参考——主推江美舍，近华新街、可执行。</p>
+<p class="hotel-overlay-lede">峡江滨江尺度的落脚参考，主推江美舍，近华新街、可执行。</p>
 </div>
-</div><div class="hotel-primary-copy"><div class="h-rank">主推</div>
+</div>
+<div class="hotel-primary-copy"><div class="h-rank">主推</div>
 <h4>江美舍公寓（观音桥北滨路店）</h4>
 <div class="h-price">
         参考价 ¥132/晚
       </div>
 <div class="h-rating">
-        美团 ⭐ 4.6 ｜ 小红书情感 —
+        美团 ⭐ 4.6 ｜ 小红书情感 ：
       </div>
 <div class="h-loc">📍 江北区北滨路·华新街地铁站约400m（3号线） 8</div>
 <div class="h-reason">推荐理由：【重庆用户锁定J】美团4.6·大床¥132/双床¥161；北滨路居民沿江带，嘉陵江江景，非景区；华新街站约400m</div>
@@ -4521,14 +6437,23 @@ html body .period-col .timeline .stop:last-child {
 </div>
 <span class="confidence-badge confidence-green"></span>
 </div>
-</div><div class="hotel-card is-secondary">
+</div>
+</div>
+<div class="hotel-alt-sheet">
+<div class="hotel-alt-head">
+<p class="hotel-alt-kicker">Alternates</p>
+<h3 class="hotel-alt-title">可切换备选</h3>
+<p class="hotel-alt-lede">价格与预订链接保持原数据；按行程节点就近切换。</p>
+</div>
+<div class="hotel-alt-list">
+<div class="hotel-card is-secondary">
 <div class="h-rank">备选 2</div>
 <h4>桐晖酒店（重庆巫山游客中心店）</h4>
 <div class="h-price">
         参考价 ¥117/晚
       </div>
 <div class="h-rating">
-        美团 ⭐ 4.9 ｜ 小红书情感 —
+        美团 ⭐ 4.9 ｜ 小红书情感 ：
       </div>
 <div class="h-loc">📍 巫山·游客中心旁·距小三峡码头约0.3km 10</div>
 <div class="h-reason">推荐理由：【巫山用户锁定B】美团4.9·2025开业·¥117；距码头约0.3km；临江双床可选；晚上滨江/游客中心一带可逛，早起步行赶小三峡头班</div>
@@ -4551,7 +6476,7 @@ html body .period-col .timeline .stop:last-child {
         参考价 ¥111/晚
       </div>
 <div class="h-rating">
-        美团 ⭐ 4.7 ｜ 小红书情感 —
+        美团 ⭐ 4.7 ｜ 小红书情感 ：
       </div>
 <div class="h-loc">📍 巫山·距小三峡旅游码头约0.2km 10</div>
 <div class="h-reason">推荐理由：备选：更近码头¥111·4.7分</div>
@@ -4574,7 +6499,7 @@ html body .period-col .timeline .stop:last-child {
         参考价 ¥198/晚
       </div>
 <div class="h-rating">
-        美团 ⭐ 4.7 ｜ 小红书情感 —
+        美团 ⭐ 4.7 ｜ 小红书情感 ：
       </div>
 <div class="h-loc">📍 巫山·距码头约0.5km 9</div>
 <div class="h-reason">推荐理由：备选：连锁·夜逛配套略好</div>
@@ -4597,7 +6522,7 @@ html body .period-col .timeline .stop:last-child {
         参考价 ¥73/晚
       </div>
 <div class="h-rating">
-        美团 ⭐ 4.5 ｜ 小红书情感 —
+        美团 ⭐ 4.5 ｜ 小红书情感 ：
       </div>
 <div class="h-loc">📍 巫山县城·市政广场0.4km 8</div>
 <div class="h-reason">推荐理由：备选最便宜¥73</div>
@@ -4614,7 +6539,8 @@ html body .period-col .timeline .stop:last-child {
 </div>
 <span class="confidence-badge confidence-green"></span>
 </div>
-
+</div>
+</div>
 </div>
 </section>
 <section class="essentials" id="essentials" aria-label="须知">
@@ -4947,7 +6873,7 @@ html body .period-col .timeline .stop:last-child {
 <div class="xhs-grid">
 <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E9%A6%99%E9%B8%AD%E5%B1%85%20%E9%87%8D%E5%BA%86" rel="noopener" target="_blank">
 <div class="xhs-body">
-<div class="xhs-title">🦆 香鸭居(纯阳洞) — 抖音「来重庆必吃10家苍蝇馆子」常驻</div>
+<div class="xhs-title">🦆 香鸭居(纯阳洞) ： 抖音「来重庆必吃10家苍蝇馆子」常驻</div>
 <div class="xhs-meta">
 <span>@多平台食客</span>
 <span>❤️ 抖音万赞</span>
@@ -4958,7 +6884,7 @@ html body .period-col .timeline .stop:last-child {
 </a>
 <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E8%80%B6%E5%B1%B9%E5%8F%A3%E5%AF%BF%E5%8F%B8%20%E9%87%8D%E5%BA%86" rel="noopener" target="_blank">
 <div class="xhs-body">
-<div class="xhs-title">🍣 耶屹口寿司(石油路) — 排队2h+的「川派寿司天花板」</div>
+<div class="xhs-title">🍣 耶屹口寿司(石油路) ： 排队2h+的「川派寿司天花板」</div>
 <div class="xhs-meta">
 <span>@微博/抖音万赞食客</span>
 <span>❤️ 多篇万赞</span>
@@ -4969,18 +6895,18 @@ html body .period-col .timeline .stop:last-child {
 </a>
 <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E8%BE%A3%E4%B8%89%E9%B2%9C%20%E8%87%AA%E8%B4%A1%E8%8F%9C%20%E5%9B%9E%E9%BE%99%E6%B9%BE" rel="noopener" target="_blank">
 <div class="xhs-body">
-<div class="xhs-title">🌶 辣三鲜·火爆自贡菜(回龙湾) — 密子君同款爆辣盐帮菜</div>
+<div class="xhs-title">🌶 辣三鲜·火爆自贡菜(回龙湾) ： 密子君同款爆辣盐帮菜</div>
 <div class="xhs-meta">
 <span>@抖音/头条食客</span>
 <span>❤️ 多篇热推</span>
 </div>
-<div class="xhs-snippet">回龙湾是重庆最被低估的美食街之一。自贡鲜货每日凌晨直送重庆，拒绝预制菜，明档明厨现点现炒。🔥必点三件套：①自贡冷吃兔——兔肉炸得干香紧实裹满海椒花椒，下酒...</div>
+<div class="xhs-snippet">回龙湾是重庆最被低估的美食街之一。自贡鲜货每日凌晨直送重庆，拒绝预制菜，明档明厨现点现炒。🔥必点三件套：①自贡冷吃兔，兔肉炸得干香紧实裹满海椒花椒，下酒...</div>
 <span class="xhs-sentiment xhs-sentiment-positive">👍 推荐</span>
 </div>
 </a>
 <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E6%B8%9D%E5%91%B3%E5%93%8D%E7%81%AB%E9%94%85%20%E5%A4%A7%E5%9D%AA" rel="noopener" target="_blank">
 <div class="xhs-body">
-<div class="xhs-title">🍲 渝味响火锅(大坪总店) — 必吃榜连续上榜·褒贬两极分化</div>
+<div class="xhs-title">🍲 渝味响火锅(大坪总店) ： 必吃榜连续上榜·褒贬两极分化</div>
 <div class="xhs-meta">
 <span>@微博/十六番食客</span>
 <span>❤️ 必吃榜2022/2023</span>
@@ -4991,7 +6917,7 @@ html body .period-col .timeline .stop:last-child {
 </a>
 <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E5%B7%AB%E5%B1%B1%20%E7%83%A4%E9%B1%BC%20%E6%8E%A8%E8%8D%90" rel="noopener" target="_blank">
 <div class="xhs-body">
-<div class="xhs-title">🐟 巫山烤鱼 — 重庆市级非遗·焦脆鲜三绝·具体店推荐</div>
+<div class="xhs-title">🐟 巫山烤鱼 ： 重庆市级非遗·焦脆鲜三绝·具体店推荐</div>
 <div class="xhs-meta">
 <span>@综合食客/搜狐美食</span>
 <span>❤️ 非遗美食</span>
@@ -5092,18 +7018,18 @@ html body .period-col .timeline .stop:last-child {
 </a>
 <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E7%A3%81%E5%99%A8%E5%8F%A3%20%E9%99%88%E9%BA%BB%E8%8A%B1%20%E5%93%AA%E5%AE%B6%E6%AD%A3%E5%AE%97" rel="noopener" target="_blank">
 <div class="xhs-body">
-<div class="xhs-title">🧈 磁器口陈麻花 — 三足鼎立怎么选</div>
+<div class="xhs-title">🧈 磁器口陈麻花 ： 三足鼎立怎么选</div>
 <div class="xhs-meta">
 <span>@本地人/资深游客</span>
 <span>❤️ 非遗+重庆老字号</span>
 </div>
-<div class="xhs-snippet">磁器口30多家麻花店，12家叫「陈麻花」，分三派：①陈昌银——唯一「非物质文化遗产」+「重庆老字号」双认证，始於1907年，超市也有卖，最权威...</div>
+<div class="xhs-snippet">磁器口30多家麻花店，12家叫「陈麻花」，分三派：①陈昌银，唯一「非物质文化遗产」+「重庆老字号」双认证，始於1907年，超市也有卖，最权威...</div>
 <span class="xhs-sentiment xhs-sentiment-positive">👍 推荐</span>
 </div>
 </a>
 <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E9%87%8D%E5%BA%86%E7%81%AB%E9%94%85%E5%BA%95%E6%96%99%20%E8%8F%9C%E5%B8%82%E5%9C%BA%20%E6%A1%A5%E5%A4%B4%20%E7%A7%8B%E9%9C%9E" rel="noopener" target="_blank">
 <div class="xhs-body">
-<div class="xhs-title">🍲 火锅底料 — 菜市场&gt;超市&gt;景区（价差最高50%）</div>
+<div class="xhs-title">🍲 火锅底料 ： 菜市场&gt;超市&gt;景区（价差最高50%）</div>
 <div class="xhs-meta">
 <span>@本地人/知乎/抖音</span>
 <span>❤️ 全民攻略</span>
@@ -5114,7 +7040,7 @@ html body .period-col .timeline .stop:last-child {
 </a>
 <a class="xhs-card" href="https://www.xiaohongshu.com/search_result?keyword=%E5%B7%AB%E5%B1%B1%E8%84%86%E6%9D%8E%20%E6%80%8E%E4%B9%88%E6%8C%91%20%E5%B8%A6%E5%9B%9E" rel="noopener" target="_blank">
 <div class="xhs-body">
-<div class="xhs-title">🫐 巫山脆李 — 中华名果·8月正当时·最后一批</div>
+<div class="xhs-title">🫐 巫山脆李 ： 中华名果·8月正当时·最后一批</div>
 <div class="xhs-meta">
 <span>@央视/新华网/果农</span>
 <span>❤️ 中华名果·年产值70亿+</span>
@@ -5162,7 +7088,7 @@ html body .period-col .timeline .stop:last-child {
 <div class="comp-row">
 <strong>✅ 已启用</strong>
 <ul>
-<li>WebSearch — 兜底数据源</li>
+<li>WebSearch ： 兜底数据源</li>
 </ul>
 </div>
 <p class="comp-tip">
@@ -5179,7 +7105,7 @@ html body .period-col .timeline .stop:last-child {
 <div class="comp-row">
 <strong>✅ 已启用</strong>
 <ul>
-<li>WebSearch — 兜底数据源</li>
+<li>WebSearch ： 兜底数据源</li>
 </ul>
 </div>
 <p class="comp-tip">
@@ -5244,7 +7170,7 @@ html body .period-col .timeline .stop:last-child {
 <footer>
 <p>由出游规划师 v1.0.0 生成 · 2026-07-27T18:26:03+08:00</p>
 <p>本报告所有价格 / 营业 / 评分均为查询时刻的参考值，请出行前再核实。</p>
-<p class="dossier-build-stamp" style="margin-top:0.75rem;opacity:0.55;">视觉版 craft-v7-linear-timeline · 摄影与日程单线连续</p></footer>
+<p class="dossier-build-stamp" style="margin-top:0.75rem;opacity:0.55;">视觉版 craft-v14-omai-controls · 菜单抽屉 + 图片定位交互</p></footer>
 <script>
   // 总览地图 -- 国内可用瓦片源（按可达性顺序），任何一个失败自动切下一个
   const map = L.map('map', { preferCanvas: true });
@@ -5411,10 +7337,65 @@ html body .period-col .timeline .stop:last-child {
   const nav = document.querySelector('.site-nav');
   const hero = document.querySelector('.hero');
   const backTop = document.getElementById('back-to-top');
+  const drawer = document.getElementById('trip-drawer');
+  const drawerBackdrop = document.getElementById('trip-drawer-backdrop');
+  const drawerTrigger = document.getElementById('nav-menu-trigger');
+  const drawerAction = document.getElementById('nav-action');
+  const drawerClose = document.getElementById('trip-drawer-close');
+  let drawerReturnFocus = null;
+
+  const setDrawer = (open) => {
+    if (!drawer || !drawerBackdrop) return;
+    drawer.classList.toggle('is-open', open);
+    drawerBackdrop.classList.toggle('is-open', open);
+    drawer.setAttribute('aria-hidden', String(!open));
+    drawerBackdrop.setAttribute('aria-hidden', String(!open));
+    document.body.classList.toggle('trip-drawer-open', open);
+    [drawerTrigger, drawerAction].forEach((trigger) => {
+      trigger?.setAttribute('aria-expanded', String(open));
+    });
+    if (open) {
+      drawerReturnFocus = document.activeElement;
+      window.setTimeout(() => drawerClose?.focus(), reduce ? 0 : 220);
+    } else {
+      drawerReturnFocus?.focus?.();
+      drawerReturnFocus = null;
+    }
+  };
+
+  drawerTrigger?.addEventListener('click', () => setDrawer(!drawer?.classList.contains('is-open')));
+  drawerAction?.addEventListener('click', () => setDrawer(!drawer?.classList.contains('is-open')));
+  drawerClose?.addEventListener('click', () => setDrawer(false));
+  drawerBackdrop?.addEventListener('click', () => setDrawer(false));
+  drawer?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setDrawer(false)));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && drawer?.classList.contains('is-open')) setDrawer(false);
+  });
 
   if (!reduce) document.documentElement.classList.add('motion-ready');
 
-  // Hero staged entrance: double rAF ensures initial hidden frame paints first
+  // Omai-style word split for titles living inside photography.
+  const splitWords = (el) => {
+    if (!el || el.dataset.omaiSplit === '1') return;
+    const text = el.textContent.trim();
+    if (!text) return;
+    el.dataset.omaiSplit = '1';
+    el.textContent = '';
+    text.split(/(\s+)/).forEach((token) => {
+      if (!token) return;
+      if (/^\s+$/.test(token)) {
+        el.appendChild(document.createTextNode(token));
+        return;
+      }
+      const span = document.createElement('span');
+      span.className = 'omai-word';
+      span.textContent = token;
+      el.appendChild(span);
+    });
+  };
+  document.querySelectorAll('.media-title, .day-theme-title .day-theme').forEach(splitWords);
+
+  // Hero staged entrance
   if (hero) {
     if (reduce) {
       hero.classList.add('is-ready');
@@ -5425,19 +7406,24 @@ html body .period-col .timeline .stop:last-child {
     }
   }
 
-  // Safety: never leave content hidden if observer misses
+  // Safety only for above-the-fold risk, not a full-page force reveal.
   window.setTimeout(() => {
-    document.querySelectorAll('.reveal-target').forEach((el) => el.classList.add('is-visible'));
     if (hero) hero.classList.add('is-ready');
-    if (typeof window.__drawBudgetChart === 'function') window.__drawBudgetChart();
-  }, 1800);
+    document.querySelectorAll('.day-cover.story-reveal').forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.92) el.classList.add('is-visible');
+    });
+  }, 2200);
 
-  // Mark reveal targets
+  // Utility sections: Omai text rise
   const revealNodes = [
-    ...document.querySelectorAll('section'),
-    ...document.querySelectorAll('.day-card, .hotel-card, .trans-card, .risk-block, .xhs-section, .completeness-panel')
-  ];
-  revealNodes.forEach((el) => el.classList.add('reveal-target'));
+    ...document.querySelectorAll('body > section:not(#days), #appendix .appendix-inner > section')
+  ].filter((el, index, nodes) => nodes.indexOf(el) === index);
+  revealNodes.forEach((el) => {
+    el.classList.add('reveal-target');
+    el.setAttribute('data-animate', '');
+    el.setAttribute('data-animate-text', '');
+  });
 
   const revealIO = new IntersectionObserver((entries, obs) => {
     entries.forEach((entry) => {
@@ -5445,7 +7431,7 @@ html body .period-col .timeline .stop:last-child {
       entry.target.classList.add('is-visible');
       obs.unobserve(entry.target);
     });
-  }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
+  }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
 
   if (reduce) {
     revealNodes.forEach((el) => el.classList.add('is-visible'));
@@ -5453,14 +7439,72 @@ html body .period-col .timeline .stop:last-child {
     revealNodes.forEach((el) => revealIO.observe(el));
   }
 
-  // Nav scrolled state via sentinel (no per-frame scroll math)
-  const sentinel = document.getElementById('nav-sentinel');
-  if (nav && sentinel) {
+  // Photographic story beats: observe each card, not the whole strip.
+  const storyNodes = [
+    ...document.querySelectorAll('.day-cover, .media-card, .day-body-pad'),
+    ...document.querySelectorAll('.hotel-primary-media, .hotel-primary-copy, .hotel-alt-sheet')
+  ];
+  storyNodes.forEach((el) => {
+    el.classList.add('story-reveal');
+    if (el.matches('.media-card, .day-cover, .hotel-primary-media')) {
+      el.setAttribute('data-animate', '');
+      el.setAttribute('data-animate-img', '');
+    } else {
+      el.setAttribute('data-animate', '');
+      el.setAttribute('data-animate-text', '');
+    }
+  });
+
+  // Make each photo a meaningful interaction: jump to the matching time block.
+  document.querySelectorAll('.day-card').forEach((dayCard) => {
+    const stops = [...dayCard.querySelectorAll('.timeline .stop')];
+    dayCard.querySelectorAll('.media-card').forEach((card, index) => {
+      const target = stops[index === 2 ? stops.length - 1 : Math.min(index + 1, Math.max(stops.length - 1, 0))];
+      if (!target) return;
+      card.setAttribute('role', 'link');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', `查看${dayCard.dataset.day}日第${index + 1}段具体时刻`);
+      const focusTarget = () => {
+        document.querySelectorAll('.media-card.is-focused, .stop.is-focus-target').forEach((el) => {
+          el.classList.remove('is-focused', 'is-focus-target');
+        });
+        card.classList.add('is-focused');
+        target.classList.add('is-focus-target');
+        const top = target.getBoundingClientRect().top + window.pageYOffset - (nav?.getBoundingClientRect().height || 0) - 24;
+        window.scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
+        window.setTimeout(() => target.classList.remove('is-focus-target'), reduce ? 1400 : 2800);
+      };
+      card.addEventListener('click', focusTarget);
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          focusTarget();
+        }
+      });
+    });
+  });
+
+  const storyIO = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      obs.unobserve(entry.target);
+    });
+  }, { threshold: 0.18, rootMargin: '0px 0px -10% 0px' });
+
+  if (reduce) {
+    storyNodes.forEach((el) => el.classList.add('is-visible'));
+  } else {
+    storyNodes.forEach((el) => storyIO.observe(el));
+  }
+
+  // Nav solid state from hero visibility
+  if (nav && hero) {
     const navIO = new IntersectionObserver(([entry]) => {
       nav.classList.toggle('is-scrolled', !entry.isIntersecting);
       if (backTop) backTop.classList.toggle('is-visible', !entry.isIntersecting);
-    }, { threshold: 1 });
-    navIO.observe(sentinel);
+    }, { threshold: 0, rootMargin: '-72px 0px 0px 0px' });
+    navIO.observe(hero);
   }
 
   // Day progress rail
@@ -5493,6 +7537,24 @@ html body .period-col .timeline .stop:last-child {
     }, { threshold: [0.45, 0.7], rootMargin: '-30% 0px -35% 0px' });
     stops.forEach((stop) => stopIO.observe(stop));
   }
+
+  // Smooth in-page anchors with header offset, no scroll listener.
+  const headerOffset = () => {
+    const h = nav ? nav.getBoundingClientRect().height : 0;
+    return Math.round(h + 12);
+  };
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const href = link.getAttribute('href');
+      if (!href || href === '#' || href.length < 2) return;
+      const target = document.querySelector(href);
+      if (!target) return;
+      event.preventDefault();
+      const top = target.getBoundingClientRect().top + window.pageYOffset - headerOffset();
+      window.scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
+      if (history.pushState) history.pushState(null, '', href);
+    });
+  });
 
   // Budget chart + count-up once in view
   const animateCount = (el) => {
@@ -5529,7 +7591,6 @@ html body .period-col .timeline .stop:last-child {
     budgetIO.observe(budgetSection);
   }
 
-  // Day budget counts when day card visible
   document.querySelectorAll('.day-card').forEach((card) => {
     const counts = card.querySelectorAll('.day-budget [data-count-to]');
     if (!counts.length) return;
@@ -5543,7 +7604,6 @@ html body .period-col .timeline .stop:last-child {
     io.observe(card);
   });
 
-  // Back to top
   if (backTop) {
     backTop.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
