@@ -1,96 +1,77 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate"/>
+
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<title>重庆+巫山 · 2026-08-01 行程书（视觉初稿）</title>
-<meta content="重庆主城与巫山小三峡四日行程书视觉优化初稿" name="description"/>
-<meta content="light dark" name="color-scheme"/>
+<title>重庆 · 巫山 · 私人行程册（2026-08-01）</title>
+<meta content="重庆与巫山四日三夜私人行程册：城夜、峡江与可执行日程。" name="description"/>
+<meta content="light" name="color-scheme"/>
 <link crossorigin="anonymous" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/>
 <script crossorigin="anonymous" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
 
 :root {
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-inout: cubic-bezier(0.45, 0, 0.55, 1);
+  color-scheme: light;
+  --ease-out: cubic-bezier(0.25, 0.5, 0, 1);
+  --ease-inout: cubic-bezier(0.4, 0, 0.2, 1);
   --hover-ms: 200ms;
-  --enter-ms: 560ms;
+  --enter-ms: 520ms;
   --press-ms: 100ms;
   --stagger-ms: 60ms;
-  --hover-y: -3px;
-  --hover-scale: 1.01;
-  --enter-y: 20px;
-  --bg: #fff8f1;
-  --bg-2: #eef9ff;
-  --surface: #ffffff;
-  --surface-2: #fff4ea;
-  --surface-sky: #eef8ff;
-  --ink: #1c2430;
-  --ink-soft: #5b6675;
-  --ink-faint: #8b95a3;
-  --line: #f0ddd0;
-  --line-sky: #d5eaf8;
-  --accent: #ff6a3d;
-  --accent-2: #e85a30;
-  --accent-soft: #ffe3d7;
-  --accent-ink: #7a2410;
-  --sky: #2aa8e0;
-  --sky-2: #148fc7;
-  --sky-soft: #d9f1ff;
-  --mint: #14b8a6;
-  --mint-soft: #d8f7f2;
-  --sun: #f5b301;
-  --sun-soft: #fff3c4;
-  --ok: #0f9f6e;
-  --ok-soft: #d8f8ea;
-  --warn: #d97706;
-  --warn-soft: #ffedd5;
-  --danger: #e11d48;
-  --danger-soft: #ffe4e6;
-  --shadow: 0 14px 40px rgba(255, 106, 61, 0.10), 0 8px 24px rgba(42, 168, 224, 0.08);
-  --shadow-sm: 0 4px 14px rgba(28, 36, 48, 0.06);
-  --radius: 20px;
-  --radius-sm: 14px;
+  --hover-y: -2px;
+  --hover-scale: 1.02;
+  --enter-y: 16px;
+  --paper: #F3EFE8;
+  --paper-2: #EAE4DA;
+  --bg: #F3EFE8;
+  --bg-2: #EAE4DA;
+  --surface: #FFFCF7;
+  --surface-2: #F7F2EA;
+  --surface-sky: #EFE9E0;
+  --ink: #1E1B18;
+  --ink-soft: #5E574F;
+  --ink-faint: #8A8278;
+  --line: #D9D3C9;
+  --line-sky: #C4BDB2;
+  --line-strong: #C4BDB2;
+  --accent: #8C6B45;
+  --accent-2: #7A5B3A;
+  --accent-soft: #E8DFD2;
+  --accent-ink: #5A432C;
+  --bronze: #8C6B45;
+  --bronze-soft: #E8DFD2;
+  --sky: #6B635A;
+  --sky-2: #5E574F;
+  --sky-soft: #EAE4DA;
+  --mint: #3F6B54;
+  --mint-soft: #E4EFE8;
+  --sun: #9A6B2F;
+  --sun-soft: #F3EBD8;
+  --ok: #3F6B54;
+  --ok-soft: #E4EFE8;
+  --warn: #9A6B2F;
+  --warn-soft: #F3EBD8;
+  --danger: #8F3F3F;
+  --danger-soft: #F0E4E2;
+  --shadow: none;
+  --shadow-sm: 0 8px 24px rgba(30, 27, 24, 0.06);
+  --radius: 10px;
+  --radius-sm: 6px;
   --nav-h: 64px;
-  --font: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-display: "Noto Serif SC", "Songti SC", "Source Han Serif SC", "STSong", serif;
+  --font-body: "PingFang SC", "Noto Sans SC", "Hiragino Sans GB", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-label: "PingFang SC", "Noto Sans SC", "Hiragino Sans GB", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font: "PingFang SC", "Noto Sans SC", "Hiragino Sans GB", "Segoe UI", system-ui, -apple-system, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --max: 1120px;
+  --max-read: 720px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #121820;
-    --bg-2: #0f1720;
-    --surface: #1a2330;
-    --surface-2: #243041;
-    --surface-sky: #173043;
-    --ink: #f3f7fb;
-    --ink-soft: #b3c0cf;
-    --ink-faint: #8493a5;
-    --line: #334155;
-    --line-sky: #2a4b63;
-    --accent: #ff8b63;
-    --accent-2: #ffb089;
-    --accent-soft: #4a261b;
-    --accent-ink: #ffe7dc;
-    --sky: #5cc8f5;
-    --sky-2: #7dd3fc;
-    --sky-soft: #163246;
-    --mint: #2dd4bf;
-    --mint-soft: #134e4a;
-    --sun: #fbbf24;
-    --sun-soft: #422006;
-    --ok: #34d399;
-    --ok-soft: #064e3b;
-    --warn: #fbbf24;
-    --warn-soft: #451a03;
-    --danger: #fb7185;
-    --danger-soft: #4c0519;
-    --shadow: 0 18px 48px rgba(0,0,0,.4);
-    --shadow-sm: 0 4px 16px rgba(0,0,0,.28);
-  }
-}
+/* dark theme disabled: fixed paper dossier */
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -98,29 +79,12 @@ body {
   margin: 0;
   font-family: var(--font);
   color: var(--ink);
-  background:
-    radial-gradient(900px 420px at 8% -8%, color-mix(in srgb, var(--sun) 28%, transparent), transparent 60%),
-    radial-gradient(800px 380px at 92% 0%, color-mix(in srgb, var(--sky) 24%, transparent), transparent 58%),
-    radial-gradient(700px 360px at 50% 18%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 55%),
-    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 48%, var(--bg) 100%);
+  background: var(--paper);
   line-height: 1.62;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.35;
-  background-image:
-    radial-gradient(circle at 12% 22%, color-mix(in srgb, var(--sun) 18%, transparent) 0 2px, transparent 3px),
-    radial-gradient(circle at 78% 18%, color-mix(in srgb, var(--sky) 20%, transparent) 0 2px, transparent 3px),
-    radial-gradient(circle at 40% 70%, color-mix(in srgb, var(--accent) 16%, transparent) 0 1.5px, transparent 2.5px);
-  background-size: 180px 180px, 220px 220px, 160px 160px;
-}
 
 a { color: var(--sky-2); text-decoration-thickness: 1px; text-underline-offset: 3px; }
 a:hover { color: var(--accent-2); }
@@ -157,17 +121,7 @@ footer { position: relative; z-index: 1; }
   color: var(--ink);
   text-decoration: none;
 }
-.nav-mark {
-  width: 30px;
-  height: 30px;
-  border-radius: 999px;
-  background:
-    radial-gradient(circle at 30% 30%, #fff7c2 0 28%, transparent 30%),
-    linear-gradient(145deg, var(--accent), var(--sky));
-  box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 28%, transparent);
-  flex: 0 0 auto;
-  position: relative;
-}
+.nav-mark { width:10px; height:10px; border-radius:999px; background: var(--bronze); box-shadow:none; }
 .nav-mark::after {
   content: "";
   position: absolute;
@@ -258,6 +212,7 @@ footer { position: relative; z-index: 1; }
   background: var(--accent);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);
 }
+h1, .hero h1 { background-image:none !important; }
 .hero h1 {
   margin: 0 0 12px;
   font-size: clamp(2.05rem, 4.4vw, 3.25rem);
@@ -740,7 +695,7 @@ section > h2::after {
 }
 .route-steps li {
   padding: 6px 0 6px 14px;
-  border-left: 3px solid color-mix(in srgb, var(--accent) 40%, var(--sky));
+  border-left: 0;
   margin-left: 4px;
 }
 .route-source-text { color: var(--ink-faint); font-weight: 720; }
@@ -900,7 +855,7 @@ section > h2::after {
 .risk-panel { display: grid; gap: 12px; }
 .risk-block {
   padding: 16px;
-  border-left: 5px solid var(--line-strong, var(--line));
+  border-left: 0;
   background: linear-gradient(90deg, color-mix(in srgb, var(--surface-2) 80%, transparent), var(--surface));
 }
 .risk-block.confidence-green { border-left-color: var(--ok); }
@@ -1497,50 +1452,3140 @@ a:focus-visible,
   .day-cover { aspect-ratio: 16 / 10; }
 }
 
+
+/* ===== Private Trip Dossier overrides ===== */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600&display=swap");
+html, body { background: var(--paper) !important; color: var(--ink); font-family: var(--font-body); }
+body::before { display:none !important; }
+.site-nav { background: transparent; border:0; box-shadow:none; color:#F7F1E8; backdrop-filter:none; }
+.site-nav.is-solid, .site-nav.is-scrolled, .site-nav.scrolled, body.has-solid-nav .site-nav {
+  background: rgba(255,252,247,.94) !important; color: var(--ink); border-bottom:1px solid var(--line); box-shadow: var(--shadow-sm);
+}
+.nav-brand { font-family: var(--font-display); letter-spacing:.06em; font-weight:500; }
+.nav-links a { min-height:44px; display:inline-flex; align-items:center; padding:0 12px; font-size:11px; font-weight:600; letter-spacing:.1em; color:inherit; opacity:.9; }
+.nav-links a:hover { color: var(--bronze); opacity:1; }
+.nav-mark { background: var(--bronze) !important; animation:none !important; }
+
+.hero {
+  min-height: 100vh; min-height:100dvh; display:grid; align-items:end; position:relative;
+  padding: calc(var(--nav-h) + 2rem) 1.25rem 4.5rem; color:#F7F1E8 !important;
+  border-radius:0 !important; overflow:hidden;
+  width:100% !important; max-width:none !important; margin:0 !important;
+  box-shadow:none !important; border:0 !important;
+  background:
+    linear-gradient(180deg, rgba(20,17,15,.28) 0%, rgba(20,17,15,.18) 42%, rgba(20,17,15,.78) 100%),
+    url("media/wu-gorge.jpg") center/cover no-repeat !important;
+}
+.hero::before, .hero::after { display:none !important; }
+.hero-copy { max-width: 42rem; position:relative; z-index:1; color:#F7F1E8 !important; }
+.hero-kicker { font-size:11px; letter-spacing:.16em; color:rgba(247,241,232,.84) !important; font-weight:600; margin-bottom:.85rem; background:none !important; border:0 !important; padding:0 !important; }
+.hero h1 {
+  font-family:var(--font-display); font-size:clamp(2.5rem,6vw,4.25rem); font-weight:500; line-height:1.05; letter-spacing:-.02em;
+  margin:0 0 .75rem; max-width:10ch;
+  color:#F7F1E8 !important; background:none !important; -webkit-text-fill-color:#F7F1E8 !important;
+  text-shadow:0 1px 18px rgba(0,0,0,.35);
+}
+.hero-sub { font-size:1rem; line-height:1.7; color:rgba(247,241,232,.9) !important; max-width:34em; margin:0 0 1.25rem; }
+.hero-meta-row { display:flex; flex-wrap:wrap; gap:.35rem 1rem; font-size:12px; color:rgba(247,241,232,.82) !important; border-top:1px solid rgba(247,241,232,.22); padding-top:.9rem; }
+.hero-meta-row .chip { background:transparent !important; border:0 !important; box-shadow:none !important; padding:0 !important; border-radius:0 !important; color:inherit !important; }
+.hero-meta-row .chip span { color:rgba(247,241,232,.66) !important; font-size:11px; letter-spacing:.08em; }
+.hero-meta-row .chip strong { color:#F7F1E8 !important; font-weight:500; font-family:var(--font-mono); -webkit-text-fill-color:#F7F1E8 !important; background:none !important; }
+.hero-stamp, .hero-panel, .confidence-summary, .hero-copy::before, .hero-copy::after { content:none !important; display:none !important; }
+.hero-scroll-hint { position:absolute; left:50%; bottom:1.2rem; transform:translateX(-50%); font-size:11px; letter-spacing:.14em; color:rgba(247,241,232,.75) !important; }
+
+.snapshot { background:var(--paper); color:var(--ink); padding:4rem 0 1.5rem; width:min(var(--max), calc(100% - 2.5rem)); margin:0 auto; }
+.snapshot-grid { display:grid; gap:2rem; }
+@media (min-width:900px){ .snapshot-grid{ grid-template-columns:1.2fr .8fr; gap:3rem; align-items:end; } }
+.snapshot h2 { font-family:var(--font-display); font-size:clamp(1.75rem,3vw,2.4rem); font-weight:500; margin:0 0 1rem; }
+.snapshot-copy p { font-size:1rem; line-height:1.7; color:var(--ink-soft); max-width:36em; margin:0; }
+.snapshot-facts { display:grid; grid-template-columns:1fr 1fr; gap:.85rem; }
+.snapshot-facts div { border:1px solid var(--line); background:var(--surface); padding:.9rem 1rem; border-radius:6px; }
+.snapshot-facts .label { display:block; font-size:11px; letter-spacing:.1em; color:var(--ink-faint); margin-bottom:.3rem; }
+.snapshot-facts .value { font-family:var(--font-display); font-size:1.15rem; color:var(--ink); }
+.snapshot-link { display:inline-flex; min-height:44px; align-items:center; margin-top:1rem; color:var(--bronze); border-bottom:1px solid currentColor; font-size:11px; letter-spacing:.12em; font-weight:600; text-decoration:none; }
+
+.route-band { width:min(var(--max), calc(100% - 2.5rem)); margin:0 auto 2rem; padding:1rem 0 2rem; display:grid; gap:.75rem; }
+@media (min-width:800px){ .route-band{ grid-template-columns:repeat(3,1fr); gap:1rem; } }
+.route-step { border-top:1px solid var(--line-strong); padding-top:.9rem; }
+.route-step .label { font-size:11px; letter-spacing:.12em; color:var(--ink-faint); font-weight:600; }
+.route-step h3 { font-family:var(--font-display); font-size:1.35rem; margin:.35rem 0; font-weight:500; }
+.route-step p { margin:0; color:var(--ink-soft); font-size:.95rem; line-height:1.6; }
+
+.section-label { font-size:11px; letter-spacing:.14em; color:var(--ink-faint); font-weight:600; margin:0 0 .5rem; }
+section, .day-card, .hotel-card, .trans-card, .xhs-card, .video-card, .media-card, .check-group { border-radius:6px !important; box-shadow:none !important; }
+section { background:transparent !important; border:0 !important; width:min(var(--max), calc(100% - 2.5rem)); margin-left:auto; margin-right:auto; margin-bottom:2.25rem; padding-left:0 !important; padding-right:0 !important; }
+section > h2 { font-family:var(--font-display); font-size:clamp(1.6rem,3vw,2.3rem); font-weight:500; border-bottom:1px solid var(--line); padding-bottom:.75rem; margin-bottom:1.25rem; }
+
+#days { width:min(var(--max), calc(100% - 2.5rem)); margin-inline:auto; }
+.day-card { background:var(--surface) !important; border:1px solid var(--line) !important; padding:0 !important; overflow:hidden; margin-bottom:2rem; }
+.day-header { padding:1.25rem 1.25rem .75rem; background:transparent !important; }
+.day-kicker { font-size:11px; letter-spacing:.12em; color:var(--bronze); font-weight:600; }
+.day-header h3, .day-theme { font-family:var(--font-display); font-size:clamp(1.5rem,2.8vw,2rem); font-weight:500; line-height:1.2; margin:.25rem 0 .55rem; color:var(--ink); }
+.day-meta { color:var(--ink-faint) !important; font-size:12px !important; }
+.day-cover { margin:0; border-radius:0 !important; }
+.day-cover img { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; }
+.day-cover figcaption, .media-card figcaption { font-size:12px; color:var(--ink-faint); padding:.45rem 1.25rem 0; }
+.day-body-pad { padding:.35rem 1.25rem 1rem; }
+.period-grid { display:grid; gap:1rem; margin:1rem 0 .5rem; }
+@media (min-width:900px){ .period-grid{ grid-template-columns:repeat(3,1fr); } }
+.period-col { border-top:1px solid var(--line); padding-top:.75rem; }
+.period-col h4 { margin:0 0 .65rem; font-size:11px; letter-spacing:.12em; color:var(--ink-faint); font-weight:600; }
+.timeline { padding:0 !important; margin:0 !important; list-style:none; }
+.stop { border:0 !important; background:transparent !important; box-shadow:none !important; padding:.55rem 0 !important; border-bottom:1px solid var(--line) !important; border-radius:0 !important; display:flex; gap:.75rem; }
+.stop:last-child { border-bottom:0 !important; }
+.t-time { font-family:var(--font-mono); font-size:12px; color:var(--ink-faint); min-width:3.2rem; }
+.t-emoji { display:none; }
+.t-reason { color:var(--ink-soft); font-size:.92rem; line-height:1.55; }
+.t-detail { color:var(--ink-faint) !important; font-size:12px !important; }
+.day-footer-note { margin:.85rem 1.25rem 0; padding:.85rem 1rem; background:var(--paper-2); border-left:0; color:var(--ink-soft); font-size:.92rem; }
+.day-budget { background:transparent !important; color:var(--ink-faint) !important; border-top:1px solid var(--line); font-family:var(--font-mono); font-size:12px; padding:.75rem 1.25rem 1rem !important; }
+
+.hotel-grid { display:grid; gap:1rem; }
+.hotel-card { background:var(--surface) !important; border:1px solid var(--line) !important; padding:1rem 1.1rem !important; }
+.hotel-card.is-primary { display:grid; gap:.85rem; }
+@media (min-width:900px){ .hotel-card.is-primary{ grid-template-columns:1.05fr 1fr; } }
+.hotel-primary-media img { width:100%; min-height:220px; height:100%; object-fit:cover; border-radius:2px; display:block; }
+.hotel-card h4 { font-family:var(--font-display); font-size:1.35rem; font-weight:500; margin:.2rem 0; }
+.h-rank { background:transparent !important; color:var(--bronze) !important; border:1px solid var(--line); border-radius:2px; font-size:11px; letter-spacing:.08em; display:inline-flex; padding:.2rem .45rem; }
+.h-price { font-family:var(--font-mono); color:var(--ink-soft); }
+
+.essentials { width:min(var(--max), calc(100% - 2.5rem)); margin:0 auto 2.5rem; }
+.essentials-list { list-style:none; padding:0; margin:0; display:grid; gap:.75rem; }
+.essentials-list li { border-left:0; background:var(--surface); border-top:1px solid var(--line); border-right:1px solid var(--line); border-bottom:1px solid var(--line); padding:.9rem 1rem; color:var(--ink-soft); line-height:1.6; }
+.essentials-list strong { color:var(--ink); }
+
+.appendix { background:var(--paper-2); border-top:1px solid var(--line-strong); padding:3rem 0 2rem; margin-top:1rem; }
+.appendix-inner { width:min(var(--max), calc(100% - 2.5rem)); margin:0 auto; }
+.appendix-title { font-family:var(--font-display); font-size:clamp(1.8rem,3vw,2.5rem); margin:0 0 .35rem; font-weight:500; }
+.appendix-desc { color:var(--ink-soft); margin:0 0 1.5rem; max-width:36em; }
+.appendix-toc { list-style:none; padding:0; margin:0 0 2rem; border-top:1px solid var(--line); }
+.appendix-toc a { display:flex; justify-content:space-between; gap:1rem; min-height:48px; align-items:center; padding:.65rem 0; border-bottom:1px solid var(--line); color:var(--ink); text-decoration:none; }
+.appendix-toc a:hover { color:var(--bronze); }
+.appendix-toc .num { font-family:var(--font-mono); color:var(--ink-faint); font-size:12px; }
+.appendix section { width:100%; }
+
+.trans-card, .xhs-card, .video-card, .media-card, .check-group { border:1px solid var(--line) !important; background:var(--surface) !important; }
+.tag, .chip, .confidence-badge, .warn-badge { background:var(--paper-2) !important; color:var(--ink-soft) !important; border:1px solid var(--line) !important; border-radius:2px !important; box-shadow:none !important; }
+.back-to-top { background:var(--ink) !important; color:var(--surface) !important; border-radius:6px !important; box-shadow:none !important; min-width:44px; min-height:44px; }
+.day-progress, .days-rail, .day-index { background:rgba(255,252,247,.94) !important; border:1px solid var(--line) !important; box-shadow:var(--shadow-sm) !important; }
+a:focus-visible, button:focus-visible, .nav-links a:focus-visible, .appendix-toc a:focus-visible { outline:2px solid var(--bronze); outline-offset:3px; }
+
+
+/* day rail dossier tone */
+.day-rail-wrap { position:sticky; top:calc(var(--nav-h) + 8px); z-index:25; margin:0 0 1rem; }
+.day-rail { display:flex; gap:8px; overflow-x:auto; padding:8px; border-radius:6px; border:1px solid var(--line); background:rgba(255,252,247,.94); box-shadow:var(--shadow-sm); }
+.day-rail a { flex:0 0 auto; min-height:44px; display:inline-flex; align-items:center; padding:0 14px; border-radius:2px; border:1px solid transparent; text-decoration:none; color:var(--ink-soft); font-size:12px; letter-spacing:.08em; font-weight:600; background:transparent; }
+.day-rail a:hover { color:var(--bronze); }
+.day-rail a.is-active { color:var(--ink); border-color:var(--line-strong); background:var(--bronze-soft); }
+.day-rail a:focus-visible { outline:2px solid var(--bronze); outline-offset:2px; }
+@media (max-width:720px){ .day-rail-wrap{ top:calc(var(--nav-h) + 4px); } }
+
+/* secondary hotels + neutralize old festive gradients */
+.hotel-card.is-primary { margin-bottom:.25rem; }
+.hotel-card.is-secondary { padding:.85rem 1rem !important; }
+.hotel-card.is-secondary h4 { font-size:1.05rem; margin:.15rem 0; }
+.hotel-card.is-secondary .h-amenities,
+.hotel-card.is-secondary .warning { display:none; }
+.hotel-card:nth-child(n) {
+  background: var(--surface) !important;
+  border: 1px solid var(--line) !important;
+  box-shadow: none !important;
+}
+.hotel-grid { grid-template-columns: 1fr; }
+.hotel-card.is-secondary {
+  display:grid !important;
+  grid-template-columns: 1fr !important;
+  gap:.35rem !important;
+}
+.hotel-card.is-secondary h4 {
+  font-size:1.05rem;
+  line-height:1.35;
+  max-width:none;
+  writing-mode:horizontal-tb;
+}
+.hotel-card.is-secondary .h-rank { justify-self:start; }
+.hotel-card.is-secondary .h-loc,
+.hotel-card.is-secondary .h-reason { font-size:.9rem; color:var(--ink-soft); }
+.hotel-card.is-secondary .book-links a { min-height:44px; display:inline-flex; align-items:center; }
+
+
+/* stop hierarchy */
+.t-title strong { font-weight:600; color:var(--ink); font-size:.98rem; }
+.t-reason { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.t-detail { display:flex; flex-wrap:wrap; gap:.35rem .75rem; margin-top:.25rem; }
+
+/* budget ledger */
+.budget-section { display:grid; gap:1.25rem; align-items:start; }
+@media (min-width:900px){ .budget-section { grid-template-columns: 280px 1fr; } }
+.budget-table table { width:100%; border-collapse:collapse; font-variant-numeric:tabular-nums; }
+.budget-table th, .budget-table td { border-bottom:1px solid var(--line); padding:.65rem .4rem; text-align:left; font-size:14px; color:var(--ink-soft); }
+.budget-table th { font-size:11px; letter-spacing:.1em; color:var(--ink-faint); font-weight:600; }
+.budget-table .grand td { color:var(--ink); font-weight:600; border-bottom:0; font-family:var(--font-mono); }
+
+/* risk semantic bars */
+.risk-panel { display:grid; gap:1rem; }
+.risk-block { background:var(--surface) !important; border:1px solid var(--line) !important; border-left:0 !important; border-radius:2px !important; box-shadow:none !important; padding:1rem 1.1rem; }
+.risk-block.confidence-yellow { border-left-color: var(--warn) !important; }
+.risk-block.confidence-gray { border-left-color: var(--line-strong) !important; }
+.risk-block h4 { font-family:var(--font-display); font-weight:500; margin:0 0 .5rem; color:var(--ink); }
+.risk-block p, .risk-block li { color:var(--ink-soft); line-height:1.6; font-size:.95rem; }
+
+/* media editorial grid */
+.video-intro, .xhs-intro { color:var(--ink-soft); max-width:40em; line-height:1.7; }
+.video-grid, .xhs-grid { gap:1rem !important; }
+.video-card header, .xhs-card { box-shadow:none !important; }
+.video-card h3, .xhs-title { font-family:var(--font-display); font-weight:500; color:var(--ink); }
+.video-link, .xhs-meta { color:var(--ink-faint) !important; font-size:12px; }
+.xhs-card { border-radius:6px !important; background:var(--surface) !important; border:1px solid var(--line) !important; }
+.xhs-count { color:var(--bronze); font-family:var(--font-mono); }
+
+/* data completeness as footnote */
+.completeness-panel { background:transparent !important; border:0 !important; border-top:1px solid var(--line) !important; box-shadow:none !important; border-radius:0 !important; padding:1rem 0 !important; color:var(--ink-faint); font-size:13px; }
+.completeness-panel .comp-tip { color:var(--ink-faint); }
+
+/* checklist print-friendly */
+.checklist { display:grid; gap:1rem; }
+@media (min-width:800px){ .checklist { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+.check-group { border-radius:2px !important; padding:1rem !important; }
+.check-group h4 { font-family:var(--font-display); font-weight:500; margin:0 0 .6rem; }
+.check-group label { display:flex; gap:.55rem; align-items:flex-start; min-height:44px; padding:.25rem 0; color:var(--ink-soft); }
+
+/* appendix section labels */
+#appendix .section-label { margin-top:1.5rem; }
+#transport h2, #budget h2, #risk h2, #overview-map h2, #media-videos h2, #xhs-notes h2, #data-completeness h2, #checklist h2 {
+  font-size:clamp(1.35rem,2.4vw,1.8rem);
+}
+
+/* kill leftover festive decorations inside cards */
+.hotel-card::before, .hotel-card::after, .day-card::before, .trans-card::before { display:none !important; }
+
+
+
+
+/* ===== Body craft elevation: match hero editorial website ===== */
+/* Kill report ornaments on chapter titles */
+section > h2,
+#days > h2,
+#hotel > h2,
+#essentials > h2,
+#appendix h2,
+.appendix-title,
+#overview-map > h2,
+#transport > h2,
+#budget > h2,
+#risk > h2,
+#media-videos > h2,
+#xhs-notes > h2,
+#data-completeness > h2,
+#checklist > h2 {
+  display:block !important;
+  align-items:unset !important;
+  gap:0 !important;
+  font-family:var(--font-display) !important;
+  font-weight:500 !important;
+  letter-spacing:-0.02em !important;
+  line-height:1.15 !important;
+  color:var(--ink) !important;
+  border-bottom:1px solid var(--line) !important;
+  padding-bottom:0.85rem !important;
+  margin:0 0 1.75rem !important;
+  background:none !important;
+  -webkit-text-fill-color:var(--ink) !important;
+}
+section > h2::before,
+section > h2::after,
+#days > h2::before,
+#days > h2::after,
+#hotel > h2::before,
+#hotel > h2::after,
+#essentials > h2::before,
+#essentials > h2::after,
+#overview-map > h2::before,
+#overview-map > h2::after,
+#transport > h2::before,
+#transport > h2::after,
+#budget > h2::before,
+#budget > h2::after,
+#risk > h2::before,
+#risk > h2::after,
+#media-videos > h2::before,
+#media-videos > h2::after,
+#xhs-notes > h2::before,
+#xhs-notes > h2::after,
+#data-completeness > h2::before,
+#data-completeness > h2::after,
+#checklist > h2::before,
+#checklist > h2::after,
+.appendix-title::before,
+.appendix-title::after {
+  content:none !important;
+  display:none !important;
+  width:0 !important;
+  height:0 !important;
+  background:none !important;
+  box-shadow:none !important;
+  flex:0 !important;
+}
+#days > h2, #hotel > h2, #essentials > h2, .appendix-title {
+  font-size:clamp(1.9rem, 3.4vw, 2.75rem) !important;
+}
+#appendix .appendix-title { border-bottom:0 !important; margin-bottom:0.5rem !important; padding-bottom:0 !important; }
+
+/* Quieter system labels */
+.section-label {
+  font-size:10px !important;
+  letter-spacing:0.16em !important;
+  text-transform:uppercase !important;
+  color:var(--ink-faint) !important;
+  opacity:0.62;
+  margin:0 0 0.55rem !important;
+  font-weight:600 !important;
+}
+
+/* Snapshot: facts as ledger lines, not metric cards */
+.snapshot { padding:4.5rem 0 1.25rem !important; }
+.snapshot-copy p { max-width:36em; color:var(--ink-soft) !important; font-size:1.02rem; line-height:1.75 !important; }
+.snapshot-facts {
+  gap:0 !important;
+  border-top:1px solid var(--line-strong);
+}
+.snapshot-facts div {
+  background:transparent !important;
+  border:0 !important;
+  border-bottom:1px solid var(--line) !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  padding:0.95rem 0 !important;
+}
+.snapshot-facts .label { margin-bottom:0.25rem !important; }
+.snapshot-facts .value { font-size:1.2rem !important; }
+.snapshot-link {
+  margin-top:1.35rem !important;
+  border-bottom-width:1px !important;
+}
+
+/* Route: hairline editorial steps */
+.route-band { padding:0.5rem 0 3rem !important; gap:1.25rem !important; }
+.route-step { border-top:1px solid var(--line-strong) !important; padding-top:1rem !important; }
+.route-step .label { color:var(--ink-faint) !important; }
+.route-step h3 { font-size:1.45rem !important; margin:0.4rem 0 0.45rem !important; }
+.route-step p { color:var(--ink-soft) !important; max-width:28em; }
+
+/* Day index: text rail, not segmented control */
+.day-rail-wrap,
+.day-progress,
+.days-rail,
+.day-index {
+  background:rgba(243,239,232,0.96) !important;
+  border:0 !important;
+  border-bottom:1px solid var(--line) !important;
+  box-shadow:none !important;
+  border-radius:0 !important;
+  padding:0 0 0.15rem !important;
+  margin:0 0 1.75rem !important;
+}
+.day-rail {
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+  border-radius:0 !important;
+  padding:0 !important;
+  gap:1.35rem !important;
+}
+.day-rail a {
+  background:transparent !important;
+  border:0 !important;
+  border-bottom:1px solid transparent !important;
+  border-radius:0 !important;
+  min-height:44px !important;
+  padding:0.55rem 0 !important;
+  color:var(--ink-faint) !important;
+  letter-spacing:0.08em !important;
+  font-size:12px !important;
+  font-weight:600 !important;
+}
+.day-rail a:hover { color:var(--bronze) !important; }
+.day-rail a.is-active {
+  color:var(--ink) !important;
+  background:transparent !important;
+  border-bottom-color:var(--ink) !important;
+}
+
+/* Day chapters: magazine, not app cards */
+.day-card {
+  background:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  margin:0 0 4.5rem !important;
+  overflow:visible !important;
+}
+.day-header {
+  position:static !important;
+  top:auto !important;
+  z-index:auto !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  background:transparent !important;
+  background-image:none !important;
+  border:0 !important;
+  border-bottom:0 !important;
+  padding:0 0 1rem !important;
+  color:var(--ink) !important;
+}
+.day-kicker {
+  color:var(--bronze) !important;
+  margin-bottom:0.35rem !important;
+}
+.day-header h3,
+.day-theme {
+  color:var(--ink) !important;
+  -webkit-text-fill-color:var(--ink) !important;
+  background:none !important;
+  font-size:clamp(1.65rem, 3vw, 2.25rem) !important;
+  margin:0.15rem 0 0.7rem !important;
+}
+.day-meta {
+  display:flex !important;
+  flex-wrap:wrap !important;
+  gap:0.35rem 1.15rem !important;
+  color:var(--ink-faint) !important;
+  font-size:12px !important;
+}
+.day-meta > span {
+  display:inline !important;
+  background:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  padding:0 !important;
+  color:var(--ink-faint) !important;
+  font-size:12px !important;
+  line-height:1.5 !important;
+}
+.day-cover {
+  margin:0 0 1rem !important;
+  border-radius:0 !important;
+}
+.day-cover img {
+  border-radius:2px !important;
+  aspect-ratio:16/9 !important;
+}
+.day-cover figcaption,
+.media-card figcaption {
+  padding:0.55rem 0 0 !important;
+  color:var(--ink-faint) !important;
+  font-size:12px !important;
+}
+.media-strip {
+  display:grid !important;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:0.75rem !important;
+  margin:0 0 1.5rem !important;
+  padding:0 !important;
+}
+@media (max-width:720px){
+  .media-strip { grid-template-columns:1fr 1fr; }
+}
+.media-card {
+  background:transparent !important;
+  border:0 !important;
+  border-radius:2px !important;
+  box-shadow:none !important;
+  overflow:hidden;
+  padding:0 !important;
+}
+.media-card img { width:100%; aspect-ratio:4/3; object-fit:cover; display:block; border-radius:2px; }
+.day-body-pad { padding:0 !important; }
+.period-grid { margin:1.25rem 0 0.75rem !important; gap:1.5rem !important; }
+.period-col {
+  border-top:1px solid var(--line-strong) !important;
+  padding-top:0.9rem !important;
+}
+.period-col h4 {
+  font-family:var(--font-display) !important;
+  font-size:0.98rem !important;
+  letter-spacing:0.04em !important;
+  color:var(--ink) !important;
+  font-weight:500 !important;
+  text-transform:none !important;
+}
+.stop {
+  border-bottom:1px solid var(--line) !important;
+  padding:0.9rem 0 !important;
+  gap:0.9rem !important;
+}
+.t-time {
+  min-width:3.4rem !important;
+  color:var(--ink-faint) !important;
+  font-size:12px !important;
+  padding-top:0.15rem;
+}
+.t-title strong {
+  font-weight:600 !important;
+  color:var(--ink) !important;
+  font-size:0.98rem !important;
+  letter-spacing:0 !important;
+}
+.t-reason {
+  color:var(--ink-soft) !important;
+  font-size:0.92rem !important;
+  line-height:1.6 !important;
+  margin-top:0.2rem;
+}
+.t-detail {
+  margin-top:0.35rem !important;
+  color:var(--ink-faint) !important;
+  font-size:12px !important;
+  gap:0.75rem !important;
+}
+.day-footer-note {
+  margin:1.25rem 0 0 !important;
+  padding:1rem 0 !important;
+  background:transparent !important;
+  border:0 !important;
+  border-top:1px solid var(--line-strong) !important;
+  border-left:0 !important;
+  color:var(--ink-soft) !important;
+  font-size:0.95rem !important;
+}
+.day-budget {
+  border-top:1px solid var(--line) !important;
+  padding:0.85rem 0 0 !important;
+  margin-top:0.5rem !important;
+  color:var(--ink-faint) !important;
+  background:transparent !important;
+}
+
+/* Hotel: suite sheet, not OTA card wall */
+#hotel > p { max-width:38em; color:var(--ink-soft) !important; margin:0 0 1.5rem !important; line-height:1.7 !important; }
+.hotel-grid { gap:0 !important; }
+.hotel-card {
+  background:transparent !important;
+  border:0 !important;
+  border-top:1px solid var(--line) !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  padding:1.5rem 0 !important;
+  overflow:visible !important;
+}
+.hotel-card.is-primary {
+  border-top:0 !important;
+  padding-top:0.25rem !important;
+  margin-bottom:0.5rem !important;
+  gap:1.35rem !important;
+}
+.hotel-primary-media img {
+  border-radius:2px !important;
+  min-height:280px !important;
+}
+.hotel-card h4 {
+  font-size:clamp(1.25rem, 2vw, 1.55rem) !important;
+  margin:0.25rem 0 0.45rem !important;
+}
+.h-rank {
+  background:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+  color:var(--bronze) !important;
+  padding:0 !important;
+  letter-spacing:0.14em !important;
+  font-size:11px !important;
+  font-weight:600 !important;
+}
+.h-price { font-size:1.05rem !important; color:var(--ink) !important; margin:0.15rem 0 !important; }
+.h-rating, .h-loc { color:var(--ink-faint) !important; font-size:13px !important; }
+.h-reason, .hotel-card .h-reason, .hotel-card > div.h-reason {
+  background:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+  padding:0.35rem 0 0.15rem !important;
+  color:var(--ink-soft) !important;
+  line-height:1.65 !important;
+  max-width:42em;
+}
+.h-amenities {
+  display:flex !important;
+  flex-wrap:wrap !important;
+  gap:0.35rem 0.9rem !important;
+  margin:0.45rem 0 !important;
+}
+.h-amenities .tag,
+.tag {
+  background:transparent !important;
+  border:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  padding:0 !important;
+  color:var(--ink-faint) !important;
+  font-size:12px !important;
+}
+.warning {
+  background:transparent !important;
+  border:0 !important;
+  border-top:1px solid var(--line) !important;
+  border-radius:0 !important;
+  color:var(--ink-soft) !important;
+  padding:0.7rem 0 !important;
+  margin-top:0.35rem !important;
+}
+.book-links { gap:0.45rem !important; margin-top:0.75rem !important; }
+.book-links a,
+.book-links .book-label + a {
+  background:transparent !important;
+  border:1px solid var(--line) !important;
+  border-radius:2px !important;
+  box-shadow:none !important;
+  min-height:40px !important;
+  padding:0 0.85rem !important;
+  color:var(--ink-soft) !important;
+  font-size:12px !important;
+  letter-spacing:0.04em !important;
+}
+.book-links a:hover { border-color:var(--bronze) !important; color:var(--bronze) !important; }
+.confidence-badge { display:none !important; }
+
+/* Essentials: clean rules, not alert bars */
+.essentials { margin:0 auto 4rem !important; }
+.essentials-list { gap:0 !important; }
+.essentials-list li {
+  background:transparent !important;
+  border:0 !important;
+  border-top:1px solid var(--line) !important;
+  border-left:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  padding:1.05rem 0 !important;
+  color:var(--ink-soft) !important;
+  line-height:1.7 !important;
+}
+.essentials-list li:first-child { border-top:1px solid var(--line-strong) !important; }
+.essentials-list strong { color:var(--ink) !important; font-weight:600 !important; }
+
+/* Appendix continuum */
+.appendix {
+  background:var(--paper) !important;
+  border-top:1px solid var(--line-strong) !important;
+  padding:4.5rem 0 3rem !important;
+  margin-top:2rem !important;
+}
+.appendix-desc { color:var(--ink-soft) !important; max-width:36em !important; margin-bottom:2rem !important; line-height:1.7 !important; }
+.appendix-toc { margin-bottom:3rem !important; }
+.appendix-toc a {
+  font-size:1rem !important;
+  min-height:52px !important;
+  color:var(--ink) !important;
+  border-bottom-color:var(--line) !important;
+}
+.appendix-toc a:hover { color:var(--bronze) !important; }
+.appendix-toc .num { letter-spacing:0.08em; }
+.appendix section { margin-bottom:3rem !important; }
+
+/* Transport / budget / risk as documents */
+.trans-card,
+.dir-block,
+.transport-section .trans-card {
+  background:transparent !important;
+  border:0 !important;
+  border-top:1px solid var(--line) !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  padding:1.1rem 0 !important;
+}
+.trans-mode { color:var(--bronze) !important; letter-spacing:0.08em; font-size:11px !important; font-weight:600; }
+.trans-route { font-family:var(--font-display); font-size:1.15rem; color:var(--ink); }
+.trans-time, .trans-price { color:var(--ink-soft) !important; font-family:var(--font-mono); font-size:13px; }
+.intra-tip { border-top:1px solid var(--line); padding-top:1rem; color:var(--ink-soft); }
+
+.budget-section { gap:2rem !important; align-items:start !important; }
+.budget-pie-wrap {
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+  border-radius:0 !important;
+  padding:0 !important;
+}
+.budget-table th {
+  background:transparent !important;
+  border-bottom:1px solid var(--line-strong) !important;
+}
+.budget-table td, .budget-table th { padding:0.8rem 0.35rem !important; }
+.budget-table .grand td {
+  border-top:1px solid var(--line-strong) !important;
+  padding-top:0.95rem !important;
+}
+
+.risk-panel { gap:0 !important; }
+.risk-block {
+  background:transparent !important;
+  border:0 !important;
+  border-top:1px solid var(--line) !important;
+  border-left:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  padding:1.25rem 0 !important;
+}
+.risk-block h4 {
+  font-family:var(--font-display) !important;
+  font-size:1.15rem !important;
+  margin:0 0 0.55rem !important;
+}
+.risk-block p, .risk-block li { color:var(--ink-soft) !important; }
+
+/* Media / notes / checklist */
+.video-intro, .xhs-intro { color:var(--ink-soft) !important; margin-bottom:1.25rem !important; }
+.video-card {
+  background:transparent !important;
+  border:0 !important;
+  border-radius:2px !important;
+  box-shadow:none !important;
+  overflow:hidden;
+}
+.video-card header {
+  background:transparent !important;
+  border:0 !important;
+  padding:0.5rem 0 !important;
+}
+.xhs-card {
+  background:transparent !important;
+  border:0 !important;
+  border-top:1px solid var(--line) !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  padding:1rem 0 !important;
+}
+.xhs-title { font-size:0.98rem !important; line-height:1.5 !important; }
+.check-group {
+  background:transparent !important;
+  border:0 !important;
+  border-top:1px solid var(--line) !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  padding:1rem 0 !important;
+}
+.completeness-panel {
+  border-top:1px solid var(--line) !important;
+  color:var(--ink-faint) !important;
+}
+
+/* Footer quiet */
+footer {
+  border-top:1px solid var(--line);
+  background:transparent !important;
+  color:var(--ink-faint) !important;
+  padding:2rem 0 3rem !important;
+  text-align:left !important;
+  width:min(var(--max), calc(100% - 2.5rem));
+  margin:0 auto;
+  font-size:12px;
+}
+
+/* Body rhythm */
+body { background:var(--paper) !important; }
+main, body > section, #snapshot, #route, #days, #hotel, #essentials {
+  scroll-margin-top: calc(var(--nav-h) + 12px);
+}
+/* dossier editorial grids (override horizontal snap carousels) */
+.xhs-grid {
+  display: grid !important;
+  grid-auto-flow: row !important;
+  grid-auto-columns: unset !important;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)) !important;
+  overflow: visible !important;
+  scroll-snap-type: none !important;
+}
+.video-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
+  overflow: visible !important;
+}
+@media (max-width: 600px) {
+  .xhs-grid, .video-grid { grid-template-columns: 1fr !important; }
+}
+/* narrow overflow guards */
+@media (max-width: 900px) {
+  .hotel-card.is-primary { grid-template-columns: 1fr !important; }
+  .hotel-primary-media img { min-height: 180px !important; }
+  .xhs-grid, .video-grid { display:grid !important; grid-template-columns: 1fr !important; overflow:auto; }
+  .period-grid { grid-template-columns: 1fr !important; }
+  .book-links { display:flex; flex-wrap:wrap; gap:.35rem; }
+  .day-rail { max-width:100%; }
+}
+@media (max-width: 420px) {
+  .hero { padding-left: 1rem !important; padding-right: 1rem !important; }
+  .nav-links a { padding: 0 8px; }
+}
+@media print {
+  .site-nav, .back-to-top, .day-progress, .days-rail, .day-index, .day-rail-wrap, .hero-scroll-hint, #map, canvas, iframe { display:none !important; }
+  body { background:#fff !important; color:#111 !important; }
+  .hero {
+    min-height:auto !important; height:auto !important; padding:1.25rem 0 1rem !important;
+    color:#111 !important; background:#fff !important; width:100% !important; max-width:none !important; margin:0 !important;
+  }
+  .hero-copy::before, .hero-copy::after { content:none !important; display:none !important; }
+  .hero-copy, .hero-sub, .hero-meta-row, .hero-meta-row .chip span, .hero-meta-row .chip strong, .hero-kicker, .hero h1 {
+    color:#111 !important; -webkit-text-fill-color:#111 !important; background:none !important; text-shadow:none !important;
+  }
+  .hotel-card, .hotel-card.is-primary, .hotel-card.is-secondary {
+    display:block !important; grid-template-columns:1fr !important; width:auto !important; max-width:100% !important; overflow:visible !important;
+  }
+  .hotel-primary-media img { min-height:0 !important; max-height:220px; width:100% !important; }
+  .xhs-grid, .video-grid, .period-grid, .hotel-grid, .checklist, .budget-section {
+    display:block !important; grid-template-columns:1fr !important; width:100% !important; max-width:100% !important;
+  }
+  .xhs-card, .video-card, .day-card, .trans-card, .risk-block, .check-group { break-inside: avoid; page-break-inside: avoid; }
+  .book-links { display:flex; flex-wrap:wrap; gap:.35rem; }
+  a[href]::after { content:" (" attr(href) ")"; font-size:10px; color:#666; word-break:break-all; }
+  a[href^="#"]::after, a[href^="javascript"]::after { content:""; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+}
+
+
+/* final specificity boost for body craft */
+.hotel-card,
+.hotel-card:nth-child(n),
+.hotel-card:nth-child(-n+2),
+.hotel-card:nth-child(n+3),
+.hotel-card.is-primary,
+.hotel-card.is-secondary,
+.trans-card,
+.trans-card:nth-child(n),
+.xhs-card,
+.video-card,
+.check-group,
+.risk-block,
+.completeness-panel {
+  background: transparent !important;
+  background-image: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+.hotel-card,
+.hotel-card:nth-child(n),
+.hotel-card.is-primary,
+.hotel-card.is-secondary {
+  border: 0 !important;
+  border-top: 1px solid var(--line) !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.hotel-card.is-primary { border-top: 0 !important; }
+.hotel-card::before,
+.hotel-card::after,
+.trans-card::before,
+.day-card::before { display:none !important; content:none !important; }
+.day-rail,
+.day-rail-wrap,
+.day-progress,
+.days-rail,
+.day-index {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+  background: rgba(243,239,232,0.97) !important;
+  box-shadow: none !important;
+}
+.budget-table,
+.budget-table table,
+.budget-pie-wrap {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+.budget-table th, .budget-table td { background: transparent !important; }
+.budget-table thead th { border-bottom: 1px solid var(--line-strong) !important; }
+.budget-table .grand td { background: transparent !important; }
+/* secondary hotel denser quiet list */
+.hotel-card.is-secondary {
+  padding-top: 1.15rem !important;
+  padding-bottom: 1.15rem !important;
+}
+
+
+/* kill leftover AI slop ornaments still in base CSS */
+.nav-mark {
+  background: var(--bronze) !important;
+  box-shadow: none !important;
+  background-image: none !important;
+  animation: none !important;
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 999px !important;
+}
+.stop, .risk-block, .essentials-list li, .day-footer-note, .trans-card, .warning {
+  border-left-width: 0 !important;
+  border-left-style: none !important;
+}
+
 </style>
+
+<style id="dossier-craft-v3">
+/* craft-v3: unmistakable body website system — last word in cascade */
+html body {
+  background: #F3EFE8 !important;
+  color: #1E1B18 !important;
+}
+html body::before,
+html body::after { display:none !important; content:none !important; }
+
+/* Chapter titles: clean display type, no ornaments */
+html body section > h2,
+html body #days > h2,
+html body #hotel > h2,
+html body #essentials > h2,
+html body #appendix h2,
+html body .appendix-title,
+html body #overview-map > h2,
+html body #transport > h2,
+html body #budget > h2,
+html body #risk > h2,
+html body #media-videos > h2,
+html body #xhs-notes > h2,
+html body #checklist > h2,
+html body #data-completeness > h2 {
+  display: block !important;
+  font-family: "Noto Serif SC", "Songti SC", serif !important;
+  font-weight: 500 !important;
+  font-size: clamp(2rem, 4vw, 3rem) !important;
+  letter-spacing: -0.025em !important;
+  line-height: 1.12 !important;
+  color: #1E1B18 !important;
+  -webkit-text-fill-color: #1E1B18 !important;
+  background: none !important;
+  border: 0 !important;
+  border-bottom: 1px solid #D9D3C9 !important;
+  padding: 0 0 1rem !important;
+  margin: 0 0 2rem !important;
+  gap: 0 !important;
+}
+html body section > h2::before,
+html body section > h2::after,
+html body #days > h2::before,
+html body #days > h2::after,
+html body #hotel > h2::before,
+html body #hotel > h2::after,
+html body #essentials > h2::before,
+html body #essentials > h2::after,
+html body #overview-map > h2::before,
+html body #overview-map > h2::after,
+html body #transport > h2::before,
+html body #transport > h2::after,
+html body #budget > h2::before,
+html body #budget > h2::after,
+html body #risk > h2::before,
+html body #risk > h2::after,
+html body #media-videos > h2::before,
+html body #media-videos > h2::after,
+html body #xhs-notes > h2::before,
+html body #xhs-notes > h2::after,
+html body #checklist > h2::before,
+html body #checklist > h2::after {
+  content: none !important;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  flex: none !important;
+}
+
+html body .section-label {
+  display: block !important;
+  font-size: 11px !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  color: #8A8278 !important;
+  opacity: 0.7 !important;
+  margin: 0 0 0.75rem !important;
+  font-weight: 600 !important;
+  font-family: "PingFang SC", system-ui, sans-serif !important;
+}
+
+/* Snapshot magazine spread */
+html body #snapshot.snapshot,
+html body section#snapshot {
+  width: min(1120px, calc(100% - 3rem)) !important;
+  margin: 0 auto !important;
+  padding: 5.5rem 0 2rem !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+html body #snapshot h2 {
+  font-size: clamp(2.1rem, 4.2vw, 3.2rem) !important;
+  border-bottom: 0 !important;
+  margin-bottom: 1rem !important;
+  padding-bottom: 0 !important;
+  max-width: 12em !important;
+}
+html body .snapshot-grid {
+  display: grid !important;
+  gap: 3rem !important;
+}
+@media (min-width: 960px) {
+  html body .snapshot-grid { grid-template-columns: 1.25fr 0.85fr !important; align-items: end !important; }
+}
+html body .snapshot-facts {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 0 !important;
+  border-top: 1px solid #C4BDB2 !important;
+  background: transparent !important;
+}
+html body .snapshot-facts > div {
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid #D9D3C9 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 1.1rem 0 !important;
+}
+html body .snapshot-facts .value {
+  font-family: "Noto Serif SC", serif !important;
+  font-size: 1.35rem !important;
+  color: #1E1B18 !important;
+}
+
+/* Route as editorial columns */
+html body #route.route-band,
+html body section#route {
+  width: min(1120px, calc(100% - 3rem)) !important;
+  margin: 0 auto 3.5rem !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  display: grid !important;
+  gap: 1.5rem !important;
+}
+@media (min-width: 900px) {
+  html body #route { grid-template-columns: repeat(3, 1fr) !important; }
+}
+html body .route-step {
+  border-top: 1px solid #C4BDB2 !important;
+  padding-top: 1.1rem !important;
+  background: transparent !important;
+}
+html body .route-step h3 {
+  font-family: "Noto Serif SC", serif !important;
+  font-size: 1.55rem !important;
+  font-weight: 500 !important;
+  margin: 0.45rem 0 !important;
+}
+
+/* Day rail text only */
+html body .day-rail-wrap,
+html body .day-progress,
+html body .days-rail,
+html body .day-index {
+  position: sticky !important;
+  top: 64px !important;
+  z-index: 20 !important;
+  width: min(1120px, calc(100% - 3rem)) !important;
+  margin: 0 auto 2rem !important;
+  background: rgba(243,239,232,0.94) !important;
+  border: 0 !important;
+  border-bottom: 1px solid #D9D3C9 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+  padding: 0 !important;
+}
+html body .day-rail {
+  display: flex !important;
+  gap: 1.75rem !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0.25rem 0 0.65rem !important;
+  box-shadow: none !important;
+  overflow-x: auto !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+html body .day-rail a {
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid transparent !important;
+  border-radius: 0 !important;
+  min-height: 44px !important;
+  padding: 0.6rem 0 !important;
+  color: #8A8278 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.1em !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+}
+html body .day-rail a.is-active {
+  color: #1E1B18 !important;
+  background: transparent !important;
+  border-bottom-color: #1E1B18 !important;
+}
+
+/* Day chapters as magazine features */
+html body #days {
+  width: min(1120px, calc(100% - 3rem)) !important;
+  margin: 0 auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+html body .day-card,
+html body article.day-card {
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  margin: 0 0 6rem !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+html body .day-header {
+  position: static !important;
+  top: auto !important;
+  z-index: auto !important;
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 0 0 1.25rem !important;
+  color: #1E1B18 !important;
+}
+html body .day-kicker {
+  color: #8C6B45 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.14em !important;
+  font-weight: 600 !important;
+}
+html body .day-theme,
+html body .day-header h3,
+html body .day-header h3 .day-theme {
+  display: block !important;
+  font-family: "Noto Serif SC", serif !important;
+  font-size: clamp(2rem, 3.8vw, 2.75rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.15 !important;
+  color: #1E1B18 !important;
+  -webkit-text-fill-color: #1E1B18 !important;
+  background: none !important;
+  margin: 0.35rem 0 0.85rem !important;
+}
+html body .day-meta {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.4rem 1.25rem !important;
+}
+html body .day-meta > span {
+  display: inline !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  color: #8A8278 !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+}
+html body .day-cover {
+  margin: 0 0 1.25rem !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+}
+html body .day-cover img {
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+  object-fit: cover !important;
+  display: block !important;
+  border-radius: 0 !important;
+}
+html body .media-strip {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 0.85rem !important;
+  margin: 0 0 2rem !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+html body .media-card {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+html body .media-card img {
+  width: 100% !important;
+  aspect-ratio: 4 / 3 !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+html body .day-body-pad { padding: 0 !important; }
+html body .period-grid {
+  display: grid !important;
+  gap: 2rem !important;
+  margin: 1.5rem 0 !important;
+}
+@media (min-width: 900px) {
+  html body .period-grid { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+}
+html body .period-col {
+  border-top: 1px solid #C4BDB2 !important;
+  padding-top: 1rem !important;
+  background: transparent !important;
+}
+html body .period-col h4 {
+  font-family: "Noto Serif SC", serif !important;
+  font-size: 1.05rem !important;
+  font-weight: 500 !important;
+  color: #1E1B18 !important;
+  letter-spacing: 0.02em !important;
+  margin: 0 0 0.85rem !important;
+}
+html body li.stop,
+html body .stop {
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid #D9D3C9 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 1rem 0 !important;
+  display: flex !important;
+  gap: 1rem !important;
+}
+html body .t-time {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  color: #8A8278 !important;
+  font-size: 12px !important;
+  min-width: 3.5rem !important;
+}
+html body .t-title strong {
+  font-weight: 600 !important;
+  color: #1E1B18 !important;
+  font-size: 1rem !important;
+}
+html body .t-reason {
+  color: #5E574F !important;
+  font-size: 0.95rem !important;
+  line-height: 1.65 !important;
+}
+html body .t-detail { color: #8A8278 !important; font-size: 12px !important; }
+html body .t-emoji { display: none !important; }
+html body .day-footer-note {
+  margin: 1.5rem 0 0 !important;
+  padding: 1.1rem 0 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-top: 1px solid #C4BDB2 !important;
+  color: #5E574F !important;
+  font-size: 0.98rem !important;
+  line-height: 1.65 !important;
+}
+html body .day-budget {
+  background: transparent !important;
+  border: 0 !important;
+  border-top: 1px solid #D9D3C9 !important;
+  color: #8A8278 !important;
+  padding: 0.9rem 0 0 !important;
+  margin-top: 0.75rem !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 12px !important;
+}
+
+/* Hotel suite sheet */
+html body #hotel {
+  width: min(1120px, calc(100% - 3rem)) !important;
+  margin: 0 auto 5rem !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+html body #hotel > p {
+  max-width: 38em !important;
+  color: #5E574F !important;
+  line-height: 1.75 !important;
+  margin: 0 0 2rem !important;
+  font-size: 1.02rem !important;
+}
+html body .hotel-grid {
+  display: grid !important;
+  gap: 0 !important;
+  background: transparent !important;
+}
+html body .hotel-card,
+html body .hotel-card.is-primary,
+html body .hotel-card.is-secondary,
+html body .hotel-card:nth-child(n),
+html body .hotel-card:nth-child(-n+2),
+html body .hotel-card:nth-child(n+3) {
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-top: 1px solid #D9D3C9 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 1.75rem 0 !important;
+  overflow: visible !important;
+}
+html body .hotel-card.is-primary {
+  border-top: 0 !important;
+  padding-top: 0.25rem !important;
+  display: grid !important;
+  gap: 1.75rem !important;
+}
+@media (min-width: 900px) {
+  html body .hotel-card.is-primary { grid-template-columns: 1.05fr 1fr !important; align-items: start !important; }
+}
+html body .hotel-primary-media img {
+  width: 100% !important;
+  min-height: 320px !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  border-radius: 0 !important;
+  display: block !important;
+}
+html body .hotel-card h4 {
+  font-family: "Noto Serif SC", serif !important;
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem) !important;
+  font-weight: 500 !important;
+  margin: 0.35rem 0 0.55rem !important;
+  color: #1E1B18 !important;
+}
+html body .h-rank {
+  background: transparent !important;
+  border: 0 !important;
+  color: #8C6B45 !important;
+  padding: 0 !important;
+  letter-spacing: 0.16em !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+}
+html body .h-price {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  color: #1E1B18 !important;
+  font-size: 1.05rem !important;
+}
+html body .h-rating,
+html body .h-loc { color: #8A8278 !important; font-size: 13px !important; }
+html body .h-reason,
+html body .hotel-card .h-reason {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0.5rem 0 !important;
+  color: #5E574F !important;
+  line-height: 1.7 !important;
+  max-width: 40em !important;
+}
+html body .h-amenities { gap: 0.85rem !important; margin: 0.5rem 0 !important; }
+html body .h-amenities .tag,
+html body .tag {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  color: #8A8278 !important;
+  font-size: 12px !important;
+  box-shadow: none !important;
+}
+html body .warning {
+  background: transparent !important;
+  border: 0 !important;
+  border-top: 1px solid #D9D3C9 !important;
+  border-radius: 0 !important;
+  color: #5E574F !important;
+  padding: 0.85rem 0 !important;
+  margin-top: 0.5rem !important;
+}
+html body .book-links a {
+  background: transparent !important;
+  border: 1px solid #C4BDB2 !important;
+  border-radius: 2px !important;
+  box-shadow: none !important;
+  color: #5E574F !important;
+  min-height: 42px !important;
+  padding: 0 0.9rem !important;
+}
+html body .confidence-badge { display: none !important; }
+
+/* Essentials clean list */
+html body #essentials,
+html body section.essentials {
+  width: min(1120px, calc(100% - 3rem)) !important;
+  margin: 0 auto 5rem !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+html body .essentials-list {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: grid !important;
+  gap: 0 !important;
+}
+html body .essentials-list li {
+  background: transparent !important;
+  border: 0 !important;
+  border-top: 1px solid #D9D3C9 !important;
+  border-left: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 1.25rem 0 !important;
+  color: #5E574F !important;
+  line-height: 1.75 !important;
+  font-size: 1.02rem !important;
+}
+html body .essentials-list li:first-child { border-top: 1px solid #C4BDB2 !important; }
+html body .essentials-list strong { color: #1E1B18 !important; font-weight: 600 !important; }
+
+/* Appendix document */
+html body #appendix.appendix,
+html body section#appendix {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 3rem 0 0 !important;
+  padding: 5rem 0 3rem !important;
+  background: #EAE4DA !important;
+  border: 0 !important;
+  border-top: 1px solid #C4BDB2 !important;
+  border-radius: 0 !important;
+}
+html body #appendix .appendix-inner {
+  width: min(1120px, calc(100% - 3rem)) !important;
+  margin: 0 auto !important;
+}
+html body #appendix .appendix-title {
+  font-size: clamp(2.4rem, 5vw, 3.5rem) !important;
+  border-bottom: 0 !important;
+  margin-bottom: 0.75rem !important;
+  padding-bottom: 0 !important;
+}
+html body #appendix .appendix-desc {
+  color: #5E574F !important;
+  max-width: 34em !important;
+  line-height: 1.75 !important;
+  margin-bottom: 2.5rem !important;
+  font-size: 1.05rem !important;
+}
+html body #appendix .appendix-toc {
+  list-style: none !important;
+  margin: 0 0 3.5rem !important;
+  padding: 0 !important;
+  border-top: 1px solid #C4BDB2 !important;
+}
+html body #appendix .appendix-toc a {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  min-height: 56px !important;
+  padding: 0.85rem 0 !important;
+  border-bottom: 1px solid #D9D3C9 !important;
+  color: #1E1B18 !important;
+  text-decoration: none !important;
+  font-size: 1.05rem !important;
+  background: transparent !important;
+}
+html body #appendix section {
+  width: 100% !important;
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  margin: 0 0 3.5rem !important;
+  box-shadow: none !important;
+}
+
+/* Transport / budget / risk sheets */
+html body .trans-card,
+html body .risk-block,
+html body .xhs-card,
+html body .video-card,
+html body .check-group,
+html body .completeness-panel {
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-top: 1px solid #D9D3C9 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 1.25rem 0 !important;
+}
+html body .budget-pie-wrap,
+html body .budget-table,
+html body .budget-table table {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+html body .budget-table th,
+html body .budget-table td {
+  background: transparent !important;
+  border-bottom: 1px solid #D9D3C9 !important;
+  padding: 0.85rem 0.4rem !important;
+  color: #5E574F !important;
+}
+html body .budget-table .grand td {
+  color: #1E1B18 !important;
+  border-bottom: 0 !important;
+  font-weight: 600 !important;
+}
+html body .risk-block h4 {
+  font-family: "Noto Serif SC", serif !important;
+  font-weight: 500 !important;
+  font-size: 1.2rem !important;
+  color: #1E1B18 !important;
+}
+html body footer {
+  width: min(1120px, calc(100% - 3rem)) !important;
+  margin: 0 auto !important;
+  padding: 2rem 0 3rem !important;
+  background: transparent !important;
+  border-top: 1px solid #D9D3C9 !important;
+  color: #8A8278 !important;
+  text-align: left !important;
+  font-size: 12px !important;
+}
+html body .dossier-build-stamp {
+  color: #8C6B45 !important;
+  letter-spacing: 0.08em !important;
+  font-size: 11px !important;
+  opacity: 0.8 !important;
+}
+
+
+/* ===== Full-bleed photography v4: edge-to-edge, no content gutters ===== */
+/* Kill horizontal scroll from 100vw breakout + scrollbar gutter */
+html {
+  overflow-x: clip !important;
+}
+body {
+  overflow-x: clip !important;
+}
+
+html body .day-card,
+html body article.day-card,
+html body #days,
+html body #hotel,
+html body .hotel-card,
+html body .hotel-card.is-primary {
+  overflow: visible !important;
+}
+
+/* Shared full-bleed breakout: more reliable than left/50% alone */
+html body .day-cover,
+html body .media-strip,
+html body .hotel-bleed {
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  box-sizing: border-box !important;
+  border-radius: 0 !important;
+}
+
+/* Day hero image: near full-viewport cinematic frame */
+html body .day-cover {
+  margin-top: 0.25rem !important;
+  margin-bottom: 0 !important;
+  overflow: hidden !important;
+  background: #14110F !important;
+  height: min(92vh, 980px) !important;
+  min-height: 520px !important;
+  max-height: none !important;
+  aspect-ratio: auto !important;
+}
+html body .day-cover img {
+  width: 100% !important;
+  max-width: none !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  aspect-ratio: auto !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  display: block !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  position: static !important;
+  inset: auto !important;
+}
+html body .day-cover figcaption {
+  position: absolute !important;
+  left: max(1.25rem, calc((100vw - 1120px) / 2)) !important;
+  bottom: 1.1rem !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: rgba(247,241,232,0.88) !important;
+  font-size: 12px !important;
+  letter-spacing: 0.04em !important;
+  text-shadow: 0 1px 14px rgba(0,0,0,0.55) !important;
+  max-width: min(1120px, calc(100vw - 2.5rem)) !important;
+  z-index: 1 !important;
+}
+
+
+/* Day rail should not sit as a solid card over photography */
+html body .day-rail-wrap {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+html body .day-rail {
+  background: rgba(243, 239, 232, 0.82) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  width: max-content !important;
+  max-width: calc(100vw - 2rem) !important;
+  margin-left: 0 !important;
+  padding: 0 0.85rem !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(28, 24, 20, 0.08) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Supporting strip: true edge-to-edge, no side paper gutters */
+html body .media-strip {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 2.5rem !important;
+  padding: 0 !important;
+  background: #14110F !important;
+  border: 0 !important;
+}
+html body .media-card {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+}
+html body .media-card img {
+  width: 100% !important;
+  max-width: none !important;
+  height: min(42vh, 420px) !important;
+  min-height: 220px !important;
+  max-height: none !important;
+  aspect-ratio: auto !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  display: block !important;
+  border-radius: 0 !important;
+}
+html body .media-card figcaption {
+  display: none !important;
+}
+
+/* Hotel: full-bleed photo band, then readable facts in column */
+html body .hotel-card.is-primary {
+  display: block !important;
+  grid-template-columns: none !important;
+  padding-top: 0 !important;
+}
+html body .hotel-primary-media,
+html body .hotel-card.is-primary > .hotel-primary-media {
+  display: block !important;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  margin-bottom: 1.75rem !important;
+  overflow: hidden !important;
+  border-radius: 0 !important;
+  background: #14110F !important;
+}
+html body .hotel-primary-media img {
+  width: 100% !important;
+  max-width: none !important;
+  height: min(72vh, 760px) !important;
+  min-height: 420px !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  display: block !important;
+  border-radius: 0 !important;
+}
+html body .hotel-card.is-primary > div:not(.hotel-primary-media) {
+  width: min(720px, 100%) !important;
+}
+html body .hotel-card.is-primary h4 {
+  font-size: clamp(1.6rem, 3vw, 2.15rem) !important;
+}
+
+@media (max-width: 720px) {
+  html body .day-cover {
+    height: min(78vh, 640px) !important;
+    min-height: 320px !important;
+  }
+  html body .day-cover img {
+    height: 100% !important;
+    min-height: 100% !important;
+  }
+  html body .media-strip {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0 !important;
+  }
+  html body .media-strip .media-card:last-child {
+    grid-column: 1 / -1 !important;
+  }
+  html body .media-card img {
+    height: min(28vh, 240px) !important;
+    min-height: 140px !important;
+  }
+  html body .media-strip .media-card:last-child img {
+    height: min(36vh, 300px) !important;
+  }
+  html body .hotel-primary-media img {
+    height: min(56vh, 480px) !important;
+    min-height: 260px !important;
+  }
+}
+
+@media print {
+  html body .day-cover,
+  html body .media-strip,
+  html body .hotel-primary-media {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  html body .day-cover img,
+  html body .media-card img,
+  html body .hotel-primary-media img {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 280px !important;
+  }
+}
+
+
+/* ===== Text-in-photo overlays v5 (Omai-style editorial) ===== */
+html body .day-cover {
+  position: relative !important;
+  isolation: isolate !important;
+}
+html body .day-cover > img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+/* bottom-left scrim like luxury destination sites */
+html body .day-cover::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background:
+    linear-gradient(180deg, rgba(12,10,8,0.18) 0%, rgba(12,10,8,0.08) 28%, rgba(12,10,8,0.15) 55%, rgba(12,10,8,0.72) 100%),
+    linear-gradient(90deg, rgba(12,10,8,0.45) 0%, rgba(12,10,8,0.12) 42%, transparent 70%) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+html body .day-cover-overlay {
+  position: absolute !important;
+  left: max(1.25rem, calc((100vw - 1120px) / 2)) !important;
+  right: max(1.25rem, calc((100vw - 1120px) / 2)) !important;
+  bottom: clamp(1.25rem, 4vh, 2.75rem) !important;
+  z-index: 2 !important;
+  max-width: min(36rem, 92vw) !important;
+  color: #F7F1E8 !important;
+  text-shadow: 0 1px 18px rgba(0,0,0,0.35) !important;
+  pointer-events: none !important;
+}
+html body .day-cover-overlay .day-kicker {
+  margin: 0 0 0.55rem !important;
+  color: rgba(247,241,232,0.78) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.16em !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+}
+html body .day-cover-overlay .day-theme-title,
+html body .day-cover-overlay .day-theme-title .day-theme {
+  display: block !important;
+  margin: 0 0 0.7rem !important;
+  font-family: "Noto Serif SC", serif !important;
+  font-size: clamp(1.85rem, 4.2vw, 3rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.12 !important;
+  color: #F7F1E8 !important;
+  -webkit-text-fill-color: #F7F1E8 !important;
+  background: none !important;
+}
+html body .day-cover-overlay .day-cover-lede {
+  margin: 0 0 0.95rem !important;
+  max-width: 28em !important;
+  font-size: clamp(0.95rem, 1.35vw, 1.08rem) !important;
+  line-height: 1.65 !important;
+  color: rgba(247,241,232,0.88) !important;
+  font-weight: 400 !important;
+}
+html body .day-cover-overlay .day-meta-on-photo {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.35rem 1rem !important;
+  margin: 0 !important;
+  color: rgba(247,241,232,0.72) !important;
+  font-size: 12px !important;
+  letter-spacing: 0.02em !important;
+}
+html body .day-cover-overlay .day-meta-on-photo > span {
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 !important;
+  color: rgba(247,241,232,0.72) !important;
+  box-shadow: none !important;
+}
+/* credit tiny, not competing with overlay title */
+html body .day-cover-credit {
+  position: absolute !important;
+  right: max(1rem, calc((100vw - 1120px) / 2)) !important;
+  bottom: 0.85rem !important;
+  z-index: 2 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: rgba(247,241,232,0.55) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.04em !important;
+  text-shadow: 0 1px 10px rgba(0,0,0,0.45) !important;
+  max-width: 40vw !important;
+  text-align: right !important;
+}
+
+/* Media strip: caption embedded on image */
+html body .media-card {
+  position: relative !important;
+  isolation: isolate !important;
+}
+html body .media-card::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background: linear-gradient(180deg, transparent 45%, rgba(10,8,6,0.66) 100%) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+html body .media-overlay {
+  display: block !important;
+  position: absolute !important;
+  left: 0.85rem !important;
+  right: 0.85rem !important;
+  bottom: 0.75rem !important;
+  z-index: 2 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #F7F1E8 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.08em !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 12px rgba(0,0,0,0.45) !important;
+}
+html body .media-overlay span { display: inline-block !important; }
+
+/* Hotel photo identity overlay */
+html body .hotel-primary-media {
+  position: relative !important;
+  isolation: isolate !important;
+}
+html body .hotel-primary-media::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  background:
+    linear-gradient(180deg, rgba(12,10,8,0.12) 0%, rgba(12,10,8,0.08) 40%, rgba(12,10,8,0.7) 100%),
+    linear-gradient(90deg, rgba(12,10,8,0.4) 0%, transparent 55%) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+html body .hotel-media-overlay {
+  position: absolute !important;
+  left: max(1.25rem, calc((100vw - 1120px) / 2)) !important;
+  right: max(1.25rem, calc((100vw - 1120px) / 2)) !important;
+  bottom: clamp(1.2rem, 3.5vh, 2.4rem) !important;
+  z-index: 2 !important;
+  max-width: min(34rem, 90vw) !important;
+  color: #F7F1E8 !important;
+  text-shadow: 0 1px 16px rgba(0,0,0,0.35) !important;
+  pointer-events: none !important;
+}
+html body .hotel-overlay-kicker {
+  margin: 0 0 0.45rem !important;
+  font-size: 11px !important;
+  letter-spacing: 0.16em !important;
+  color: rgba(247,241,232,0.75) !important;
+  font-weight: 600 !important;
+}
+html body .hotel-overlay-title {
+  margin: 0 0 0.45rem !important;
+  font-family: "Noto Serif SC", serif !important;
+  font-size: clamp(1.55rem, 3vw, 2.35rem) !important;
+  font-weight: 500 !important;
+  line-height: 1.15 !important;
+  color: #F7F1E8 !important;
+}
+html body .hotel-overlay-price {
+  margin: 0 0 0.55rem !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 13px !important;
+  color: rgba(247,241,232,0.88) !important;
+}
+html body .hotel-overlay-lede {
+  margin: 0 !important;
+  max-width: 30em !important;
+  font-size: 0.98rem !important;
+  line-height: 1.6 !important;
+  color: rgba(247,241,232,0.84) !important;
+}
+/* below-image hotel copy becomes practical sheet, less title shout */
+html body .hotel-primary-copy {
+  width: min(720px, 100%) !important;
+  padding-top: 0.25rem !important;
+}
+html body .hotel-primary-copy .h-rank {
+  color: #8C6B45 !important;
+  letter-spacing: 0.12em !important;
+  font-size: 11px !important;
+}
+html body .hotel-primary-copy h4 {
+  font-size: clamp(1.25rem, 2vw, 1.55rem) !important;
+}
+
+@media (max-width: 720px) {
+  html body .day-cover-overlay {
+    left: 1rem !important;
+    right: 1rem !important;
+    bottom: 1rem !important;
+    max-width: none !important;
+  }
+  html body .day-cover-overlay .day-theme-title {
+    font-size: clamp(1.55rem, 7vw, 2.1rem) !important;
+  }
+  html body .day-cover-credit { display: none !important; }
+  html body .hotel-media-overlay {
+    left: 1rem !important;
+    right: 1rem !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  html body .day-cover::after,
+  html body .media-card::after,
+  html body .hotel-primary-media::after {
+    background: rgba(12,10,8,0.55) !important;
+  }
+}
+
+@media print {
+  html body .day-cover::after,
+  html body .media-card::after,
+  html body .hotel-primary-media::after { display: none !important; }
+  html body .day-cover-overlay,
+  html body .hotel-media-overlay,
+  html body .media-overlay {
+    position: static !important;
+    color: #111 !important;
+    text-shadow: none !important;
+    max-width: none !important;
+  }
+  html body .day-cover-overlay .day-theme-title,
+  html body .day-cover-overlay .day-theme-title .day-theme,
+  html body .hotel-overlay-title { color: #111 !important; -webkit-text-fill-color: #111 !important; }
+}
+
+
+/* v5b: win specificity wars for text-on-photo */
+html body .media-card figcaption,
+html body .media-card figcaption.media-overlay,
+html body figcaption.media-overlay {
+  display: block !important;
+  position: absolute !important;
+  left: 0.85rem !important;
+  right: 0.85rem !important;
+  bottom: 0.75rem !important;
+  z-index: 3 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #F7F1E8 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.08em !important;
+  font-weight: 600 !important;
+  line-height: 1.35 !important;
+  background: transparent !important;
+  border: 0 !important;
+  text-shadow: 0 1px 12px rgba(0,0,0,0.55) !important;
+}
+html body .media-card::after {
+  z-index: 2 !important;
+  background: linear-gradient(180deg, transparent 40%, rgba(10,8,6,0.72) 100%) !important;
+}
+html body .hotel-primary-media::after {
+  background:
+    linear-gradient(180deg, rgba(12,10,8,0.05) 0%, rgba(12,10,8,0.12) 35%, rgba(12,10,8,0.78) 100%),
+    linear-gradient(90deg, rgba(12,10,8,0.5) 0%, rgba(12,10,8,0.18) 45%, transparent 72%) !important;
+}
+html body .hotel-media-overlay,
+html body .hotel-media-overlay * {
+  color: #F7F1E8 !important;
+  -webkit-text-fill-color: #F7F1E8 !important;
+  background: none !important;
+  text-shadow: 0 1px 18px rgba(0,0,0,0.45) !important;
+}
+html body .hotel-card h4.hotel-overlay-title,
+html body .hotel-media-overlay .hotel-overlay-title,
+html body .hotel-media-overlay h4 {
+  color: #F7F1E8 !important;
+  -webkit-text-fill-color: #F7F1E8 !important;
+  font-family: "Noto Serif SC", serif !important;
+  font-size: clamp(1.55rem, 3vw, 2.35rem) !important;
+  font-weight: 500 !important;
+  margin: 0 0 0.45rem !important;
+}
+html body .hotel-media-overlay .hotel-overlay-kicker {
+  color: rgba(247,241,232,0.8) !important;
+  -webkit-text-fill-color: rgba(247,241,232,0.8) !important;
+}
+html body .hotel-media-overlay .hotel-overlay-price,
+html body .hotel-media-overlay .hotel-overlay-lede {
+  color: rgba(247,241,232,0.9) !important;
+  -webkit-text-fill-color: rgba(247,241,232,0.9) !important;
+}
+/* kill older hide rule residue if any longhand remains weaker */
+html body .day-cover-overlay,
+html body .day-cover-overlay * {
+  color: #F7F1E8 !important;
+  -webkit-text-fill-color: #F7F1E8 !important;
+}
+html body .day-cover-overlay .day-kicker,
+html body .day-cover-overlay .day-meta-on-photo,
+html body .day-cover-overlay .day-meta-on-photo > span {
+  color: rgba(247,241,232,0.78) !important;
+  -webkit-text-fill-color: rgba(247,241,232,0.78) !important;
+}
+html body .day-cover-overlay .day-cover-lede {
+  color: rgba(247,241,232,0.9) !important;
+  -webkit-text-fill-color: rgba(247,241,232,0.9) !important;
+}
+
+
+/* ===== v6 continuum: media-strip → day-body as one editorial chapter ===== */
+/*
+  Spatial thesis:
+  - Lead: full-bleed photography
+  - Bridge: same paper field, no floating card island
+  - Support: route spine + period columns in one reading measure
+  - Density: tight within stops, generous after images only once
+*/
+
+/* 1) Kill the hard cut under the photo strip */
+html body .media-strip {
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+}
+html body .day-cover {
+  margin-bottom: 0 !important;
+}
+
+/* 2) Body becomes the continuation of the chapter, not a separate app module */
+html body .day-body-pad {
+  width: min(1120px, calc(100% - 3rem)) !important;
+  margin: 0 auto !important;
+  padding: 2.75rem 0 0.5rem !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  position: relative !important;
+}
+
+/* subtle continuous rule: photo world → readable dossier */
+html body .day-body-pad::before {
+  content: "" !important;
+  display: block !important;
+  width: 100% !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent 0%, #C4BDB2 12%, #C4BDB2 88%, transparent 100%) !important;
+  margin: 0 0 2.25rem !important;
+}
+
+/* 3) Route block: editorial spine, never a card */
+html body .day-routes,
+html body .day-body-pad > .day-routes {
+  margin: 0 0 2.75rem !important;
+  padding: 0 !important;
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  max-width: 46rem !important;
+}
+html body .day-routes h4,
+html body .day-spine-label {
+  margin: 0 0 1rem !important;
+  padding: 0 !important;
+  font-family: "Noto Serif SC", serif !important;
+  font-size: 1.05rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: none !important;
+  color: #1E1B18 !important;
+  background: none !important;
+  border: 0 !important;
+}
+/* strip emoji / map icon noise if still in text nodes visually via smaller label row */
+html body .day-routes h4 {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 0.65rem !important;
+}
+html body .route-steps {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-top: 1px solid #D9D3C9 !important;
+  counter-reset: route-step !important;
+}
+html body .route-steps li {
+  counter-increment: route-step !important;
+  position: relative !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0.95rem 0 0.95rem 2.6rem !important;
+  border: 0 !important;
+  border-bottom: 1px solid #E7E1D7 !important;
+  border-left: 0 !important;
+  background: transparent !important;
+  color: #3F3A34 !important;
+  font-size: 0.98rem !important;
+  line-height: 1.65 !important;
+  border-radius: 0 !important;
+}
+html body .route-steps li::before {
+  content: counter(route-step, decimal-leading-zero) !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 1.05rem !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 11px !important;
+  letter-spacing: 0.06em !important;
+  color: #8C6B45 !important;
+}
+html body .route-source-text {
+  display: none !important; /* "路径：" is form chrome, not editorial */
+}
+html body .route-steps li {
+  /* narrative path reads as one line of place → place */
+  font-weight: 450 !important;
+}
+
+/* 4) Period grid: same measure, shared top rule language as spine */
+html body .period-grid {
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 0 2.5rem !important;
+  width: 100% !important;
+  border-top: 0 !important;
+}
+@media (min-width: 900px) {
+  html body .period-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    column-gap: 2.5rem !important;
+  }
+  html body .period-col + .period-col {
+    border-left: 1px solid #E7E1D7 !important;
+    padding-left: 2rem !important;
+  }
+}
+html body .period-col {
+  border-top: 1px solid #C4BDB2 !important;
+  padding-top: 1.15rem !important;
+  margin: 0 !important;
+  background: transparent !important;
+}
+html body .period-col h4 {
+  font-family: "Noto Serif SC", serif !important;
+  font-size: 1.02rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.06em !important;
+  color: #1E1B18 !important;
+  margin: 0 0 1rem !important;
+  padding: 0 !important;
+  text-transform: none !important;
+  border: 0 !important;
+  background: none !important;
+}
+
+/* 5) Stops: dossier lines, kill leftover chips/pills */
+html body li.stop,
+html body .stop,
+html body .timeline .stop {
+  display: grid !important;
+  grid-template-columns: 3.25rem minmax(0, 1fr) !important;
+  gap: 0.85rem !important;
+  padding: 0.95rem 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid #E7E1D7 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+html body .timeline {
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+html body .t-time {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 12px !important;
+  color: #8A8278 !important;
+  letter-spacing: 0.02em !important;
+  padding-top: 0.15rem !important;
+  min-width: 0 !important;
+}
+html body .t-body { min-width: 0 !important; }
+html body .t-title {
+  margin: 0 0 0.35rem !important;
+  display: block !important;
+}
+html body .t-title strong {
+  font-family: "Noto Serif SC", "Source Han Serif SC", serif !important;
+  font-size: 1.02rem !important;
+  font-weight: 550 !important;
+  color: #1E1B18 !important;
+  line-height: 1.35 !important;
+}
+html body .t-emoji { display: none !important; }
+html body .t-reason {
+  margin: 0 0 0.45rem !important;
+  color: #5E574F !important;
+  font-size: 0.92rem !important;
+  line-height: 1.6 !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+html body .t-detail {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 0.35rem 0.85rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+html body .t-detail > span,
+html body .t-detail span {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: #8A8278 !important;
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+  white-space: normal !important;
+}
+
+/* 6) Footer note + budget sit in same column rhythm */
+html body .day-footer-note,
+html body .day-budget {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 1.75rem 0 0 !important;
+  padding: 1rem 0 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-top: 1px solid #D9D3C9 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+html body .day-budget {
+  color: #8A8278 !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 12px !important;
+  letter-spacing: 0.02em !important;
+}
+html body .day-footer-note {
+  color: #5E574F !important;
+  font-size: 0.95rem !important;
+  line-height: 1.65 !important;
+}
+
+/* 7) Chapter close spacing before next day */
+html body .day-card,
+html body article.day-card {
+  margin-bottom: 5.5rem !important;
+  padding-bottom: 0 !important;
+}
+
+/* 8) Mobile: keep continuum, stack periods cleanly */
+@media (max-width: 899px) {
+  html body .day-body-pad {
+    width: min(100% - 2rem, 1120px) !important;
+    padding-top: 2rem !important;
+  }
+  html body .period-col + .period-col {
+    border-left: 0 !important;
+    padding-left: 0 !important;
+  }
+  html body .period-grid {
+    gap: 1.75rem !important;
+  }
+  html body .route-steps li {
+    grid-template-columns: 1.75rem minmax(0, 1fr) !important;
+    gap: 0.65rem !important;
+  }
+}
+
+@media print {
+  html body .day-body-pad::before { display: none !important; }
+  html body .day-routes,
+  html body .period-grid { break-inside: avoid; }
+}
+
+
+/* v6c: timeline facts as plain dossier text, not app chips */
+html body .stop .rating,
+html body .t-title .rating,
+html body span.rating {
+  display: inline !important;
+  margin: 0 0 0 0.45rem !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: #8A8278 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  letter-spacing: 0.02em !important;
+  vertical-align: middle !important;
+}
+html body .stop .warn-badge,
+html body .timeline .warn-badge {
+  display: inline !important;
+  margin: 0.25rem 0 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  color: #8C6B45 !important;
+  font-size: 12px !important;
+}
+html body .period-col,
+html body .period-col * {
+  box-shadow: none !important;
+}
+html body .period-col {
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+/* reason line: quieter secondary prose */
+html body .t-reason {
+  max-width: 36em !important;
+}
+
+/* ===== end v6 continuum ===== */
+</style>
+
 </head>
-<body>
+<body data-dossier-build="craft-v6c-continuum-20260727" >
 <div aria-hidden="true" id="nav-sentinel" style="position:absolute;top:0;left:0;width:1px;height:1px;"></div>
-<nav aria-label="本页导航" class="site-nav">
-<a class="nav-brand" href="#top">
-<span aria-hidden="true" class="nav-mark"></span>
-<span>重庆巫山行程书</span>
-</a>
+<nav aria-label="本页导航" class="site-nav" id="site-nav">
+<a class="nav-brand" href="#top"><span aria-hidden="true" class="nav-mark"></span><span>重庆 · 巫山</span></a>
 <div class="nav-links">
-<a href="#overview-map">地图</a>
-<a href="#transport">交通</a>
-<a href="#hotel">住宿</a>
+<a href="#top">封面</a>
 <a href="#days">日程</a>
-<a href="#budget">预算</a>
-<a href="#risk">风险</a>
-<a href="#media-videos">影像</a>
-<a href="#xhs-notes">笔记</a>
-<a href="#checklist">清单</a>
+<a href="#hotel">住宿</a>
+<a href="#essentials">须知</a>
+<a href="#appendix">附录</a>
 </div>
 </nav>
 <header class="hero" id="top">
 <div class="hero-copy">
-<div class="hero-kicker"><i aria-hidden="true"></i>Chongqing getaway · 出发啦</div>
-<h1>重庆+巫山 · 4日行程</h1>
-<p class="hero-sub">跟着晚风去洪崖洞，再坐船钻进小三峡；最后一天还能去动物园看熊猫。四天刚好够浪一圈：吃火锅、拍夜景、赶头班船，把假期过成开心的样子。</p>
+<div class="hero-kicker">私人行程 · 2026.08</div>
+<h1>重庆 · 巫山</h1>
+<p class="hero-sub">四日三夜 · 城夜与峡江。从洪崖洞的江风走到小三峡的头班船，把重庆的层叠夜色与巫山的水道收进一册可执行的行程里。</p>
 <div class="hero-meta-row">
 <span class="chip"><span>日期</span><strong>2026-08-01 ~ 2026-08-04</strong></span>
 <span class="chip"><span>人数</span><strong>2人</strong></span>
-<span class="chip"><span>预算</span><strong>¥2870 / 2人</strong></span>
+<span class="chip"><span>参考预算</span><strong>¥2870 / 2人</strong></span>
 </div>
-<div class="hero-stamp">数据生成时间 2026-07-27T18:26:03+08:00</div>
 </div>
-<aside aria-label="行程快照" class="hero-panel">
-<h2>Trip snapshot</h2>
-<div class="stat-grid">
-<div class="stat"><span class="label">行程跨度</span><span class="value">4 天 3 晚</span></div>
-<div class="stat"><span class="label">主线目的地</span><span class="value">重庆 · 巫山</span></div>
-<div class="stat"><span class="label">核心体验</span><span class="value">熊猫 + 夜景 + 小三峡</span></div>
-<div class="stat"><span class="label">参考总预算</span><span class="value">¥2870 / 2人</span></div>
-</div>
-<div class="confidence-summary"><span class="dot dot-green"></span> 一手数据 62% <span class="dot dot-yellow"></span> 抓取 38% <span class="dot dot-gray"></span> 静态参考 0%</div>
-</aside>
+<div class="hero-scroll-hint" aria-hidden="true">下阅</div>
 </header>
+<section class="snapshot" id="snapshot" aria-label="行程扉页">
+<div class="snapshot-grid">
+<div class="snapshot-copy">
+<p class="section-label">行程扉页</p>
+<h2>为城夜留一整晚，为峡江留一个清晨</h2>
+<p>这趟四日不求把重庆走完，只把最稳的夜景、一顿本地馆子、一次过江索道，以及巫山小三峡的头班船排进可执行的节奏。衔接偏紧凑，但每段都留了雨备与回程窗口。</p>
+<a class="snapshot-link" href="#appendix">查看完整预算与风险 →</a>
+</div>
+<div class="snapshot-facts">
+<div><span class="label">行程跨度</span><span class="value">4 天 3 晚</span></div>
+<div><span class="label">主线目的地</span><span class="value">重庆 · 巫山</span></div>
+<div><span class="label">核心体验</span><span class="value">夜景 · 小三峡 · 熊猫</span></div>
+<div><span class="label">步调</span><span class="value">紧凑但可执行</span></div>
+</div>
+</div>
+</section>
+<section class="route-band" id="route" aria-label="行程主线">
+<div class="route-step"><div class="label">01</div><h3>城夜重庆</h3><p>解放碑、索道与洪崖洞，把第一夜交给江面灯光。</p></div>
+<div class="route-step"><div class="label">02</div><h3>峡江巫山</h3><p>高铁出城，滨江夜食，清晨把头班船留给小三峡。</p></div>
+<div class="route-step"><div class="label">03</div><h3>回渝收束</h3><p>下浩里或雨备馆子，熊猫与火锅之后从容飞回广州。</p></div>
+</section>
+<!--
+  📅 每日行程 · AGENT MUST-DO:
+  ① 必须按 trip.duration_days 给出**全部天数**的卡片（D1 ~ Dn 一个不能少）
+  ② 每天至少包含：当天主题 / 时间轴 / 3-6 个 POI / 三餐推荐
+  ③ 每个 POI 必须有：名称 / 推荐理由 / 用时建议 / 营业时间 / 评分（缺失时显式标）
+  ④ 每天必须有"当天小地图 + 当天路线"（路线规则同总览地图）
+  ⑤ 每天必须有：当天预算小计 + 体力指数（轻松/适中/暴走）
+-->
+<section id="days">
+<p class="section-label">Days</p>
+<h2>四日行程</h2>
+<nav aria-label="四日目录" class="day-rail-wrap day-progress days-rail day-index">
+  <div class="day-rail">
+    <a href="#day-1" data-day-link="1">D1 城夜</a>
+    <a href="#day-2" data-day-link="2">D2 出城</a>
+    <a href="#day-3" data-day-link="3">D3 峡江</a>
+    <a href="#day-4" data-day-link="4">D4 返程</a>
+  </div>
+</nav>
+<!--
+  AGENT MUST-DO（每天卡片）:
+  ① day.theme / day.fatigue_index 必填（否则 header 残缺）
+  ② day.stops 至少 3-6 条（含三餐 + 景点），每条必须有 time / poi.name / duration_min
+  ③ day.routes 必填（实际道路 polyline 或 路径文字版，规则同总览地图）
+  ④ stop.poi 缺字段时，agent 自己用 WebSearch 补 rating/open_hours/ticket_price
+-->
+
+<!--
+  AGENT MUST-DO（每天卡片）:
+  ① day.theme / day.fatigue_index 必填（否则 header 残缺）
+  ② day.stops 至少 3-6 条（含三餐 + 景点），每条必须有 time / poi.name / duration_min
+  ③ day.routes 必填（实际道路 polyline 或 路径文字版，规则同总览地图）
+  ④ stop.poi 缺字段时，agent 自己用 WebSearch 补 rating/open_hours/ticket_price
+-->
+
+<!--
+  AGENT MUST-DO（每天卡片）:
+  ① day.theme / day.fatigue_index 必填（否则 header 残缺）
+  ② day.stops 至少 3-6 条（含三餐 + 景点），每条必须有 time / poi.name / duration_min
+  ③ day.routes 必填（实际道路 polyline 或 路径文字版，规则同总览地图）
+  ④ stop.poi 缺字段时，agent 自己用 WebSearch 补 rating/open_hours/ticket_price
+-->
+
+<!--
+  AGENT MUST-DO（每天卡片）:
+  ① day.theme / day.fatigue_index 必填（否则 header 残缺）
+  ② day.stops 至少 3-6 条（含三餐 + 景点），每条必须有 time / poi.name / duration_min
+  ③ day.routes 必填（实际道路 polyline 或 路径文字版，规则同总览地图）
+  ④ stop.poi 缺字段时，agent 自己用 WebSearch 补 rating/open_hours/ticket_price
+-->
+
+<article class="day-card" data-day="1" id="day-1">
+<figure class="day-cover">
+<img alt="实拍 · 洪崖洞夜景（千厮门大桥视角）" decoding="async" loading="lazy" src="media/hongya-qiansimen.jpg"/>
+<div class="day-cover-overlay">
+<p class="day-kicker">D1 · 2026-08-01</p>
+<h3 class="day-theme-title"><span class="day-theme">江上的第一夜城</span></h3>
+<p class="day-cover-lede">千厮门桥上的洪崖洞灯海——把第一夜交给江面与层叠屋檐。</p>
+<div class="day-meta day-meta-on-photo"><span>📍 8km</span>
+<span>🚶 2.0 体力指数</span>
+<span>☁️ 小雨 27-37℃（趋势🟡）· 傍晚雷阵雨风险</span></div>
+</div>
+<figcaption class="day-cover-credit">实拍 · 洪崖洞夜景（千厮门大桥视角）</figcaption>
+</figure><div class="media-strip"><figure class="media-card">
+<img alt="实拍 · 解放碑夜景" decoding="async" loading="lazy" src="media/jiefangbei-night.jpg"/>
+<figcaption class="media-overlay"><span>解放碑夜色</span></figcaption>
+</figure><figure class="media-card">
+<img alt="实拍 · 重庆长江索道" decoding="async" loading="lazy" src="media/cableway-chongqing.jpg"/>
+<figcaption class="media-overlay"><span>长江索道</span></figcaption>
+</figure><figure class="media-card">
+<img alt="实拍 · 千厮门看洪崖洞" decoding="async" loading="lazy" src="media/hongya-qiansimen.jpg"/>
+<figcaption class="media-overlay"><span>洪崖洞灯海</span></figcaption>
+</figure></div>
+<div class="day-body-pad">
+<div class="day-routes">
+<h4 class="day-spine-label">当日动线</h4>
+<ol class="route-steps">
+<li>江北机场 → 江美舍北滨路(华新街站)入住 → 解放碑·八一好吃街</li>
+<li>解放碑·八一好吃街 → 长江索道（单程 → 南岸）</li>
+<li>长江索道（单程 → 南岸） → 香鸭居（纯阳洞店）</li>
+<li>香鸭居（纯阳洞店） → 千厮门大桥 · 洪崖洞夜景</li>
+<li>七星岗 → 1号线 → 小什字 → 洪崖洞夜景 → 步行回华新街方向</li>
+</ol>
+</div>
+<div class="period-grid"><div class="period-col"><h4>上午</h4><p class="t-reason">本日此时段较轻。</p></div><div class="period-col"><h4>下午</h4><ol class="timeline"><li class="stop stop-transport">
+<div class="t-time">15:30</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>江北机场→江美舍北滨路(华新街站)入住</strong>
+</div>
+<div class="t-reason">锁定：江美舍公寓(观音桥北滨路店)·美团4.7·¥132/晚·🟢 3号线华新街站步行约400m·嘉陵江景大床房 http://dpurl.cn/8i97Tcxz</div>
+<div class="t-detail"><span>—</span>
+<span>¥地铁¥7/人 或 打车¥50-60</span>
+<span>约50 分钟</span></div>
+</div>
+</li><li class="stop stop-attraction">
+<div class="t-time">16:30</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>解放碑·八一好吃街</strong>
+<span class="rating">4.5</span>
+</div>
+<div class="t-reason">华新街3号线→两路口换1号线→较场口，约25分钟；先逛解放碑+八一好吃街小吃垫肚子</div>
+<div class="t-detail"><span>全天</span>
+<span>免费</span>
+<span>约90 分钟</span></div>
+</div>
+</li></ol></div><div class="period-col"><h4>夜</h4><ol class="timeline"><li class="stop stop-attraction">
+<div class="t-time">18:00</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>长江索道（单程→南岸）</strong>
+<span class="rating">4.8</span>
+</div>
+<div class="t-reason">新华路站→上新街单程；傍晚横跨长江看日落，到南岸后直接打车去七星岗吃香鸭居（约15分钟）</div>
+<div class="t-detail"><span>07:30-22:30</span>
+<span>¥单程¥20/人</span>
+<span>约40 分钟</span></div>
+</div>
+</li><li class="stop stop-dinner">
+<div class="t-time">18:50</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">🍽️</span>
+<strong>🦆 香鸭居（纯阳洞店）</strong>
+<span class="rating">4.5</span>
+</div>
+<div class="t-reason">七星岗2号口纯阳老酒馆对面小巷·重庆本地老饕推荐·招牌鸭翅膀+鸭脚板+干豇豆绝配 🟡 人均约¥65-80；从南岸上新街打车约15分钟即到</div>
+<div class="t-detail"><span>约17:00-23:00</span>
+<span>¥人均¥65-80</span>
+<span>约80 分钟</span></div>
+</div>
+</li><li class="stop stop-evening">
+<div class="t-time">20:10</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">🌃</span>
+<strong>千厮门大桥·洪崖洞夜景</strong>
+<span class="rating">4.9</span>
+</div>
+<div class="t-reason">七星岗1号线→小什字9号口出，步行至千厮门大桥拍洪崖洞全景；结束坐6号线回华新街</div>
+<div class="t-detail"><span>全天（亮灯19:00-23:00）</span>
+<span>免费</span>
+<span>约80 分钟</span></div>
+</div>
+</li></ol></div></div>
+</div>
+<div class="day-footer-note">当晚江美舍 · 傍晚注意雷阵雨窗口</div>
+<div class="day-budget">💸 当天预算约 ¥<span class="budget-count" data-count-to="480">480</span></div>
+</article><article class="day-card" data-day="2" id="day-2">
+<figure class="day-cover">
+<img alt="实拍 · 磁器口古镇街景" decoding="async" loading="lazy" src="media/ciqikou-street.jpg"/>
+<div class="day-cover-overlay">
+<p class="day-kicker">D2 · 2026-08-02</p>
+<h3 class="day-theme-title"><span class="day-theme">从老街驶向峡江</span></h3>
+<p class="day-cover-lede">磁器口老街的石板与屋檐——出城前，先走一段重庆的烟火尺度。</p>
+<div class="day-meta day-meta-on-photo"><span>📍 160km</span>
+<span>🚶 2.2 体力指数</span>
+<span>☁️ 雨 27-35℃ 重庆 / 巫山约22-34℃（趋势🟡）</span></div>
+</div>
+<figcaption class="day-cover-credit">实拍 · 磁器口古镇街景</figcaption>
+</figure><div class="media-strip"><figure class="media-card">
+<img alt="实拍 · 磁器口门楼" decoding="async" loading="lazy" src="media/ciqikou-gateway.jpg"/>
+<figcaption class="media-overlay"><span>磁器口门楼</span></figcaption>
+</figure><figure class="media-card">
+<img alt="实拍 · 磁器口人流" decoding="async" loading="lazy" src="media/ciqikou-crowd.jpg"/>
+<figcaption class="media-overlay"><span>老街人流</span></figcaption>
+</figure><figure class="media-card">
+<img alt="实拍 · 巫山 / 巫峡 / 长江大桥" decoding="async" loading="lazy" src="media/wushan-bridge.jpg"/>
+<figcaption class="media-overlay"><span>巫山江桥</span></figcaption>
+</figure></div>
+<div class="day-body-pad">
+<div class="day-routes">
+<h4 class="day-spine-label">当日动线</h4>
+<ol class="route-steps">
+<li>退房+行李寄存前台+早餐 → 磁器口古镇</li>
+<li>耶屹口寿司午餐 · 磁器口古镇 → 磁器口 → 石油路（1号线直达）</li>
+<li>磁器口 → 石油路（1号线直达） → 耶屹口寿司（石油路店）</li>
+<li>1h32m最快） · 耶屹口寿司（石油路店） → 石油路 → 重庆北站</li>
+<li>石油路 → 重庆北站 → C9174 重庆北 → 巫山</li>
+</ol>
+</div>
+<div class="period-grid"><div class="period-col"><h4>上午</h4><ol class="timeline"><li class="stop stop-breakfast">
+<div class="t-time">07:30</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">🥐</span>
+<strong>退房+行李寄存前台+早餐</strong>
+<span class="warn-badge">⚠️ 坐标待校验</span>
+</div>
+<div class="t-reason">江美舍北滨路退房，行李寄存前台；只带巫山一晚换洗衣物（轻装去巫山，D3回重庆继续住）</div>
+<div class="t-detail"><span>—</span>
+<span>¥¥15-20</span>
+<span>约30 分钟</span></div>
+</div>
+</li><li class="stop stop-attraction">
+<div class="t-time">08:00</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>磁器口古镇</strong>
+<span class="rating">3.8</span>
+</div>
+<div class="t-reason">完整2.5h不压缩：华新街3号线→两路口换1号线→磁器口（约30分钟）；后街茶馆+陈麻花+逛江边；10:30动身去石油路</div>
+<div class="t-detail"><span>全天</span>
+<span>免费</span>
+<span>约150 分钟</span></div>
+</div>
+</li><li class="stop stop-transport">
+<div class="t-time">10:30</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>磁器口→石油路（1号线直达）</strong>
+</div>
+<div class="t-reason">1号线磁器口→石油路约7站·20分钟；赶耶屹口11:00开门第一波</div>
+<div class="t-detail"><span>—</span>
+<span>¥¥4/人</span>
+<span>约20 分钟</span></div>
+</div>
+</li><li class="stop stop-lunch">
+<div class="t-time">11:00</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">🍜</span>
+<strong>🍣 耶屹口寿司（石油路店）</strong>
+<span class="rating">4.7</span>
+</div>
+<div class="t-reason">重庆排队王川派寿司·石油路站旁·必点：酥皮鹅肝寿司+冰皮榴莲寿司+脑花寿司·人均¥80-120 🟡 赶11:00开门可避开高峰；⚠️不点拉面，只吃寿司</div>
+<div class="t-detail"><span>约11:00-21:30</span>
+<span>¥人均¥80-120</span>
+<span>约75 分钟</span></div>
+</div>
+</li></ol></div><div class="period-col"><h4>下午</h4><ol class="timeline"><li class="stop stop-transport">
+<div class="t-time">12:15</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>石油路→重庆北站</strong>
+</div>
+<div class="t-reason">1号线石油路→两路口换3号线→重庆北站南广场；约35-40分钟；14:22发车，充裕</div>
+<div class="t-detail"><span>—</span>
+<span>¥¥5/人</span>
+<span>约40 分钟</span></div>
+</div>
+</li><li class="stop stop-transport">
+<div class="t-time">14:22</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>C9174 重庆北→巫山 🟢</strong>
+</div>
+<div class="t-reason">暑假加开·14:22→15:54·仅1h32m·二等座约¥196 🎫 12306可查；备选G372(12:23→14:25)或C9194(14:10→16:11)；⚠️暑假加开车次请提前在12306确认2026年8月排图</div>
+<div class="t-detail"><span>—</span>
+<span>¥¥196/人</span>
+<span>约92 分钟</span></div>
+</div>
+</li><li class="stop stop-transport">
+<div class="t-time">16:00</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>巫山站→桐晖酒店(游客中心店)入住</strong>
+<span class="rating">4.9</span>
+</div>
+<div class="t-reason">巫山站打车约15分钟到桐晖·美团4.9·¥117/晚·距小三峡码头约0.3km 🎫http://dpurl.cn/olXCgdvz</div>
+<div class="t-detail"><span>—</span>
+<span>¥约¥117/晚</span>
+<span>约30 分钟</span></div>
+</div>
+</li><li class="stop stop-attraction">
+<div class="t-time">16:30</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>巫山滨江路/县城散步</strong>
+<span class="rating">4.0</span>
+</div>
+<div class="t-reason">比原计划晚到约15分钟但仍在下午；滨江路散步+确认明早码头集合点</div>
+<div class="t-detail"><span>全天</span>
+<span>免费</span>
+<span>约90 分钟</span></div>
+</div>
+</li></ol></div><div class="period-col"><h4>夜</h4><ol class="timeline"><li class="stop stop-dinner">
+<div class="t-time">18:00</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">🍽️</span>
+<strong>巫山烤鱼</strong>
+<span class="rating">4.2</span>
+<span class="warn-badge">⚠️ 坐标待校验</span>
+</div>
+<div class="t-reason">游客中心/滨江一带烤鱼人均¥60-90；早睡备D3 8:30头班游船</div>
+<div class="t-detail"><span>—</span>
+<span>¥人均¥60-90</span>
+<span>约90 分钟</span></div>
+</div>
+</li></ol></div></div>
+</div>
+<div class="day-footer-note">当晚巫山滨江 · 预留 C9174 检票缓冲</div>
+<div class="day-budget">💸 当天预算约 ¥<span class="budget-count" data-count-to="780">780</span></div>
+</article><article class="day-card" data-day="3" id="day-3">
+<figure class="day-cover">
+<img alt="实拍 · 巫山小三峡（大宁河）" decoding="async" loading="lazy" src="media/little-three-gorges.jpg"/>
+<div class="day-cover-overlay">
+<p class="day-kicker">D3 · 2026-08-03</p>
+<h3 class="day-theme-title"><span class="day-theme">头班船与回渝的水位</span></h3>
+<p class="day-cover-lede">峡江桥影下的水道——头班船与水位，决定这一天的全部开合。</p>
+<div class="day-meta day-meta-on-photo"><span>📍 170km</span>
+<span>🚶 2.3 体力指数</span>
+<span>☁️ 多云 约26-34℃，雨约40%（用户自查 7/27 🟡）· 主方案小三峡</span></div>
+</div>
+<figcaption class="day-cover-credit">实拍 · 巫山小三峡（大宁河）</figcaption>
+</figure><div class="media-strip"><figure class="media-card">
+<img alt="实拍 · 巫峡江景" decoding="async" loading="lazy" src="media/wu-gorge.jpg"/>
+<figcaption class="media-overlay"><span>巫峡江面</span></figcaption>
+</figure><figure class="media-card">
+<img alt="实拍 · 巫山江边" decoding="async" loading="lazy" src="media/wushan-town.jpg"/>
+<figcaption class="media-overlay"><span>巫山江边</span></figcaption>
+</figure><figure class="media-card">
+<img alt="实拍 · 南岸龙门浩索道站" decoding="async" loading="lazy" src="media/longmenhao-cable-station.jpg"/>
+<figcaption class="media-overlay"><span>龙门浩一带</span></figcaption>
+</figure></div>
+<div class="day-body-pad">
+<div class="day-routes">
+<h4 class="day-spine-label">当日动线</h4>
+<ol class="route-steps">
+<li>退房+早餐 → 小三峡·小小三峡游船 5A</li>
+<li>小三峡·小小三峡游船 5A → 简餐/打包</li>
+<li>简餐/打包 → G3455 巫山 → 重庆北</li>
+<li>G3455 巫山 → 重庆北 → 重庆北 → 江美舍北滨路入住(续住)</li>
+<li>龙门浩 · 重庆北 → 江美舍北滨路入住(续住) → 下浩里·龙门浩老街</li>
+<li>辣三鲜自贡菜 · 下浩里·龙门浩老街 → ️ 辣三鲜·火爆自贡菜·江湖菜（南岸回龙湾店）</li>
+</ol>
+</div>
+<div class="period-grid"><div class="period-col"><h4>上午</h4><ol class="timeline"><li class="stop stop-breakfast">
+<div class="t-time">07:30</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">🥐</span>
+<strong>退房+早餐</strong>
+<span class="warn-badge">⚠️ 坐标待校验</span>
+</div>
+<div class="t-reason">桐晖退房，步行约5-10分钟到小三峡码头赶8:30头班</div>
+<div class="t-detail"><span>—</span>
+<span>¥¥10-15</span>
+<span>约30 分钟</span></div>
+</div>
+</li><li class="stop stop-attraction">
+<div class="t-time">08:30</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>小三峡·小小三峡游船 5A</strong>
+<span class="rating">4.9</span>
+</div>
+<div class="t-reason">桐晖步行至码头；头班人少；备晕船药；约12:30返航后简餐再赶G3455 15:24</div>
+<div class="t-detail"><span>08:00-18:00（首班8:30）</span>
+<span>¥约¥120/人</span>
+<span>约240 分钟</span></div>
+</div>
+</li></ol></div><div class="period-col"><h4>下午</h4><ol class="timeline"><li class="stop stop-lunch">
+<div class="t-time">12:30</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">🍜</span>
+<strong>简餐/打包</strong>
+<span class="warn-badge">⚠️ 坐标待校验</span>
+</div>
+<div class="t-reason">码头附近简餐，留时间回酒店取行李→去巫山站</div>
+<div class="t-detail"><span>—</span>
+<span>¥人均¥30-50</span>
+<span>约50 分钟</span></div>
+</div>
+</li><li class="stop stop-transport">
+<div class="t-time">15:24</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>G3455 巫山→重庆北 🟢</strong>
+</div>
+<div class="t-reason">美团：15:24→17:26 2h2m 二等座¥185；游船后最稳不赶 🎫 http://dpurl.cn/Mp95NSEz</div>
+<div class="t-detail"><span>—</span>
+<span>¥¥185/人</span>
+<span>约122 分钟</span></div>
+</div>
+</li><li class="stop stop-transport">
+<div class="t-time">17:40</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>重庆北→江美舍北滨路入住(续住)</strong>
+</div>
+<div class="t-reason">北站3号线→华新街约25分钟；D3续住江美舍北滨路（已含在住宿费中）</div>
+<div class="t-detail"><span>—</span>
+<span>¥地铁¥5/人</span>
+<span>约40 分钟</span></div>
+</div>
+</li></ol></div><div class="period-col"><h4>夜</h4><ol class="timeline"><li class="stop stop-attraction">
+<div class="t-time">18:30</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>下浩里·龙门浩老街</strong>
+<span class="rating">4.6</span>
+</div>
+<div class="t-reason">华新街打车跨江约20分钟直达南岸龙门浩；傍晚老街+江景绝佳；逛约1.5h后打车去回龙湾</div>
+<div class="t-detail"><span>全天（商铺约10:00-22:00）</span>
+<span>免费</span>
+<span>约105 分钟</span></div>
+</div>
+</li><li class="stop stop-dinner">
+<div class="t-time">20:15</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">🍽️</span>
+<strong>🌶️ 辣三鲜·火爆自贡菜·江湖菜（南岸回龙湾店）</strong>
+<span class="rating">4.5</span>
+</div>
+<div class="t-reason">下浩里打车约15分钟到回龙湾；重庆最被低估的美食街·自贡盐帮菜·鲜辣锅气·拒绝预制菜·必点自贡冷吃兔+葱葱土鲫鱼+盐帮鱼蛋 🟡 人均约¥80-100；吃完打车回江美舍约25分钟</div>
+<div class="t-detail"><span>约11:00-23:00</span>
+<span>¥人均¥80-100</span>
+<span>约90 分钟</span></div>
+</div>
+</li></ol></div></div>
+</div>
+<div class="day-footer-note">雨天 B 仅小三峡停航启用 · 回渝衔接</div>
+<div class="day-budget">💸 当天预算约 ¥<span class="budget-count" data-count-to="720">720</span></div>
+</article><article class="day-card" data-day="4" id="day-4">
+<figure class="day-cover">
+<img alt="主城返程动线参考" decoding="async" loading="lazy" src="media/cableway-chongqing.jpg"/>
+<div class="day-cover-overlay">
+<p class="day-kicker">D4 · 2026-08-04</p>
+<h3 class="day-theme-title"><span class="day-theme">熊猫、火锅与返程</span></h3>
+<p class="day-cover-lede">长江索道横切两江——返程日用主城动线收束，给机场留足缓冲。</p>
+<div class="day-meta day-meta-on-photo"><span>📍 35km</span>
+<span>🚶 1.5 体力指数</span>
+<span>☁️ 雨 27-35℃ · 动物园户外湿滑（趋势🟡）</span></div>
+</div>
+<figcaption class="day-cover-credit">主城返程动线参考（动物园后前往机场）</figcaption>
+</figure><div class="media-strip"><figure class="media-card">
+<img alt="实拍 · 长江索道" decoding="async" loading="lazy" src="media/cableway-chongqing.jpg"/>
+<figcaption class="media-overlay"><span>长江索道</span></figcaption>
+</figure><figure class="media-card">
+<img alt="实拍 · 龙门浩一带" decoding="async" loading="lazy" src="media/longmenhao-cable-station.jpg"/>
+<figcaption class="media-overlay"><span>龙门浩一带</span></figcaption>
+</figure><figure class="media-card">
+<img alt="实拍 · 洪崖洞夜色" decoding="async" loading="lazy" src="media/hongya-qiansimen.jpg"/>
+<figcaption class="media-overlay"><span>洪崖洞灯海</span></figcaption>
+</figure></div>
+<div class="day-body-pad">
+<div class="day-routes">
+<h4 class="day-spine-label">当日动线</h4>
+<ol class="route-steps">
+<li>退房+行李寄存前台 → 华新街(3号线) → 牛角沱换2号线 → 动物园站A口</li>
+<li>渝味响火锅午餐 · 华新街(3号线) → 牛角沱换2号线 → 动物园站A口 → 重庆动物园·熊猫馆</li>
+<li>重庆动物园·熊猫馆 → 动物园 → 大坪站（2号线1站）</li>
+<li>CA4341 17:00飞广州 · 动物园 → 大坪站（2号线1站） → 渝味响火锅（大坪总店）</li>
+</ol>
+</div>
+<div class="period-grid"><div class="period-col"><h4>上午</h4><ol class="timeline"><li class="stop stop-breakfast">
+<div class="t-time">07:30</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">🥐</span>
+<strong>退房+行李寄存前台</strong>
+<span class="warn-badge">⚠️ 坐标待校验</span>
+</div>
+<div class="t-reason">江美舍北滨路退房，行李寄存前台；轻装出发看熊猫</div>
+<div class="t-detail"><span>—</span>
+<span>¥¥15-20</span>
+<span>约30 分钟</span></div>
+</div>
+</li><li class="stop stop-transport">
+<div class="t-time">08:00</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>华新街(3号线)→牛角沱换2号线→动物园站A口</strong>
+</div>
+<div class="t-reason">3号线→牛角沱换2号线→动物园站A口步行约450m；约35分钟</div>
+<div class="t-detail"><span>—</span>
+<span>¥¥5/人</span>
+<span>约35 分钟</span></div>
+</div>
+</li><li class="stop stop-attraction">
+<div class="t-time">08:45</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>🐼 重庆动物园·熊猫馆</strong>
+<span class="rating">4.6</span>
+</div>
+<div class="t-reason">全国大熊猫最多动物园之一·23只大熊猫·上午9点喂食黄金时间；熊猫馆→虎山→长颈鹿，约2小时精华</div>
+<div class="t-detail"><span>8:00-18:00（熊猫馆9:00-17:00）</span>
+<span>¥¥25/人</span>
+<span>约120 分钟</span></div>
+</div>
+</li><li class="stop stop-transport">
+<div class="t-time">10:45</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>动物园→大坪站（2号线1站）</strong>
+</div>
+<div class="t-reason">2号线动物园→大坪仅1站·3分钟；出站步行至渝味响火锅</div>
+<div class="t-detail"><span>—</span>
+<span>¥¥2/人</span>
+<span>约10 分钟</span></div>
+</div>
+</li><li class="stop stop-lunch">
+<div class="t-time">11:00</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">🍜</span>
+<strong>🍲 渝味响火锅（大坪总店）</strong>
+<span class="rating">4.6</span>
+</div>
+<div class="t-reason">大坪正街124-1-2号·重庆本地人强推·社区火锅排队王·牛油锅底麻辣鲜香·必点：冷锅鸭血+千丝黄喉+耙猪脚+1元冰汤圆 🟡 人均约¥70；早点到避开午高峰</div>
+<div class="t-detail"><span>约10:30-23:00</span>
+<span>¥人均¥70</span>
+<span>约80 分钟</span></div>
+</div>
+</li></ol></div><div class="period-col"><h4>下午</h4><ol class="timeline"><li class="stop stop-transport">
+<div class="t-time">12:20</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>大坪→2号线牛角沱换3号线→华新街·取行李</strong>
+<span class="warn-badge">⚠️ 坐标待校验</span>
+</div>
+<div class="t-reason">大坪2号线→牛角沱换3号线→华新街；约25-30分钟</div>
+<div class="t-detail"><span>—</span>
+<span>¥¥4/人</span>
+<span>约30 分钟</span></div>
+</div>
+</li><li class="stop stop-transport">
+<div class="t-time">12:50</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>江美舍取行李→打车→江北机场T3</strong>
+</div>
+<div class="t-reason">华新街打车约25-35分钟到T3；约13:30到机场·距17:00起飞仍有3.5h·绰绰有余</div>
+<div class="t-detail"><span>—</span>
+<span>¥打车¥50-60</span>
+<span>约40 分钟</span></div>
+</div>
+</li><li class="stop stop-transport">
+<div class="t-time">13:30</div>
+<div class="t-body">
+<div class="t-title">
+<span class="t-emoji">📌</span>
+<strong>江北T3→CA4341 17:00→18:50 广州白云T3 🟢</strong>
+</div>
+<div class="t-reason">国航CA4341 波音737·17:00起飞→18:50白云T3；吃完火锅到机场仍有3h+缓冲</div>
+<div class="t-detail"><span>—</span>
+<span>¥已购票</span>
+<span>约350 分钟</span></div>
+</div>
+</li></ol></div><div class="period-col"><h4>夜</h4><p class="t-reason">本日此时段较轻。</p></div></div>
+</div>
+<div class="day-footer-note">预留前往江北 T3 的交通时间</div>
+<div class="day-budget">💸 当天预算约 ¥<span class="budget-count" data-count-to="420">420</span></div>
+</article></section>
+<!--
+  🏨 住宿候选 · AGENT MUST-DO:
+  ① 至少 3 家酒店候选（不能凑数，宁少勿假）
+  ② 每家必须有：酒店全名 / 价格区间 / ≥2 个不同平台的预订链接 / 一句"为什么推荐"
+  ③ 数据来源：美团酒店 > xhs 真实评价 > WebSearch
+  ④ 凑不齐 3 家时，明确写"暂时只找到 X 家，建议你打开美团搜更多"，不要硬编造
+-->
+<section id="hotel">
+<p class="section-label">Stay</p><h2>住宿</h2><p style="color:var(--ink-soft);max-width:36em;line-height:1.7;margin:0 0 1rem;">主推一处便于执行的落脚点，其余保留为可切换备选；价格与预订链接保持原数据。</p>
+<div class="hotel-grid">
+<div class="hotel-card is-primary">
+<div class="hotel-primary-media">
+<img alt="滨江住宿氛围参考" decoding="async" loading="lazy" src="media/wushan-bridge.jpg"/>
+<div class="hotel-media-overlay">
+<p class="hotel-overlay-kicker">主推 · Stay</p>
+<h4 class="hotel-overlay-title">江美舍公寓（观音桥北滨路店）</h4>
+<p class="hotel-overlay-price">参考价 ¥132/晚</p>
+<p class="hotel-overlay-lede">峡江滨江尺度的落脚参考——主推江美舍，近华新街、可执行。</p>
+</div>
+</div><div class="hotel-primary-copy"><div class="h-rank">主推</div>
+<h4>江美舍公寓（观音桥北滨路店）</h4>
+<div class="h-price">
+        参考价 ¥132/晚
+      </div>
+<div class="h-rating">
+        美团 ⭐ 4.6 ｜ 小红书情感 —
+      </div>
+<div class="h-loc">📍 江北区北滨路·华新街地铁站约400m（3号线） 8</div>
+<div class="h-reason">推荐理由：【重庆用户锁定J】美团4.6·大床¥132/双床¥161；北滨路居民沿江带，嘉陵江江景，非景区；华新街站约400m</div>
+<div class="h-amenities">
+<span class="tag">嘉陵江江景</span><span class="tag">近华新街地铁</span><span class="tag">隔音好</span><span class="tag">停车场</span><span class="tag">麻将房</span>
+</div>
+<div class="warning">⚠️ 双床¥161略超预算，大床¥132在预算内；北滨路非观音桥步行街正中心</div>
+<div class="book-links">
+<span class="book-label">去预订：</span>
+<a href="https://hotels.meituan.com/search/?q=%E6%B1%9F%E7%BE%8E%E8%88%8D%E5%85%AC%E5%AF%93%EF%BC%88%E8%A7%82%E9%9F%B3%E6%A1%A5%E5%8C%97%E6%BB%A8%E8%B7%AF%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">美团</a>
+<a href="https://hotels.ctrip.com/hotels/list?city=&amp;checkIn=&amp;checkOut=&amp;keyword=%E6%B1%9F%E7%BE%8E%E8%88%8D%E5%85%AC%E5%AF%93%EF%BC%88%E8%A7%82%E9%9F%B3%E6%A1%A5%E5%8C%97%E6%BB%A8%E8%B7%AF%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">携程</a>
+<a href="https://hotel.fliggy.com/search.htm?searchType=hotel&amp;keywords=%E6%B1%9F%E7%BE%8E%E8%88%8D%E5%85%AC%E5%AF%93%EF%BC%88%E8%A7%82%E9%9F%B3%E6%A1%A5%E5%8C%97%E6%BB%A8%E8%B7%AF%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">飞猪</a>
+<a href="https://www.booking.com/searchresults.html?ss=%E6%B1%9F%E7%BE%8E%E8%88%8D%E5%85%AC%E5%AF%93%EF%BC%88%E8%A7%82%E9%9F%B3%E6%A1%A5%E5%8C%97%E6%BB%A8%E8%B7%AF%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">Booking</a>
+</div>
+<span class="confidence-badge confidence-green"></span>
+</div>
+</div><div class="hotel-card is-secondary">
+<div class="h-rank">备选 2</div>
+<h4>桐晖酒店（重庆巫山游客中心店）</h4>
+<div class="h-price">
+        参考价 ¥117/晚
+      </div>
+<div class="h-rating">
+        美团 ⭐ 4.9 ｜ 小红书情感 —
+      </div>
+<div class="h-loc">📍 巫山·游客中心旁·距小三峡码头约0.3km 10</div>
+<div class="h-reason">推荐理由：【巫山用户锁定B】美团4.9·2025开业·¥117；距码头约0.3km；临江双床可选；晚上滨江/游客中心一带可逛，早起步行赶小三峡头班</div>
+<div class="h-amenities">
+<span class="tag">近码头</span><span class="tag">新开业</span><span class="tag">临江双床可选</span><span class="tag">免费停车</span><span class="tag">空气净化器</span><span class="tag">干湿分离</span>
+</div>
+<div class="book-links">
+<span class="book-label">去预订：</span>
+<a href="https://hotels.meituan.com/search/?q=%E6%A1%90%E6%99%96%E9%85%92%E5%BA%97%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E6%B8%B8%E5%AE%A2%E4%B8%AD%E5%BF%83%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">美团</a>
+<a href="https://hotels.ctrip.com/hotels/list?city=&amp;checkIn=&amp;checkOut=&amp;keyword=%E6%A1%90%E6%99%96%E9%85%92%E5%BA%97%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E6%B8%B8%E5%AE%A2%E4%B8%AD%E5%BF%83%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">携程</a>
+<a href="https://hotel.fliggy.com/search.htm?searchType=hotel&amp;keywords=%E6%A1%90%E6%99%96%E9%85%92%E5%BA%97%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E6%B8%B8%E5%AE%A2%E4%B8%AD%E5%BF%83%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">飞猪</a>
+<a href="https://www.booking.com/searchresults.html?ss=%E6%A1%90%E6%99%96%E9%85%92%E5%BA%97%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E6%B8%B8%E5%AE%A2%E4%B8%AD%E5%BF%83%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">Booking</a>
+</div>
+<span class="confidence-badge confidence-green"></span>
+</div>
+<div class="hotel-card is-secondary">
+<div class="h-rank">备选 3</div>
+<h4>六柒八·酒店（市政广场店）</h4>
+<div class="h-price">
+        参考价 ¥111/晚
+      </div>
+<div class="h-rating">
+        美团 ⭐ 4.7 ｜ 小红书情感 —
+      </div>
+<div class="h-loc">📍 巫山·距小三峡旅游码头约0.2km 10</div>
+<div class="h-reason">推荐理由：备选：更近码头¥111·4.7分</div>
+<div class="h-amenities">
+<span class="tag">近码头</span><span class="tag">江景双床可选</span>
+</div>
+<div class="book-links">
+<span class="book-label">去预订：</span>
+<a href="https://hotels.meituan.com/search/?q=%E5%85%AD%E6%9F%92%E5%85%AB%C2%B7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">美团</a>
+<a href="https://hotels.ctrip.com/hotels/list?city=&amp;checkIn=&amp;checkOut=&amp;keyword=%E5%85%AD%E6%9F%92%E5%85%AB%C2%B7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">携程</a>
+<a href="https://hotel.fliggy.com/search.htm?searchType=hotel&amp;keywords=%E5%85%AD%E6%9F%92%E5%85%AB%C2%B7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">飞猪</a>
+<a href="https://www.booking.com/searchresults.html?ss=%E5%85%AD%E6%9F%92%E5%85%AB%C2%B7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">Booking</a>
+</div>
+<span class="confidence-badge confidence-green"></span>
+</div>
+<div class="hotel-card is-secondary">
+<div class="h-rank">备选 4</div>
+<h4>汉庭（重庆巫山店）</h4>
+<div class="h-price">
+        参考价 ¥198/晚
+      </div>
+<div class="h-rating">
+        美团 ⭐ 4.7 ｜ 小红书情感 —
+      </div>
+<div class="h-loc">📍 巫山·距码头约0.5km 9</div>
+<div class="h-reason">推荐理由：备选：连锁·夜逛配套略好</div>
+<div class="h-amenities">
+<span class="tag">连锁</span><span class="tag">免费停车</span>
+</div>
+<div class="book-links">
+<span class="book-label">去预订：</span>
+<a href="https://hotels.meituan.com/search/?q=%E6%B1%89%E5%BA%AD%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">美团</a>
+<a href="https://hotels.ctrip.com/hotels/list?city=&amp;checkIn=&amp;checkOut=&amp;keyword=%E6%B1%89%E5%BA%AD%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">携程</a>
+<a href="https://hotel.fliggy.com/search.htm?searchType=hotel&amp;keywords=%E6%B1%89%E5%BA%AD%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">飞猪</a>
+<a href="https://www.booking.com/searchresults.html?ss=%E6%B1%89%E5%BA%AD%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">Booking</a>
+</div>
+<span class="confidence-badge confidence-green"></span>
+</div>
+<div class="hotel-card is-secondary">
+<div class="h-rank">备选 5</div>
+<h4>江临大酒店（市政广场店）</h4>
+<div class="h-price">
+        参考价 ¥73/晚
+      </div>
+<div class="h-rating">
+        美团 ⭐ 4.5 ｜ 小红书情感 —
+      </div>
+<div class="h-loc">📍 巫山县城·市政广场0.4km 8</div>
+<div class="h-reason">推荐理由：备选最便宜¥73</div>
+<div class="h-amenities">
+<span class="tag">江景双床可选</span><span class="tag">停车场</span>
+</div>
+<div class="warning">⚠️ 到码头略远</div>
+<div class="book-links">
+<span class="book-label">去预订：</span>
+<a href="https://hotels.meituan.com/search/?q=%E6%B1%9F%E4%B8%B4%E5%A4%A7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">美团</a>
+<a href="https://hotels.ctrip.com/hotels/list?city=&amp;checkIn=&amp;checkOut=&amp;keyword=%E6%B1%9F%E4%B8%B4%E5%A4%A7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">携程</a>
+<a href="https://hotel.fliggy.com/search.htm?searchType=hotel&amp;keywords=%E6%B1%9F%E4%B8%B4%E5%A4%A7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">飞猪</a>
+<a href="https://www.booking.com/searchresults.html?ss=%E6%B1%9F%E4%B8%B4%E5%A4%A7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">Booking</a>
+</div>
+<span class="confidence-badge confidence-green"></span>
+</div>
+
+</div>
+</section>
+<section class="essentials" id="essentials" aria-label="须知">
+<p class="section-label">Essentials</p>
+<h2>须知</h2>
+<ul class="essentials-list">
+<li><strong>小三峡头班船：</strong>按景区当日首班执行，留出码头候船与安检时间；停航才启用雨天 B。</li>
+<li><strong>C9174 高铁衔接：</strong>磁器口结束后预留前往车站的缓冲，检票前避免再插入远距离景点。</li>
+<li><strong>雨天 B 启动条件：</strong>仅当小三峡停航或官方通知停运时启用备用安排，不因普通阵雨自动改线。</li>
+<li><strong>步行与防滑：</strong>重庆台阶与滨江步道多，建议防滑鞋；薄冲锋衣/雨衣按天气自查携带。</li>
+<li><strong>返程航班：</strong>D4 预留前往江北 T3 的交通时间，火锅安排在赴机前可执行的窗口。</li>
+</ul>
+</section>
+
+<section id="appendix" class="appendix" aria-label="附录">
+<div class="appendix-inner">
+<p class="section-label">Appendix</p>
+<h2 class="appendix-title">附录</h2>
+<p class="appendix-desc">地图、交通、预算、风险、影像与清单仍完整保留。正文读节奏，附录取出门细节。</p>
+<ol class="appendix-toc">
+<li><a href="#overview-map"><span>总览地图</span><span class="num">01</span></a></li>
+<li><a href="#transport"><span>大交通与票务</span><span class="num">02</span></a></li>
+<li><a href="#budget"><span>预算明细</span><span class="num">03</span></a></li>
+<li><a href="#risk"><span>风险与雨备</span><span class="num">04</span></a></li>
+<li><a href="#media-videos"><span>图文视频参考</span><span class="num">05</span></a></li>
+<li><a href="#xhs-notes"><span>真实笔记参考</span><span class="num">06</span></a></li>
+<li><a href="#data-completeness"><span>数据完整性</span><span class="num">07</span></a></li>
+<li><a href="#checklist"><span>行前清单</span><span class="num">08</span></a></li>
+</ol>
 <!--
 ═══════════════════════════════════════════════════════════════════════════════
                          AGENT INSTRUCTIONS · 必读
@@ -1564,6 +4609,7 @@ a:focus-visible,
   ③ 同一天 POI 用同色 marker，不同天换色；起终点要有方向感
 -->
 <section id="overview-map">
+<p class="section-label">Map</p>
 <h2>总览地图</h2>
 <div id="map" style="height: 480px; border-radius: 12px;"></div>
 </section>
@@ -1575,7 +4621,8 @@ a:focus-visible,
   数据来源优先级：美团火车票 > 12306 > WebSearch（携程/去哪儿）
 -->
 <section id="transport">
-<h2>大交通</h2>
+<p class="section-label">Transport</p>
+<h2>大交通与票务</h2>
 <div class="transport-section">
 <div class="dir-block">
 <h4>去程</h4>
@@ -1631,887 +4678,6 @@ a:focus-visible,
 </div>
 </section>
 <!--
-  🏨 住宿候选 · AGENT MUST-DO:
-  ① 至少 3 家酒店候选（不能凑数，宁少勿假）
-  ② 每家必须有：酒店全名 / 价格区间 / ≥2 个不同平台的预订链接 / 一句"为什么推荐"
-  ③ 数据来源：美团酒店 > xhs 真实评价 > WebSearch
-  ④ 凑不齐 3 家时，明确写"暂时只找到 X 家，建议你打开美团搜更多"，不要硬编造
--->
-<section id="hotel">
-<h2>住宿候选</h2>
-<div class="hotel-grid">
-<div class="hotel-card">
-<div class="h-rank">#1</div>
-<h4>江美舍公寓（观音桥北滨路店）</h4>
-<div class="h-price">
-        参考价 ¥132/晚
-      </div>
-<div class="h-rating">
-        美团 ⭐ 4.6 ｜ 小红书情感 —
-      </div>
-<div class="h-loc">📍 江北区北滨路·华新街地铁站约400m（3号线） 8</div>
-<div class="h-reason">推荐理由：【重庆用户锁定J】美团4.6·大床¥132/双床¥161；北滨路居民沿江带，嘉陵江江景，非景区；华新街站约400m</div>
-<div class="h-amenities">
-<span class="tag">嘉陵江江景</span><span class="tag">近华新街地铁</span><span class="tag">隔音好</span><span class="tag">停车场</span><span class="tag">麻将房</span>
-</div>
-<div class="warning">⚠️ 双床¥161略超预算，大床¥132在预算内；北滨路非观音桥步行街正中心</div>
-<div class="book-links">
-<span class="book-label">去预订：</span>
-<a href="https://hotels.meituan.com/search/?q=%E6%B1%9F%E7%BE%8E%E8%88%8D%E5%85%AC%E5%AF%93%EF%BC%88%E8%A7%82%E9%9F%B3%E6%A1%A5%E5%8C%97%E6%BB%A8%E8%B7%AF%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">美团</a>
-<a href="https://hotels.ctrip.com/hotels/list?city=&amp;checkIn=&amp;checkOut=&amp;keyword=%E6%B1%9F%E7%BE%8E%E8%88%8D%E5%85%AC%E5%AF%93%EF%BC%88%E8%A7%82%E9%9F%B3%E6%A1%A5%E5%8C%97%E6%BB%A8%E8%B7%AF%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">携程</a>
-<a href="https://hotel.fliggy.com/search.htm?searchType=hotel&amp;keywords=%E6%B1%9F%E7%BE%8E%E8%88%8D%E5%85%AC%E5%AF%93%EF%BC%88%E8%A7%82%E9%9F%B3%E6%A1%A5%E5%8C%97%E6%BB%A8%E8%B7%AF%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">飞猪</a>
-<a href="https://www.booking.com/searchresults.html?ss=%E6%B1%9F%E7%BE%8E%E8%88%8D%E5%85%AC%E5%AF%93%EF%BC%88%E8%A7%82%E9%9F%B3%E6%A1%A5%E5%8C%97%E6%BB%A8%E8%B7%AF%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">Booking</a>
-</div>
-<span class="confidence-badge confidence-green"></span>
-</div>
-<div class="hotel-card">
-<div class="h-rank">#2</div>
-<h4>桐晖酒店（重庆巫山游客中心店）</h4>
-<div class="h-price">
-        参考价 ¥117/晚
-      </div>
-<div class="h-rating">
-        美团 ⭐ 4.9 ｜ 小红书情感 —
-      </div>
-<div class="h-loc">📍 巫山·游客中心旁·距小三峡码头约0.3km 10</div>
-<div class="h-reason">推荐理由：【巫山用户锁定B】美团4.9·2025开业·¥117；距码头约0.3km；临江双床可选；晚上滨江/游客中心一带可逛，早起步行赶小三峡头班</div>
-<div class="h-amenities">
-<span class="tag">近码头</span><span class="tag">新开业</span><span class="tag">临江双床可选</span><span class="tag">免费停车</span><span class="tag">空气净化器</span><span class="tag">干湿分离</span>
-</div>
-<div class="book-links">
-<span class="book-label">去预订：</span>
-<a href="https://hotels.meituan.com/search/?q=%E6%A1%90%E6%99%96%E9%85%92%E5%BA%97%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E6%B8%B8%E5%AE%A2%E4%B8%AD%E5%BF%83%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">美团</a>
-<a href="https://hotels.ctrip.com/hotels/list?city=&amp;checkIn=&amp;checkOut=&amp;keyword=%E6%A1%90%E6%99%96%E9%85%92%E5%BA%97%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E6%B8%B8%E5%AE%A2%E4%B8%AD%E5%BF%83%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">携程</a>
-<a href="https://hotel.fliggy.com/search.htm?searchType=hotel&amp;keywords=%E6%A1%90%E6%99%96%E9%85%92%E5%BA%97%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E6%B8%B8%E5%AE%A2%E4%B8%AD%E5%BF%83%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">飞猪</a>
-<a href="https://www.booking.com/searchresults.html?ss=%E6%A1%90%E6%99%96%E9%85%92%E5%BA%97%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E6%B8%B8%E5%AE%A2%E4%B8%AD%E5%BF%83%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">Booking</a>
-</div>
-<span class="confidence-badge confidence-green"></span>
-</div>
-<div class="hotel-card">
-<div class="h-rank">#3</div>
-<h4>六柒八·酒店（市政广场店）</h4>
-<div class="h-price">
-        参考价 ¥111/晚
-      </div>
-<div class="h-rating">
-        美团 ⭐ 4.7 ｜ 小红书情感 —
-      </div>
-<div class="h-loc">📍 巫山·距小三峡旅游码头约0.2km 10</div>
-<div class="h-reason">推荐理由：备选：更近码头¥111·4.7分</div>
-<div class="h-amenities">
-<span class="tag">近码头</span><span class="tag">江景双床可选</span>
-</div>
-<div class="book-links">
-<span class="book-label">去预订：</span>
-<a href="https://hotels.meituan.com/search/?q=%E5%85%AD%E6%9F%92%E5%85%AB%C2%B7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">美团</a>
-<a href="https://hotels.ctrip.com/hotels/list?city=&amp;checkIn=&amp;checkOut=&amp;keyword=%E5%85%AD%E6%9F%92%E5%85%AB%C2%B7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">携程</a>
-<a href="https://hotel.fliggy.com/search.htm?searchType=hotel&amp;keywords=%E5%85%AD%E6%9F%92%E5%85%AB%C2%B7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">飞猪</a>
-<a href="https://www.booking.com/searchresults.html?ss=%E5%85%AD%E6%9F%92%E5%85%AB%C2%B7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">Booking</a>
-</div>
-<span class="confidence-badge confidence-green"></span>
-</div>
-<div class="hotel-card">
-<div class="h-rank">#4</div>
-<h4>汉庭（重庆巫山店）</h4>
-<div class="h-price">
-        参考价 ¥198/晚
-      </div>
-<div class="h-rating">
-        美团 ⭐ 4.7 ｜ 小红书情感 —
-      </div>
-<div class="h-loc">📍 巫山·距码头约0.5km 9</div>
-<div class="h-reason">推荐理由：备选：连锁·夜逛配套略好</div>
-<div class="h-amenities">
-<span class="tag">连锁</span><span class="tag">免费停车</span>
-</div>
-<div class="book-links">
-<span class="book-label">去预订：</span>
-<a href="https://hotels.meituan.com/search/?q=%E6%B1%89%E5%BA%AD%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">美团</a>
-<a href="https://hotels.ctrip.com/hotels/list?city=&amp;checkIn=&amp;checkOut=&amp;keyword=%E6%B1%89%E5%BA%AD%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">携程</a>
-<a href="https://hotel.fliggy.com/search.htm?searchType=hotel&amp;keywords=%E6%B1%89%E5%BA%AD%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">飞猪</a>
-<a href="https://www.booking.com/searchresults.html?ss=%E6%B1%89%E5%BA%AD%EF%BC%88%E9%87%8D%E5%BA%86%E5%B7%AB%E5%B1%B1%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">Booking</a>
-</div>
-<span class="confidence-badge confidence-green"></span>
-</div>
-<div class="hotel-card">
-<div class="h-rank">#5</div>
-<h4>江临大酒店（市政广场店）</h4>
-<div class="h-price">
-        参考价 ¥73/晚
-      </div>
-<div class="h-rating">
-        美团 ⭐ 4.5 ｜ 小红书情感 —
-      </div>
-<div class="h-loc">📍 巫山县城·市政广场0.4km 8</div>
-<div class="h-reason">推荐理由：备选最便宜¥73</div>
-<div class="h-amenities">
-<span class="tag">江景双床可选</span><span class="tag">停车场</span>
-</div>
-<div class="warning">⚠️ 到码头略远</div>
-<div class="book-links">
-<span class="book-label">去预订：</span>
-<a href="https://hotels.meituan.com/search/?q=%E6%B1%9F%E4%B8%B4%E5%A4%A7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">美团</a>
-<a href="https://hotels.ctrip.com/hotels/list?city=&amp;checkIn=&amp;checkOut=&amp;keyword=%E6%B1%9F%E4%B8%B4%E5%A4%A7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">携程</a>
-<a href="https://hotel.fliggy.com/search.htm?searchType=hotel&amp;keywords=%E6%B1%9F%E4%B8%B4%E5%A4%A7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">飞猪</a>
-<a href="https://www.booking.com/searchresults.html?ss=%E6%B1%9F%E4%B8%B4%E5%A4%A7%E9%85%92%E5%BA%97%EF%BC%88%E5%B8%82%E6%94%BF%E5%B9%BF%E5%9C%BA%E5%BA%97%EF%BC%89" rel="noopener" target="_blank">Booking</a>
-</div>
-<span class="confidence-badge confidence-green"></span>
-</div>
-</div>
-</section>
-<!--
-  📅 每日行程 · AGENT MUST-DO:
-  ① 必须按 trip.duration_days 给出**全部天数**的卡片（D1 ~ Dn 一个不能少）
-  ② 每天至少包含：当天主题 / 时间轴 / 3-6 个 POI / 三餐推荐
-  ③ 每个 POI 必须有：名称 / 推荐理由 / 用时建议 / 营业时间 / 评分（缺失时显式标）
-  ④ 每天必须有"当天小地图 + 当天路线"（路线规则同总览地图）
-  ⑤ 每天必须有：当天预算小计 + 体力指数（轻松/适中/暴走）
--->
-<section id="days">
-<h2>每日行程</h2>
-<!--
-  AGENT MUST-DO（每天卡片）:
-  ① day.theme / day.fatigue_index 必填（否则 header 残缺）
-  ② day.stops 至少 3-6 条（含三餐 + 景点），每条必须有 time / poi.name / duration_min
-  ③ day.routes 必填（实际道路 polyline 或 路径文字版，规则同总览地图）
-  ④ stop.poi 缺字段时，agent 自己用 WebSearch 补 rating/open_hours/ticket_price
--->
-
-<!--
-  AGENT MUST-DO（每天卡片）:
-  ① day.theme / day.fatigue_index 必填（否则 header 残缺）
-  ② day.stops 至少 3-6 条（含三餐 + 景点），每条必须有 time / poi.name / duration_min
-  ③ day.routes 必填（实际道路 polyline 或 路径文字版，规则同总览地图）
-  ④ stop.poi 缺字段时，agent 自己用 WebSearch 补 rating/open_hours/ticket_price
--->
-
-<!--
-  AGENT MUST-DO（每天卡片）:
-  ① day.theme / day.fatigue_index 必填（否则 header 残缺）
-  ② day.stops 至少 3-6 条（含三餐 + 景点），每条必须有 time / poi.name / duration_min
-  ③ day.routes 必填（实际道路 polyline 或 路径文字版，规则同总览地图）
-  ④ stop.poi 缺字段时，agent 自己用 WebSearch 补 rating/open_hours/ticket_price
--->
-
-<!--
-  AGENT MUST-DO（每天卡片）:
-  ① day.theme / day.fatigue_index 必填（否则 header 残缺）
-  ② day.stops 至少 3-6 条（含三餐 + 景点），每条必须有 time / poi.name / duration_min
-  ③ day.routes 必填（实际道路 polyline 或 路径文字版，规则同总览地图）
-  ④ stop.poi 缺字段时，agent 自己用 WebSearch 补 rating/open_hours/ticket_price
--->
-
-<article class="day-card" data-day="1" id="day-1">
-<header class="day-header">
-<h3>D1 · 2026-08-01 · 解放碑·长江索道·香鸭居·洪崖洞夜景</h3>
-<div class="day-meta">
-<span>📍 8km</span>
-<span>🚶 2.0 体力指数</span>
-<span>☁️ 小雨 27-37℃（趋势🟡）· 傍晚雷阵雨风险</span>
-</div>
-</header><figure class="day-cover">
-<img alt="实拍 · 洪崖洞夜景（千厮门大桥视角）" decoding="async" loading="lazy" src="media/hongya-qiansimen.jpg"/>
-<figcaption>实拍 · 洪崖洞夜景（千厮门大桥视角）</figcaption>
-</figure><div class="media-strip"><figure class="media-card">
-<img alt="实拍 · 解放碑夜景" decoding="async" loading="lazy" src="media/jiefangbei-night.jpg"/>
-<figcaption>实拍 · 解放碑夜景</figcaption>
-</figure><figure class="media-card">
-<img alt="实拍 · 重庆长江索道" decoding="async" loading="lazy" src="media/cableway-chongqing.jpg"/>
-<figcaption>实拍 · 重庆长江索道</figcaption>
-</figure><figure class="media-card">
-<img alt="实拍 · 千厮门看洪崖洞" decoding="async" loading="lazy" src="media/hongya-qiansimen.jpg"/>
-<figcaption>实拍 · 千厮门看洪崖洞</figcaption>
-</figure></div>
-<div class="day-routes">
-<h4>🗺️ 当日路线</h4>
-<ol class="route-steps">
-<li>
-<span class="route-source-text">路径：</span>江北机场→江美舍北滨路(华新街站)入住
-            
-            
-              · 江北机场→江美舍北滨路(华新街站)入住 → 解放碑·八一好吃街
-            
-          </li>
-<li>
-<span class="route-source-text">路径：</span>华新街3号线换1号线→较场口/解放碑
-            
-            
-              · 解放碑·八一好吃街 → 长江索道（单程→南岸）
-            
-          </li>
-<li>
-<span class="route-source-text">路径：</span>解放碑→长江索道(新华路站→上新街单程)
-            
-            
-              · 长江索道（单程→南岸） → 🦆 香鸭居（纯阳洞店）
-            
-          </li>
-<li>
-<span class="route-source-text">路径：</span>上新街打车或6号线换1号线→七星岗·香鸭居
-            
-            
-              · 🦆 香鸭居（纯阳洞店） → 千厮门大桥·洪崖洞夜景
-            
-          </li>
-<li>
-<span class="route-source-text">路径：</span>七星岗→1号线→小什字→洪崖洞夜景→步行回华新街方向
-            
-            
-          </li>
-</ol>
-</div>
-<ol class="timeline">
-<li class="stop stop-transport">
-<div class="t-time">15:30</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>江北机场→江美舍北滨路(华新街站)入住</strong>
-</div>
-<div class="t-reason">💡 用户锁定：江美舍公寓(观音桥北滨路店)·美团4.7·¥132/晚·🟢 3号线华新街站步行约400m·嘉陵江景大床房 http://dpurl.cn/8i97Tcxz</div>
-<div class="t-detail">
-<span>🕐 —</span>
-<span>🎫 ¥地铁¥7/人 或 打车¥50-60</span>
-<span>⏱️ 约 50 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-attraction">
-<div class="t-time">16:30</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>解放碑·八一好吃街</strong>
-<span class="rating">⭐ 4.5</span>
-</div>
-<div class="t-reason">💡 华新街3号线→两路口换1号线→较场口，约25分钟；先逛解放碑+八一好吃街小吃垫肚子</div>
-<div class="t-detail">
-<span>🕐 全天</span>
-<span>🎫 ¥免费</span>
-<span>⏱️ 约 90 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-attraction">
-<div class="t-time">18:00</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>长江索道（单程→南岸）</strong>
-<span class="rating">⭐ 4.8</span>
-</div>
-<div class="t-reason">💡 新华路站→上新街单程；傍晚横跨长江看日落，到南岸后直接打车去七星岗吃香鸭居（约15分钟）</div>
-<div class="t-detail">
-<span>🕐 07:30-22:30</span>
-<span>🎫 ¥单程¥20/人</span>
-<span>⏱️ 约 40 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-dinner">
-<div class="t-time">18:50</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">🍽️</span>
-<strong>🦆 香鸭居（纯阳洞店）</strong>
-<span class="rating">⭐ 4.5</span>
-</div>
-<div class="t-reason">💡 七星岗2号口纯阳老酒馆对面小巷·重庆本地老饕推荐·招牌鸭翅膀+鸭脚板+干豇豆绝配 🟡 人均约¥65-80；从南岸上新街打车约15分钟即到</div>
-<div class="t-detail">
-<span>🕐 约17:00-23:00</span>
-<span>🎫 ¥人均¥65-80</span>
-<span>⏱️ 约 80 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-evening">
-<div class="t-time">20:10</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">🌃</span>
-<strong>千厮门大桥·洪崖洞夜景</strong>
-<span class="rating">⭐ 4.9</span>
-</div>
-<div class="t-reason">💡 七星岗1号线→小什字9号口出，步行至千厮门大桥拍洪崖洞全景；结束坐6号线回华新街</div>
-<div class="t-detail">
-<span>🕐 全天（亮灯19:00-23:00）</span>
-<span>🎫 ¥免费</span>
-<span>⏱️ 约 80 分钟</span>
-</div>
-</div>
-</li>
-</ol>
-<div class="day-budget">💸 当天预算约 ¥<span class="budget-count" data-count-to="480">480</span></div>
-</article><article class="day-card" data-day="2" id="day-2">
-<header class="day-header">
-<h3>D2 · 2026-08-02 · 磁器口·耶屹口寿司·C9174高铁·巫山滨江·烤鱼</h3>
-<div class="day-meta">
-<span>📍 160km</span>
-<span>🚶 2.2 体力指数</span>
-<span>☁️ 雨 27-35℃ 重庆 / 巫山约22-34℃（趋势🟡）</span>
-</div>
-</header><figure class="day-cover">
-<img alt="实拍 · 磁器口古镇街景" decoding="async" loading="lazy" src="media/ciqikou-street.jpg"/>
-<figcaption>实拍 · 磁器口古镇街景</figcaption>
-</figure><div class="media-strip"><figure class="media-card">
-<img alt="实拍 · 磁器口门楼" decoding="async" loading="lazy" src="media/ciqikou-gateway.jpg"/>
-<figcaption>实拍 · 磁器口门楼</figcaption>
-</figure><figure class="media-card">
-<img alt="实拍 · 磁器口人流" decoding="async" loading="lazy" src="media/ciqikou-crowd.jpg"/>
-<figcaption>实拍 · 磁器口人流</figcaption>
-</figure><figure class="media-card">
-<img alt="实拍 · 巫山 / 巫峡 / 长江大桥" decoding="async" loading="lazy" src="media/wushan-bridge.jpg"/>
-<figcaption>实拍 · 巫山 / 巫峡 / 长江大桥</figcaption>
-</figure></div>
-<div class="day-routes">
-<h4>🗺️ 当日路线</h4>
-<ol class="route-steps">
-<li>
-<span class="route-source-text">路径：</span>江美舍退房寄存→3号线换1号线→磁器口
-            
-            
-              · 退房+行李寄存前台+早餐 → 磁器口古镇
-            
-          </li>
-<li>
-<span class="route-source-text">路径：</span>磁器口→1号线→石油路·耶屹口寿司午餐
-            
-            
-              · 磁器口古镇 → 磁器口→石油路（1号线直达）
-            
-          </li>
-<li>
-<span class="route-source-text">路径：</span>石油路→1号线两路口换3号线→重庆北站
-            
-            
-              · 磁器口→石油路（1号线直达） → 🍣 耶屹口寿司（石油路店）
-            
-          </li>
-<li>
-<span class="route-source-text">路径：</span>C9174 14:22→15:54 重庆北→巫山（暑假加开·1h32m最快）
-            
-            
-              · 🍣 耶屹口寿司（石油路店） → 石油路→重庆北站
-            
-          </li>
-<li>
-<span class="route-source-text">路径：</span>巫山站→桐晖酒店入住→滨江路散步→巫山烤鱼
-            
-            
-              · 石油路→重庆北站 → C9174 重庆北→巫山 🟢
-            
-          </li>
-</ol>
-</div>
-<ol class="timeline">
-<li class="stop stop-breakfast">
-<div class="t-time">07:30</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">🥐</span>
-<strong>退房+行李寄存前台+早餐</strong>
-<span class="warn-badge">⚠️ 坐标待校验</span>
-</div>
-<div class="t-reason">💡 江美舍北滨路退房，行李寄存前台；只带巫山一晚换洗衣物（轻装去巫山，D3回重庆继续住）</div>
-<div class="t-detail">
-<span>🕐 —</span>
-<span>🎫 ¥¥15-20</span>
-<span>⏱️ 约 30 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-attraction">
-<div class="t-time">08:00</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>磁器口古镇</strong>
-<span class="rating">⭐ 3.8</span>
-</div>
-<div class="t-reason">💡 完整2.5h不压缩：华新街3号线→两路口换1号线→磁器口（约30分钟）；后街茶馆+陈麻花+逛江边；10:30动身去石油路</div>
-<div class="t-detail">
-<span>🕐 全天</span>
-<span>🎫 ¥免费</span>
-<span>⏱️ 约 150 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-transport">
-<div class="t-time">10:30</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>磁器口→石油路（1号线直达）</strong>
-</div>
-<div class="t-reason">💡 1号线磁器口→石油路约7站·20分钟；赶耶屹口11:00开门第一波</div>
-<div class="t-detail">
-<span>🕐 —</span>
-<span>🎫 ¥¥4/人</span>
-<span>⏱️ 约 20 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-lunch">
-<div class="t-time">11:00</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">🍜</span>
-<strong>🍣 耶屹口寿司（石油路店）</strong>
-<span class="rating">⭐ 4.7</span>
-</div>
-<div class="t-reason">💡 重庆排队王川派寿司·石油路站旁·必点：酥皮鹅肝寿司+冰皮榴莲寿司+脑花寿司·人均¥80-120 🟡 赶11:00开门可避开高峰；⚠️不点拉面，只吃寿司</div>
-<div class="t-detail">
-<span>🕐 约11:00-21:30</span>
-<span>🎫 ¥人均¥80-120</span>
-<span>⏱️ 约 75 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-transport">
-<div class="t-time">12:15</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>石油路→重庆北站</strong>
-</div>
-<div class="t-reason">💡 1号线石油路→两路口换3号线→重庆北站南广场；约35-40分钟；14:22发车，充裕</div>
-<div class="t-detail">
-<span>🕐 —</span>
-<span>🎫 ¥¥5/人</span>
-<span>⏱️ 约 40 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-transport">
-<div class="t-time">14:22</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>C9174 重庆北→巫山 🟢</strong>
-</div>
-<div class="t-reason">💡 暑假加开·14:22→15:54·仅1h32m·二等座约¥196 🎫 12306可查；备选G372(12:23→14:25)或C9194(14:10→16:11)；⚠️暑假加开车次请提前在12306确认2026年8月排图</div>
-<div class="t-detail">
-<span>🕐 —</span>
-<span>🎫 ¥¥196/人</span>
-<span>⏱️ 约 92 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-transport">
-<div class="t-time">16:00</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>巫山站→桐晖酒店(游客中心店)入住</strong>
-<span class="rating">⭐ 4.9</span>
-</div>
-<div class="t-reason">💡 巫山站打车约15分钟到桐晖·美团4.9·¥117/晚·距小三峡码头约0.3km 🎫http://dpurl.cn/olXCgdvz</div>
-<div class="t-detail">
-<span>🕐 —</span>
-<span>🎫 ¥约¥117/晚</span>
-<span>⏱️ 约 30 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-attraction">
-<div class="t-time">16:30</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>巫山滨江路/县城散步</strong>
-<span class="rating">⭐ 4.0</span>
-</div>
-<div class="t-reason">💡 比原计划晚到约15分钟但仍在下午；滨江路散步+确认明早码头集合点</div>
-<div class="t-detail">
-<span>🕐 全天</span>
-<span>🎫 ¥免费</span>
-<span>⏱️ 约 90 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-dinner">
-<div class="t-time">18:00</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">🍽️</span>
-<strong>巫山烤鱼</strong>
-<span class="rating">⭐ 4.2</span>
-<span class="warn-badge">⚠️ 坐标待校验</span>
-</div>
-<div class="t-reason">💡 游客中心/滨江一带烤鱼人均¥60-90；早睡备D3 8:30头班游船</div>
-<div class="t-detail">
-<span>🕐 —</span>
-<span>🎫 ¥人均¥60-90</span>
-<span>⏱️ 约 90 分钟</span>
-</div>
-</div>
-</li>
-</ol>
-<div class="day-budget">💸 当天预算约 ¥<span class="budget-count" data-count-to="780">780</span></div>
-</article><article class="day-card" data-day="3" id="day-3">
-<header class="day-header">
-<h3>D3 · 2026-08-03 · 小三峡头班·高铁回渝·下浩里·辣三鲜（雨天B仅备用）</h3>
-<div class="day-meta">
-<span>📍 170km</span>
-<span>🚶 2.3 体力指数</span>
-<span>☁️ 多云 约26-34℃，雨约40%（用户自查 7/27 🟡）· 主方案小三峡</span>
-</div>
-</header><figure class="day-cover">
-<img alt="实拍 · 巫山小三峡（大宁河）" decoding="async" loading="lazy" src="media/little-three-gorges.jpg"/>
-<figcaption>实拍 · 巫山小三峡（大宁河）</figcaption>
-</figure><div class="media-strip"><figure class="media-card">
-<img alt="实拍 · 巫峡江景" decoding="async" loading="lazy" src="media/wu-gorge.jpg"/>
-<figcaption>实拍 · 巫峡江景</figcaption>
-</figure><figure class="media-card">
-<img alt="实拍 · 巫山江边" decoding="async" loading="lazy" src="media/wushan-town.jpg"/>
-<figcaption>实拍 · 巫山江边</figcaption>
-</figure><figure class="media-card">
-<img alt="实拍 · 南岸龙门浩索道站" decoding="async" loading="lazy" src="media/longmenhao-cable-station.jpg"/>
-<figcaption>实拍 · 南岸龙门浩索道站</figcaption>
-</figure></div>
-<div class="day-routes">
-<h4>🗺️ 当日路线</h4>
-<ol class="route-steps">
-<li>
-<span class="route-source-text">路径：</span>桐晖酒店→小三峡码头头班游船
-            
-            
-              · 退房+早餐 → 小三峡·小小三峡游船 5A
-            
-          </li>
-<li>
-<span class="route-source-text">路径：</span>游船结束→简餐→巫山站
-            
-            
-              · 小三峡·小小三峡游船 5A → 简餐/打包
-            
-          </li>
-<li>
-<span class="route-source-text">路径：</span>G3455 15:24→17:26 重庆北
-            
-            
-              · 简餐/打包 → G3455 巫山→重庆北 🟢
-            
-          </li>
-<li>
-<span class="route-source-text">路径：</span>重庆北→江美舍北滨路入住(续住)
-            
-            
-              · G3455 巫山→重庆北 🟢 → 重庆北→江美舍北滨路入住(续住)
-            
-          </li>
-<li>
-<span class="route-source-text">路径：</span>江美舍→打车跨江→南岸下浩里·龙门浩
-            
-            
-              · 重庆北→江美舍北滨路入住(续住) → 下浩里·龙门浩老街
-            
-          </li>
-<li>
-<span class="route-source-text">路径：</span>下浩里→打车→回龙湾·辣三鲜自贡菜
-            
-            
-              · 下浩里·龙门浩老街 → 🌶️ 辣三鲜·火爆自贡菜·江湖菜（南岸回龙湾店）
-            
-          </li>
-</ol>
-</div>
-<ol class="timeline">
-<li class="stop stop-breakfast">
-<div class="t-time">07:30</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">🥐</span>
-<strong>退房+早餐</strong>
-<span class="warn-badge">⚠️ 坐标待校验</span>
-</div>
-<div class="t-reason">💡 桐晖退房，步行约5-10分钟到小三峡码头赶8:30头班</div>
-<div class="t-detail">
-<span>🕐 —</span>
-<span>🎫 ¥¥10-15</span>
-<span>⏱️ 约 30 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-attraction">
-<div class="t-time">08:30</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>小三峡·小小三峡游船 5A</strong>
-<span class="rating">⭐ 4.9</span>
-</div>
-<div class="t-reason">💡 桐晖步行至码头；头班人少；备晕船药；约12:30返航后简餐再赶G3455 15:24</div>
-<div class="t-detail">
-<span>🕐 08:00-18:00（首班8:30）</span>
-<span>🎫 ¥约¥120/人</span>
-<span>⏱️ 约 240 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-lunch">
-<div class="t-time">12:30</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">🍜</span>
-<strong>简餐/打包</strong>
-<span class="warn-badge">⚠️ 坐标待校验</span>
-</div>
-<div class="t-reason">💡 码头附近简餐，留时间回酒店取行李→去巫山站</div>
-<div class="t-detail">
-<span>🕐 —</span>
-<span>🎫 ¥人均¥30-50</span>
-<span>⏱️ 约 50 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-transport">
-<div class="t-time">15:24</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>G3455 巫山→重庆北 🟢</strong>
-</div>
-<div class="t-reason">💡 美团：15:24→17:26 2h2m 二等座¥185；游船后最稳不赶 🎫 http://dpurl.cn/Mp95NSEz</div>
-<div class="t-detail">
-<span>🕐 —</span>
-<span>🎫 ¥¥185/人</span>
-<span>⏱️ 约 122 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-transport">
-<div class="t-time">17:40</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>重庆北→江美舍北滨路入住(续住)</strong>
-</div>
-<div class="t-reason">💡 北站3号线→华新街约25分钟；D3续住江美舍北滨路（已含在住宿费中）</div>
-<div class="t-detail">
-<span>🕐 —</span>
-<span>🎫 ¥地铁¥5/人</span>
-<span>⏱️ 约 40 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-attraction">
-<div class="t-time">18:30</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>下浩里·龙门浩老街</strong>
-<span class="rating">⭐ 4.6</span>
-</div>
-<div class="t-reason">💡 华新街打车跨江约20分钟直达南岸龙门浩；傍晚老街+江景绝佳；逛约1.5h后打车去回龙湾</div>
-<div class="t-detail">
-<span>🕐 全天（商铺约10:00-22:00）</span>
-<span>🎫 ¥免费</span>
-<span>⏱️ 约 105 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-dinner">
-<div class="t-time">20:15</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">🍽️</span>
-<strong>🌶️ 辣三鲜·火爆自贡菜·江湖菜（南岸回龙湾店）</strong>
-<span class="rating">⭐ 4.5</span>
-</div>
-<div class="t-reason">💡 下浩里打车约15分钟到回龙湾；重庆最被低估的美食街·自贡盐帮菜·鲜辣锅气·拒绝预制菜·必点自贡冷吃兔+葱葱土鲫鱼+盐帮鱼蛋 🟡 人均约¥80-100；吃完打车回江美舍约25分钟</div>
-<div class="t-detail">
-<span>🕐 约11:00-23:00</span>
-<span>🎫 ¥人均¥80-100</span>
-<span>⏱️ 约 90 分钟</span>
-</div>
-</div>
-</li>
-</ol>
-<div class="day-budget">💸 当天预算约 ¥<span class="budget-count" data-count-to="720">720</span></div>
-</article><article class="day-card" data-day="4" id="day-4">
-<header class="day-header">
-<h3>D4 · 2026-08-04 · 动物园看熊猫·渝味响火锅·CA4341飞广州</h3>
-<div class="day-meta">
-<span>📍 35km</span>
-<span>🚶 1.5 体力指数</span>
-<span>☁️ 雨 27-35℃ · 动物园户外湿滑（趋势🟡）</span>
-</div>
-</header><figure class="day-cover">
-<img alt="主城返程动线参考" decoding="async" loading="lazy" src="media/cableway-chongqing.jpg"/>
-<figcaption>主城返程动线参考（动物园后前往机场）</figcaption>
-</figure><div class="media-strip"><figure class="media-card">
-<img alt="实拍 · 长江索道" decoding="async" loading="lazy" src="media/cableway-chongqing.jpg"/>
-<figcaption>实拍 · 长江索道</figcaption>
-</figure><figure class="media-card">
-<img alt="实拍 · 龙门浩一带" decoding="async" loading="lazy" src="media/longmenhao-cable-station.jpg"/>
-<figcaption>实拍 · 龙门浩一带</figcaption>
-</figure><figure class="media-card">
-<img alt="实拍 · 洪崖洞夜色" decoding="async" loading="lazy" src="media/hongya-qiansimen.jpg"/>
-<figcaption>实拍 · 洪崖洞夜色</figcaption>
-</figure></div>
-<div class="day-routes">
-<h4>🗺️ 当日路线</h4>
-<ol class="route-steps">
-<li>
-<span class="route-source-text">路径：</span>江美舍退房寄存→3号线→牛角沱换2号线→动物园站A口
-            
-            
-              · 退房+行李寄存前台 → 华新街(3号线)→牛角沱换2号线→动物园站A口
-            
-          </li>
-<li>
-<span class="route-source-text">路径：</span>动物园→2号线→大坪站·渝味响火锅午餐
-            
-            
-              · 华新街(3号线)→牛角沱换2号线→动物园站A口 → 🐼 重庆动物园·熊猫馆
-            
-          </li>
-<li>
-<span class="route-source-text">路径：</span>大坪→2号线牛角沱换3号线→华新街取行李
-            
-            
-              · 🐼 重庆动物园·熊猫馆 → 动物园→大坪站（2号线1站）
-            
-          </li>
-<li>
-<span class="route-source-text">路径：</span>江美舍→打车/地铁→江北T3·CA4341 17:00飞广州
-            
-            
-              · 动物园→大坪站（2号线1站） → 🍲 渝味响火锅（大坪总店）
-            
-          </li>
-</ol>
-</div>
-<ol class="timeline">
-<li class="stop stop-breakfast">
-<div class="t-time">07:30</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">🥐</span>
-<strong>退房+行李寄存前台</strong>
-<span class="warn-badge">⚠️ 坐标待校验</span>
-</div>
-<div class="t-reason">💡 江美舍北滨路退房，行李寄存前台；轻装出发看熊猫</div>
-<div class="t-detail">
-<span>🕐 —</span>
-<span>🎫 ¥¥15-20</span>
-<span>⏱️ 约 30 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-transport">
-<div class="t-time">08:00</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>华新街(3号线)→牛角沱换2号线→动物园站A口</strong>
-</div>
-<div class="t-reason">💡 3号线→牛角沱换2号线→动物园站A口步行约450m；约35分钟</div>
-<div class="t-detail">
-<span>🕐 —</span>
-<span>🎫 ¥¥5/人</span>
-<span>⏱️ 约 35 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-attraction">
-<div class="t-time">08:45</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>🐼 重庆动物园·熊猫馆</strong>
-<span class="rating">⭐ 4.6</span>
-</div>
-<div class="t-reason">💡 全国大熊猫最多动物园之一·23只大熊猫·上午9点喂食黄金时间；熊猫馆→虎山→长颈鹿，约2小时精华</div>
-<div class="t-detail">
-<span>🕐 8:00-18:00（熊猫馆9:00-17:00）</span>
-<span>🎫 ¥¥25/人</span>
-<span>⏱️ 约 120 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-transport">
-<div class="t-time">10:45</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>动物园→大坪站（2号线1站）</strong>
-</div>
-<div class="t-reason">💡 2号线动物园→大坪仅1站·3分钟；出站步行至渝味响火锅</div>
-<div class="t-detail">
-<span>🕐 —</span>
-<span>🎫 ¥¥2/人</span>
-<span>⏱️ 约 10 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-lunch">
-<div class="t-time">11:00</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">🍜</span>
-<strong>🍲 渝味响火锅（大坪总店）</strong>
-<span class="rating">⭐ 4.6</span>
-</div>
-<div class="t-reason">💡 大坪正街124-1-2号·重庆本地人强推·社区火锅排队王·牛油锅底麻辣鲜香·必点：冷锅鸭血+千丝黄喉+耙猪脚+1元冰汤圆 🟡 人均约¥70；早点到避开午高峰</div>
-<div class="t-detail">
-<span>🕐 约10:30-23:00</span>
-<span>🎫 ¥人均¥70</span>
-<span>⏱️ 约 80 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-transport">
-<div class="t-time">12:20</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>大坪→2号线牛角沱换3号线→华新街·取行李</strong>
-<span class="warn-badge">⚠️ 坐标待校验</span>
-</div>
-<div class="t-reason">💡 大坪2号线→牛角沱换3号线→华新街；约25-30分钟</div>
-<div class="t-detail">
-<span>🕐 —</span>
-<span>🎫 ¥¥4/人</span>
-<span>⏱️ 约 30 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-transport">
-<div class="t-time">12:50</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>江美舍取行李→打车→江北机场T3</strong>
-</div>
-<div class="t-reason">💡 华新街打车约25-35分钟到T3；约13:30到机场·距17:00起飞仍有3.5h·绰绰有余</div>
-<div class="t-detail">
-<span>🕐 —</span>
-<span>🎫 ¥打车¥50-60</span>
-<span>⏱️ 约 40 分钟</span>
-</div>
-</div>
-</li>
-<li class="stop stop-transport">
-<div class="t-time">13:30</div>
-<div class="t-body">
-<div class="t-title">
-<span class="t-emoji">📌</span>
-<strong>江北T3→CA4341 17:00→18:50 广州白云T3 🟢</strong>
-</div>
-<div class="t-reason">💡 国航CA4341 波音737·17:00起飞→18:50白云T3；吃完火锅到机场仍有3h+缓冲</div>
-<div class="t-detail">
-<span>🕐 —</span>
-<span>🎫 ¥已购票</span>
-<span>⏱️ 约 350 分钟</span>
-</div>
-</div>
-</li>
-</ol>
-<div class="day-budget">💸 当天预算约 ¥<span class="budget-count" data-count-to="420">420</span></div>
-</article></section>
-<!--
   💰 预算明细 · AGENT MUST-DO:
   ① 必须有总预算 + 6 类目占比（交通/住宿/餐饮/门票/购物/备用）
   ② 必须有饼图（数据由 budget.categories 驱动，模板自带 Chart.js）
@@ -2519,6 +4685,7 @@ a:focus-visible,
   ④ 凑不齐细项时，按类目占比模板（见 data/skeleton_fallbacks.json）兜底
 -->
 <section id="budget">
+<p class="section-label">Budget</p>
 <h2>预算明细</h2>
 <div class="budget-section">
 <div class="budget-pie-wrap">
@@ -2549,7 +4716,8 @@ a:focus-visible,
   每条风险必须标置信度 🟢🟡⚪
 -->
 <section id="risk">
-<h2>风险提示</h2>
+<p class="section-label">Risk</p>
+<h2>风险与雨备</h2>
 <!--
   AGENT MUST-DO: 至少 3 类风险（天气 / 节假日 / 防坑），加 1 类应急联系。
   上游 risk-check 给空时用 skeleton_fallbacks.risk_panel_default 兜底。
@@ -2602,6 +4770,7 @@ a:focus-visible,
   （绝不允许这一节空白；本 section 即使 xhs_notes=None 也要 include）
 -->
 <section id="media-videos">
+<p class="section-label">Media</p>
 <h2>图文视频参考</h2>
 <div class="video-section">
 <p class="video-intro">为每天核心体验配了可点开的 B 站参考视频。若内嵌播放器因网络策略无法加载，可点右上角在 B 站打开；图片已缓存在本地 media 目录，离线也能看图。</p>
@@ -2707,7 +4876,8 @@ a:focus-visible,
 </div>
 </section>
 <section id="xhs-notes">
-<h2>小红书真实笔记参考</h2>
+<p class="section-label">Notes</p>
+<h2>真实笔记参考</h2>
 <!--
   AGENT MUST-DO: 至少 6-10 篇真实笔记，按主题分组。
   完全没拿到时，自动渲染"未拿到第三方游记"提示 + 给一组手动搜索链接。
@@ -2923,6 +5093,7 @@ a:focus-visible,
 </div>
 </section>
 <section id="data-completeness">
+<p class="section-label">Sources</p>
 <h2>数据完整性</h2>
 <!--
   AGENT MUST-DO:
@@ -2942,6 +5113,23 @@ a:focus-visible,
 </div>
 </section>
 <!--
+  AGENT MUST-DO:
+  这是固定底部面板，告诉用户哪些数据是一手 / 哪些是兜底。
+  data_sources 由 check_deps + agent 实际调用情况组装。
+-->
+<div class="completeness-panel">
+<div class="comp-row">
+<strong>✅ 已启用</strong>
+<ul>
+<li>WebSearch — 兜底数据源</li>
+</ul>
+</div>
+<p class="comp-tip">
+    💡 想升级数据可信度？把对应数据源配上后告诉 agent「重跑 XX」即可增量更新。
+  </p>
+</div>
+
+<!--
   🎒 行前清单 · AGENT MUST-DO:
   无论数据完整度，必须输出至少 4 类清单：
     1. 证件（身份证/驾照/学生证/老年证）
@@ -2952,6 +5140,7 @@ a:focus-visible,
   （兜底数据见 data/skeleton_fallbacks.json）
 -->
 <section id="checklist">
+<p class="section-label">Checklist</p>
 <h2>行前清单</h2>
 <!--
   AGENT MUST-DO: checklist 至少 4 类（证件/充电/支付/应急）。
@@ -2990,10 +5179,14 @@ a:focus-visible,
 </div>
 </div>
 </section>
+</div>
+</section>
+
+
 <footer>
 <p>由出游规划师 v1.0.0 生成 · 2026-07-27T18:26:03+08:00</p>
 <p>本报告所有价格 / 营业 / 评分均为查询时刻的参考值，请出行前再核实。</p>
-</footer>
+<p class="dossier-build-stamp" style="margin-top:0.75rem;opacity:0.55;">视觉版 craft-v6c-continuum · 摄影与日程同章连续</p></footer>
 <script>
   // 总览地图 -- 国内可用瓦片源（按可达性顺序），任何一个失败自动切下一个
   const map = L.map('map', { preferCanvas: true });
@@ -3143,7 +5336,7 @@ a:focus-visible,
         labels: ['大交通','住宿','餐饮','门票','市内交通','备用'],
         datasets: [{
           data: [bd.transport_long, bd.accommodation, bd.food, bd.ticket, bd.transport_intra, bd.buffer],
-          backgroundColor: ['#2aa8e0','#ff6a3d','#f5b301','#14b8a6','#7c9cff','#95a5a6'],
+          backgroundColor: ['#8C6B45','#5E574F','#A89070','#3F6B54','#9A6B2F','#C4BDB2'],
         }]
       },
       options: {
