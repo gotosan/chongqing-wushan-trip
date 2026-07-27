@@ -3803,11 +3803,69 @@ html body .t-reason {
   max-width: 36em !important;
 }
 
+/* v7: one editorial timeline, not a three-column schedule */
+html body .period-grid {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 0 !important;
+  margin: 0 !important;
+}
+html body .period-col,
+html body .period-col + .period-col {
+  display: grid !important;
+  grid-template-columns: minmax(8rem, 10.5rem) minmax(0, 1fr) !important;
+  column-gap: 2.5rem !important;
+  align-items: start !important;
+  border-top: 1px solid #C4BDB2 !important;
+  border-left: 0 !important;
+  padding: 1.35rem 0 1.6rem !important;
+  margin: 0 !important;
+}
+html body .period-col h4 {
+  margin: 0 !important;
+  padding-top: 0.1rem !important;
+  color: #8C6B45 !important;
+  font-size: 1.12rem !important;
+  line-height: 1.35 !important;
+}
+html body .period-col > .timeline,
+html body .period-col > .t-reason {
+  grid-column: 2 !important;
+  margin: 0 !important;
+  max-width: 46rem !important;
+}
+html body .period-col > .t-reason {
+  padding-top: 0.1rem !important;
+  color: #5E574F !important;
+}
+html body .period-col .timeline .stop:first-child {
+  padding-top: 0 !important;
+}
+html body .period-col .timeline .stop:last-child {
+  border-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+@media (max-width: 720px) {
+  html body .period-col,
+  html body .period-col + .period-col {
+    display: block !important;
+    padding: 1.15rem 0 1.4rem !important;
+  }
+  html body .period-col h4 {
+    margin: 0 0 0.8rem !important;
+    font-size: 1.02rem !important;
+  }
+  html body .period-col > .timeline,
+  html body .period-col > .t-reason {
+    max-width: none !important;
+  }
+}
+
 /* ===== end v6 continuum ===== */
 </style>
 
 </head>
-<body data-dossier-build="craft-v6c-continuum-20260727" >
+<body data-dossier-build="craft-v7-linear-timeline-20260727" >
 <div aria-hidden="true" id="nav-sentinel" style="position:absolute;top:0;left:0;width:1px;height:1px;"></div>
 <nav aria-label="本页导航" class="site-nav" id="site-nav">
 <a class="nav-brand" href="#top"><span aria-hidden="true" class="nav-mark"></span><span>重庆 · 巫山</span></a>
@@ -5186,7 +5244,7 @@ html body .t-reason {
 <footer>
 <p>由出游规划师 v1.0.0 生成 · 2026-07-27T18:26:03+08:00</p>
 <p>本报告所有价格 / 营业 / 评分均为查询时刻的参考值，请出行前再核实。</p>
-<p class="dossier-build-stamp" style="margin-top:0.75rem;opacity:0.55;">视觉版 craft-v6c-continuum · 摄影与日程同章连续</p></footer>
+<p class="dossier-build-stamp" style="margin-top:0.75rem;opacity:0.55;">视觉版 craft-v7-linear-timeline · 摄影与日程单线连续</p></footer>
 <script>
   // 总览地图 -- 国内可用瓦片源（按可达性顺序），任何一个失败自动切下一个
   const map = L.map('map', { preferCanvas: true });
