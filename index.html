@@ -5744,11 +5744,223 @@ html body .timeline .stop.is-focus-target {
 }
 /* ===== end craft-v13 omai interaction ===== */
 
+/* ===== craft-v15: stay, essentials, and appendix rebuild ===== */
+/* These closing rules consolidate three older visual systems into one reading order. */
+html body #hotel {
+  margin-bottom: 6.5rem !important;
+}
+html body #hotel > .section-label,
+html body #hotel > h2,
+html body #hotel > p {
+  width: min(1120px, calc(100% - 3rem)) !important;
+}
+html body #hotel > h2 {
+  margin-bottom: 0.55rem !important;
+}
+html body #hotel > p {
+  margin-bottom: 2.25rem !important;
+}
+html body .hotel-photo-stage {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+html body .hotel-photo-stage .hotel-primary-media {
+  height: min(70vh, 720px) !important;
+  min-height: 460px !important;
+  background: #171412 !important;
+}
+html body .hotel-photo-stage .hotel-primary-media img {
+  height: 100% !important;
+  min-height: 0 !important;
+  object-position: center 54% !important;
+}
+html body .hotel-photo-stage .hotel-media-overlay {
+  bottom: clamp(7rem, 15vh, 10rem) !important;
+  max-width: min(34rem, calc(100vw - 3rem)) !important;
+}
+html body .hotel-photo-stage > .hotel-primary-copy,
+html body .hotel-photo-stage .hotel-primary-copy {
+  width: min(760px, calc(100% - 3rem)) !important;
+  max-width: 760px !important;
+  margin: -4.75rem auto 0 !important;
+  padding: 1.65rem 1.75rem 1.5rem !important;
+  border: 1px solid rgba(30, 27, 24, 0.12) !important;
+  border-radius: 0 !important;
+  box-shadow: 0 18px 38px rgba(22, 16, 11, 0.13) !important;
+}
+html body .hotel-photo-stage .hotel-primary-copy .h-reason {
+  max-width: 52ch !important;
+}
+html body .hotel-alt-sheet {
+  width: min(1120px, calc(100% - 3rem)) !important;
+  margin-top: 4rem !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+html body .hotel-alt-head {
+  display: grid !important;
+  grid-template-columns: minmax(9rem, 0.4fr) minmax(0, 1fr) !important;
+  column-gap: 1.25rem !important;
+  align-items: baseline !important;
+  padding-bottom: 1rem !important;
+  border-bottom: 1px solid #C4BDB2 !important;
+}
+html body .hotel-alt-kicker {
+  grid-column: 1 !important;
+  grid-row: 1 / span 2 !important;
+  margin: 0 !important;
+}
+html body .hotel-alt-title,
+html body .hotel-alt-lede {
+  grid-column: 2 !important;
+}
+html body .hotel-alt-title { margin: 0 0 0.3rem !important; }
+html body .hotel-alt-lede { margin: 0 !important; }
+html body .hotel-alt-sheet .hotel-card.is-secondary,
+html body .hotel-alt-sheet .hotel-card.is-secondary:nth-child(n) {
+  grid-template-columns: minmax(9rem, 0.4fr) minmax(0, 1fr) !important;
+  column-gap: 1.25rem !important;
+  padding: 1.4rem 0 !important;
+}
+html body .hotel-alt-sheet .hotel-card.is-secondary .h-rank { grid-column: 1 !important; }
+html body .hotel-alt-sheet .hotel-card.is-secondary h4,
+html body .hotel-alt-sheet .hotel-card.is-secondary .h-price,
+html body .hotel-alt-sheet .hotel-card.is-secondary .h-rating,
+html body .hotel-alt-sheet .hotel-card.is-secondary .h-loc,
+html body .hotel-alt-sheet .hotel-card.is-secondary .h-reason,
+html body .hotel-alt-sheet .hotel-card.is-secondary .book-links { grid-column: 2 !important; }
+
+html body #essentials,
+html body section.essentials {
+  margin-bottom: 6rem !important;
+}
+html body .essentials-list {
+  counter-reset: essential !important;
+}
+html body .essentials-list li {
+  position: relative !important;
+  padding: 1.35rem 0 1.35rem 4rem !important;
+  counter-increment: essential !important;
+}
+html body .essentials-list li::before {
+  content: "0" counter(essential) !important;
+  position: absolute !important;
+  top: 1.45rem !important;
+  left: 0 !important;
+  color: #8C6B45 !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 11px !important;
+  letter-spacing: 0.08em !important;
+}
+html body .essentials-list li:nth-child(1),
+html body .essentials-list li:nth-child(3) {
+  color: #2D2924 !important;
+  background: rgba(140, 107, 69, 0.07) !important;
+}
+html body .essentials-list li:nth-child(1)::after,
+html body .essentials-list li:nth-child(3)::after {
+  content: "执行优先" !important;
+  display: inline-block !important;
+  margin-left: 0.6rem !important;
+  color: #8C6B45 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.06em !important;
+}
+
+html body #appendix.appendix,
+html body section#appendix {
+  margin-top: 0 !important;
+  padding: 5.5rem 0 4rem !important;
+  background: #EAE4DA !important;
+}
+html body #appendix .appendix-inner {
+  width: min(1120px, calc(100% - 3rem)) !important;
+}
+html body #appendix > .appendix-inner > .section-label,
+html body #appendix > .appendix-inner > .appendix-title,
+html body #appendix > .appendix-inner > .appendix-desc {
+  max-width: 42rem !important;
+}
+html body #appendix .appendix-toc {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  column-gap: 2rem !important;
+  margin: 2.75rem 0 4.75rem !important;
+}
+html body #appendix .appendix-toc li { min-width: 0 !important; }
+html body #appendix .appendix-toc a { min-height: 52px !important; }
+html body #appendix section {
+  margin: 0 !important;
+  padding: 3.25rem 0 4rem !important;
+  border-top: 1px solid #C4BDB2 !important;
+}
+html body #appendix section > .section-label {
+  margin-bottom: 0.45rem !important;
+}
+html body #appendix section > h2 {
+  margin-top: 0 !important;
+  margin-bottom: 1.5rem !important;
+}
+html body #appendix .xhs-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  column-gap: 2rem !important;
+  row-gap: 0 !important;
+}
+html body #appendix .xhs-card {
+  min-width: 0 !important;
+  padding: 0.9rem 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-top: 1px solid #D2CBC1 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+html body #appendix .xhs-card:hover {
+  transform: none !important;
+  background: rgba(255, 252, 246, 0.32) !important;
+}
+html body #appendix .xhs-title { line-height: 1.55 !important; }
+
+@media (max-width: 720px) {
+  html body #hotel > .section-label,
+  html body #hotel > h2,
+  html body #hotel > p { width: calc(100% - 1.5rem) !important; }
+  html body .hotel-photo-stage .hotel-primary-media {
+    height: min(58vh, 520px) !important;
+    min-height: 300px !important;
+  }
+  html body .hotel-photo-stage > .hotel-primary-copy,
+  html body .hotel-photo-stage .hotel-primary-copy {
+    width: calc(100% - 1.5rem) !important;
+    margin-top: -2.5rem !important;
+    padding: 1.25rem 1.1rem !important;
+  }
+  html body .hotel-alt-sheet { width: calc(100% - 1.5rem) !important; }
+  html body .hotel-alt-head,
+  html body .hotel-alt-sheet .hotel-card.is-secondary,
+  html body .hotel-alt-sheet .hotel-card.is-secondary:nth-child(n) { display: block !important; }
+  html body .hotel-alt-kicker { margin-bottom: 0.55rem !important; }
+  html body .hotel-alt-sheet .hotel-card.is-secondary .h-rank { margin: 0 0 0.5rem !important; }
+  html body .essentials-list li { padding-left: 3.2rem !important; }
+  html body #appendix.appendix,
+  html body section#appendix { padding: 4rem 0 2.5rem !important; }
+  html body #appendix .appendix-inner { width: calc(100% - 1.5rem) !important; }
+  html body #appendix .appendix-toc,
+  html body #appendix .xhs-grid { grid-template-columns: 1fr !important; }
+  html body #appendix .appendix-toc { column-gap: 0 !important; margin-bottom: 3.25rem !important; }
+  html body #appendix section { padding: 2.5rem 0 3.25rem !important; }
+}
+/* ===== end craft-v15 backmatter rebuild ===== */
+
 
 </style>
 
 </head>
-<body data-dossier-build="craft-v14-omai-controls-20260727" >
+<body data-dossier-build="craft-v15-backmatter-rebuild-20260728" >
 <div aria-hidden="true" id="nav-sentinel" style="position:absolute;top:0;left:0;width:1px;height:1px;"></div>
 <nav aria-label="本页导航" class="site-nav" id="site-nav">
 <button aria-controls="trip-drawer" aria-expanded="false" class="nav-menu-trigger" id="nav-menu-trigger" type="button"><span aria-hidden="true" class="nav-menu-lines"></span><span>目录</span></button>
@@ -7170,7 +7382,7 @@ html body .timeline .stop.is-focus-target {
 <footer>
 <p>由出游规划师 v1.0.0 生成 · 2026-07-27T18:26:03+08:00</p>
 <p>本报告所有价格 / 营业 / 评分均为查询时刻的参考值，请出行前再核实。</p>
-<p class="dossier-build-stamp" style="margin-top:0.75rem;opacity:0.55;">视觉版 craft-v14-omai-controls · 菜单抽屉 + 图片定位交互</p></footer>
+<p class="dossier-build-stamp" style="margin-top:0.75rem;opacity:0.55;">视觉版 craft-v15-backmatter-rebuild · 菜单抽屉 + 图片定位交互</p></footer>
 <script>
   // 总览地图 -- 国内可用瓦片源（按可达性顺序），任何一个失败自动切下一个
   const map = L.map('map', { preferCanvas: true });
@@ -7417,7 +7629,7 @@ html body .timeline .stop.is-focus-target {
 
   // Utility sections: Omai text rise
   const revealNodes = [
-    ...document.querySelectorAll('body > section:not(#days), #appendix .appendix-inner > section')
+    ...document.querySelectorAll('body > section:not(#days):not(#appendix), #appendix .appendix-inner > section')
   ].filter((el, index, nodes) => nodes.indexOf(el) === index);
   revealNodes.forEach((el) => {
     el.classList.add('reveal-target');
